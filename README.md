@@ -22,7 +22,7 @@ client.connect(err => {
 ```
 
 
-Replace <password> with the password for the dbUser user. Replace myFirstDatabase with the name of the database ( ** sample_ProjectDb **) that connections will use by default.
+Replace <password> with the password for the dbUser user. Replace myFirstDatabase with the name of the database ( **sample_ProjectDb**) that connections will use by default.
 
-a sample collection is available in the DB with the name sample_collection
+a sample collection is available in the DB with the name **sample_collection**
 
