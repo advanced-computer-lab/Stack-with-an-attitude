@@ -4,6 +4,11 @@
 this is our documentation for the ACL project 2021/2022 done by team **Stack-with-an-attitude**.
 
 
+#notes for when using files from my branch
+
+please run npm i after cloning or pulling and it will install all the modules you dont have to do them one by one
+
+
 # Connection
 
 to connect to the data base you should use this sample driver code:
