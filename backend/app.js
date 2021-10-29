@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
+const config = require('config');
  
 // Model Imports
 const Admin = require('./models/Admin');
@@ -10,7 +11,7 @@ const Flight = require('./Models/Flight');
 const adminController = require('./Controllers/AdminController');
 
 // THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
-const MongoURI = 'mongodb+srv://dbUser:dbUser@ourcluster.djjyo.mongodb.net/sample_ProjectDb?retryWrites=true&w=majority' ;
+const MongoURI =  config.get('mongoURI');
 
 //App variables
 const app = express();
