@@ -6,7 +6,7 @@ this is our documentation for the ACL project 2021/2022 done by team **Stack-wit
 
 # notes for when using files from my branch
 
-please run ```node npm i ``` after cloning or pulling and it will install all the modules you dont have to do them one by one
+please run ```java npm i ``` after cloning or pulling and it will install all the modules you dont have to do them one by one
 
 
 # Connection
