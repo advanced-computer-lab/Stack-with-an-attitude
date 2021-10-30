@@ -91,7 +91,7 @@ app.post('/admin/login',(req,res)=>{
         else{
             if(data){
                 if(pass==data.password){
-                    req.session.admin = 'user';
+                    req.session.admin = user;
                     res.send("logged in");
                 }
             }
