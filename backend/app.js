@@ -54,7 +54,8 @@ app.post("/Home",function(req,res){
   airport : req.body.airport
   });
   newflight.save();
-  res.redirect('/Home');
+  console.log('successful');
+  res.send('successful');
 })
 
 
