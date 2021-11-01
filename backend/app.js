@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const config = require('config');
-const { MongoClient } = require('mongodb');
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json()
 
