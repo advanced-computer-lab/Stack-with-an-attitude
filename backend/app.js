@@ -50,7 +50,7 @@ app.post("/Object", (req, res) => {
     })
 });
 
-//trying to update something
+//trying to update something (does not work)
 app.put("/Object/:updateID", (req, res) => {
     var ID = req.params.updateID
     var object = req.body.object
