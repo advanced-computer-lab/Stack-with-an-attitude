@@ -41,29 +41,19 @@ app.post("/Object", (req, res) => {
         'name': name,
         'age': age
     })
-    newTest.save((error, data)=>{
-        if(error)
-            console.log(error);
-        else{
-            res.status(200).send('data inserted successfully')
-        }
-    })
+
+    newTest.save()
+        .then(res.status(200).send('data inserted successfully'))
+        .catch(err => console.log(err))
+        
 });
 
 //trying to update something (does not work)
 app.put("/Object/:updateID", (req, res) => {
     var ID = req.params.updateID
-    var object = req.body.object
-    object = _.extend(object, req.body)
-    test.findByIdAndUpdate(ID, (err,data)=>{
-        if(err)
-            console.log(err);
-        else{
-            if(data)
-                res.status(200).send(`flight with id ${ID} has been updated`);
-            else{
-                res.status(200).send('flight not found');
-            }
-        }
-    })
+    let name = req.body.name
+    let age = req.body.age
+    test.findByIdAndUpdate(ID, {name, age})
+        .then(objects => res.json(objects))
+        .catch(err => console.log(err))
 });
