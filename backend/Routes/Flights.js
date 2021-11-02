@@ -80,15 +80,7 @@ router.put("/:updateID", (req, res) => {
         airport
     } = req.body
 
-    Flight.findByIdAndUpdate(ID, {flightNumber, departureTime, arrivalTime, date, economySeats, businessSeats, airport})
-        .then( (flights) => {
-            res.status(200)
-        })
-        .catch( (err) => {
-            res.status(404)
-            console.log(err)})
-    
-    Flight.findById(ID)
+    Flight.findByIdAndUpdate(ID, {flightNumber, departureTime, arrivalTime, date, economySeats, businessSeats, airport}, {new: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
