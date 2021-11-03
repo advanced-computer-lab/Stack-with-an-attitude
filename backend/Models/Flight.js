@@ -3,25 +3,39 @@ const Schema = mongoose.Schema
 
 const flightSchema = new Schema ({
     flightNumber: {
-        type: Number
+        type: String,
+        required: true,
+        validate: {
+            message: "Characters and Digits Only",
+            validator: (input) => {
+                pattern = /^[a-z0-9]$/i
+                return pattern.test(input)
+            }
+        }
     },
     departureTime: {
-        type: Number
+        type: Number,
+        //required: true
     },
     arrivalTime: {
-        type: Number
+        type: Number,
+        //required: true
     },
     date: {
-        type: Date
+        type: Date,
+        //required: true,
     },
     economySeats: {
-        type: Number
+        type: Number,
+        //required: true
     },
     businessSeats: {
-        type: Number
+        type: Number,
+        //required: true
     },
     airport: {
-        type: String
+        type: String,
+        //required: true
     }
 }, {timestamps:true})
 
