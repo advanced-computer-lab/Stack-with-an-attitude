@@ -2,21 +2,40 @@ const Flight = require('../Models/Flight');
 
 exports.searchFlight = async function(req,res) {
 
-    const flight = req.body.flight;
-    
-     const flightResults = await Flight.find(
-                {flightNum : flight.flightNum,
-                 depTime : flight.depTime,
-                 arrTime : flight.arrTime,
-                 date : flight.date,
-                 airport : flight.airport}).exec();
+    let flight = {};
 
+    const query = req.query;
+
+    if(query.flightNumber){
+        flight.flightNumber = query.flightNumber; 
+    }
+    if(query.departureTime){
+        flight.departureTime = parseInt(query.departureTime); 
+    }
+    if(query.arrivalTime){
+        flight.arrivalTime = parseInt(query.arrivalTime); 
+    }
+    if(query.airport){
+        flight.airport = query.airport; 
+    }
+    // date condition missing!!!
+
+
+
+    console.log(req.query);
+    console.log(flight);
+    
+    const flightResults = await Flight.find(flight).exec();
+
+    res.status(200).send(flightResults);
     // then send it to FE.
 }
 
 exports.getAllFlights = async function(req,res) {
 
-    const flightResults = await Flight.find({});
+    const flightResults = await Flight.find({}).exec();
+
+    res.status(200).send(flightResults);
 
     // then send it to FE.
 }

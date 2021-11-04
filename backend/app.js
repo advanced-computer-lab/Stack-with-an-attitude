@@ -10,7 +10,6 @@ const Flight = require('./Models/Flight');
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
 
-// THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
 const MongoURI =  config.get('mongoURI');
 
 //App variables
@@ -26,6 +25,8 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 //Routes
 app.get('/searchFlights', adminController.searchFlight);
+
+app.get('/allFlights', adminController.getAllFlights);
 
 
 
