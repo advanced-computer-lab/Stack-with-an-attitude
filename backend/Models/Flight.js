@@ -15,27 +15,31 @@ const flightSchema = new Schema ({
     },
     departureTime: {
         type: Number,
-        //required: true
+        required: true
     },
     arrivalTime: {
         type: Number,
-        //required: true
+        required: true
     },
     date: {
         type: Date,
-        //required: true,
+        required: true,
     },
     economySeats: {
         type: Number,
-        //required: true
+        required: true
     },
     businessSeats: {
         type: Number,
-        //required: true
+        required: true
     },
-    airport: {
+    from: {
         type: String,
-        //required: true
+        required: true
+    },
+    to: {
+        type: String,
+        required: true
     }
 }, {timestamps:true})
 

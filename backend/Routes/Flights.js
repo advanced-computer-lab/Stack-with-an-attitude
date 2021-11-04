@@ -35,25 +35,7 @@ router.get("/:getID", (req, res) => {
 
 // Create
 router.post("/", (req, res) => {
-    let {
-        flightNumber,
-        departureTime,
-        arrivalTime,
-        date,
-        economySeats,
-        businessSeats,
-        airport
-    } = req.body
-
-    let newFlight = new Flight({
-        flightNumber,
-        departureTime,
-        arrivalTime,
-        date,
-        economySeats,
-        businessSeats,
-        airport
-    })
+    let newFlight = new Flight(req.body.flight)
 
     newFlight.save()
         .then( (flight) => {
@@ -80,17 +62,7 @@ router.post("/", (req, res) => {
 router.put("/:updateID", (req, res) => {
     let ID = req.params.updateID
 
-    let {
-        flightNumber,
-        departureTime,
-        arrivalTime,
-        date,
-        economySeats,
-        businessSeats,
-        airport
-    } = req.body
-
-    Flight.findByIdAndUpdate(ID, {flightNumber, departureTime, arrivalTime, date, economySeats, businessSeats, airport}, {new: true})
+    Flight.findByIdAndUpdate(ID, req.body.flight, {new: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
