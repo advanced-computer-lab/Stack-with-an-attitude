@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
 const config = require('config');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
@@ -26,20 +28,13 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Session Initialization
 
-/* need to install these new modules of tho npmi with package.
-  lock will do it  this imports the session and the mongostore to store the session in mongo
-  by default sessions are stored in server but the storage isnt practical
-  for deployment so we store it in db cause its fast */
-
-var session = require('express-session');
-const MongoStore = require('connect-mongo');
-
 // secret is used to validate the session think password store is the place we store the session,
 //in this case as mentioned before its the mongoStore aka in mongo db 
 // you can see that it takes the same mongoUri meaning its currently in the same
 // DB but in a different collection named sessions
 
 app.use(session({
+
   secret: secret,
   resave:false,
   saveUninitialized:true,
@@ -47,6 +42,7 @@ app.use(session({
       maxAge: 1000 * 60 * 60 
   },
   store: MongoStore.create({ mongoUrl:MongoURI })
+
 }));
 
 //Routes
@@ -54,20 +50,21 @@ app.get('/searchFlights', adminController.searchFlight);
 
 app.get('/allFlights', adminController.getAllFlights);
 
-app.get('/getFlight:getID', adminController.getFlightById);
+app.get('/getFlight/:getID', adminController.getFlightById);
 
-app.get('/updateFlight:updateID', adminController.updateFlightById);
+app.get('/updateFlight/:updateID', adminController.updateFlightById);
 
 app.get('/createFlight',adminController.newFlight);
 
-app.get('/deleteFlight:deleteID',adminController.deleteFlightById);
+app.get('/deleteFlight/:deleteID',adminController.deleteFlightById);
 
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
 app.post('/admin/login',(req,res)=>{
-  var user = req.body.username;
-  var pass = req.body.password;
+  const user = req.body.username;
+  const pass = req.body.password;
+
   admin.findOne({username:user},(err,data)=>{
       if(err)
           console.log(err);
