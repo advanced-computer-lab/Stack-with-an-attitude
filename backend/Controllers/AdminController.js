@@ -61,7 +61,7 @@ exports.getFlightById = async function(req,res) {
 
 // router.get("/:getID", (req, res) =>
 
-
+// Create FLight
 exports.newFlight = async function(req,res) {
 
     let newFlight = new Flight(req.body.flight);
@@ -86,10 +86,11 @@ exports.newFlight = async function(req,res) {
             console.log(err.message)})
 }
 
-// Create
+
 // router.post("/", (req, res) => {
 
 
+// Update Flight
 exports.updateFlightById = async function(req,res) {
 
     let ID = req.params.updateID;
@@ -114,9 +115,9 @@ exports.updateFlightById = async function(req,res) {
             console.log(err.message)})
 }
 
-// Update
 // router.put("/:updateID", (req, res) => {
 
+// Delete Flight
 exports.deleteFlightById = async function(req,res) {
 
     let ID = req.params.deleteID;
@@ -131,5 +132,5 @@ exports.deleteFlightById = async function(req,res) {
             console.log(err)})
 }
 
-// Delete
+
 // router.delete("/:deleteID", (req, res) => {
