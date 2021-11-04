@@ -56,10 +56,10 @@ router.post("/", (req, res) => {
     })
 
     newFlight.save()
-        //.then( (flight) => {
-        //    res.status(200)
-        //    res.json(flight)
-        //})
+        .then( (flight) => {
+            res.status(200)
+            res.json(flight)
+        })
         .catch( (err) => {
             if (err.name === "ValidationError") {
                 let errors = {};
@@ -96,8 +96,18 @@ router.put("/:updateID", (req, res) => {
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
-            console.log(err)})
+            if (err.name === "ValidationError") {
+                let errors = {};
+          
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+          
+                return res.status(400).send(errors);
+              }
+
+            res.status(500).send(err.name)
+            console.log(err.message)})
 })
 
 

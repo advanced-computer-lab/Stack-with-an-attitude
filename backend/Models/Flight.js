@@ -8,7 +8,7 @@ const flightSchema = new Schema ({
         validate: {
             message: "Characters and Digits Only",
             validator: (input) => {
-                pattern = /^[a-z0-9]$/i
+                pattern = /^[a-z0-9]*$/i
                 return pattern.test(input)
             }
         }
