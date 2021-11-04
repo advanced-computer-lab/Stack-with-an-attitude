@@ -15,31 +15,69 @@ const flightSchema = new Schema ({
     },
     departureTime: {
         type: Number,
-        required: true
+        required: true,
+        validate: {
+            message: "Out of Range",
+            validator: (input) => {
+                return 0<=input && input<24
+            }
+        }
     },
     arrivalTime: {
         type: Number,
-        required: true
+        required: true,
+        validate: {
+            message: "Out of Range",
+            validator: (input) => {
+                return 0<=input && input<24
+            }
+        }
     },
     date: {
         type: Date,
-        required: true,
+        required: true
     },
     economySeats: {
         type: Number,
-        required: true
+        required: true,
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
     },
     businessSeats: {
         type: Number,
-        required: true
+        required: true,
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
     },
     from: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            message: "Characters Only",
+            validator: (input) => {
+                pattern = /^[a-z]*$/i
+                return pattern.test(input)
+            }
+        }
     },
     to: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            message: "Characters Only",
+            validator: (input) => {
+                pattern = /^[a-z]*$/i
+                return pattern.test(input)
+            }
+        }
     }
 }, {timestamps:true})
 
