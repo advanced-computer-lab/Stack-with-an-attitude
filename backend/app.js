@@ -35,17 +35,8 @@ app.get('/createFlight',adminController.newFlight);
 
 app.get('/deleteFlight:deleteID',adminController.deleteFlightById);
 
-
-// Starting server
-app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  });
-
-// Route Imports
-const Flights = require("./Routes/Flights")
-
-// Use Routes
-app.use("/flights", Flights)
+// // Use Routes
+// app.use("/flights", Flights)
 
 // Database Connection
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true})
