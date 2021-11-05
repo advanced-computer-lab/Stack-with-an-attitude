@@ -58,4 +58,4 @@ console.log(data)
 
 }
 
-export default addflights ;
+export default Addflights ;

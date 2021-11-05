@@ -53,7 +53,7 @@ const componentDidMount = () => {
         })
 }
 
-export default function CustomizedTables() {
+function Schedule() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -83,3 +83,5 @@ export default function CustomizedTables() {
     </TableContainer>
   );
 }
+
+export default Schedule;
