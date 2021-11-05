@@ -4,6 +4,8 @@ const bodyparser = require("body-parser");
 const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cors = require('cors');
+
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
@@ -14,7 +16,7 @@ const app = express();
 const port = process.env.PORT || "8000";
 app.use(bodyparser.urlencoded({extended : true}));
 app.use(express.json());
-
+app.use(cors());
 // configurations
 
 const MongoURI =  config.get('mongoURI');
