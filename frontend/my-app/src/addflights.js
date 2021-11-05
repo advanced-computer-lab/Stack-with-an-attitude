@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import axios from 'axios' ;
 
 class Addflights extends Component{
@@ -27,7 +28,10 @@ console.log(data)
   render(){
       return(
         <div>
-          <h1>blabla</h1>
+
+
+          <Link to='/'><h2>Home</h2></Link>
+          <br/>
         <form onSubmit={this.submit} id="form">
           <label >flight number:</label><br/>
           <input type="text" id="fnum" name="fnum" /><br/>
