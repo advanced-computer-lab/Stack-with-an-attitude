@@ -13,7 +13,7 @@ exports.searchFlight = async function(req,res) {
         flight.departureTime = parseInt(query.departureTime); 
     }
     if(query.arrivalTime){
-        flight.arrivalTime = parseInt(query.arrivalTime); 
+        flight.arrivalTime = parseInt(query.arrivalTime);
     }
     if(query.airport){
         flight.airport = query.airport; 

@@ -51,11 +51,11 @@ app.get('/allFlights', adminController.getAllFlights);
 
 app.get('/getFlight/:getID', adminController.getFlightById);
 
-app.get('/updateFlight/:updateID', adminController.updateFlightById);
+app.put('/updateFlight/:updateID', adminController.updateFlightById);
 
-app.get('/createFlight',adminController.newFlight);
+app.post('/createFlight',adminController.newFlight);
 
-app.get('/deleteFlight/:deleteID',adminController.deleteFlightById);
+app.delete('/deleteFlight/:deleteID',adminController.deleteFlightById);
 
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
