@@ -59,8 +59,8 @@ function Schedule() {
                         setRows(flights);
                         console.log(flights);    
                       }    
-                      ,10000); 
-    return () => clearInterval(interval);
+                      ,10000);
+    return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
   },[]);
       //Link to direct back to home
   return (

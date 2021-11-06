@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import axios from 'axios' ;
+import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+
 
 class Addflights extends Component{
   
@@ -29,32 +33,70 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
       return(
         <div>
 
-
           <Link to='/'><h2>Home</h2></Link>
           <br/>
+        <h1>Create a New Flight</h1>  
         <form onSubmit={this.submit} id="form">
-          <label >flight number:</label><br/>
-          <input type="text" id="fnum" name="fnum" /><br/>
-          <label >departure time:</label><br/>
-          <input type="text" id="deptime" name="deptime"/><br/>
-          <label >arrival time:</label><br/>
-          <input type="text" id="arrtime" name="arrtime"/><br/>
-          <label>date:</label><br/>
-          <input type="text" id="date" name="date"/><br/>
-          <label >number of economy seats:</label><br/>
-          <input type="text" id="ecseats" name="ecseats"/><br/>
-          <label >number of business seats:</label><br/>
-          <input type="text" id="busseats" name="busseats"/><br/>
-          <label >airport:</label><br/>
-          <input type="text" id="airport" name="airport"/><br/>
-          <label >from:</label><br/>
-          <input type="text" id="fromf" name="fromf"/><br/>
-          <label >to:</label><br/>
-          <input type="text" id="to" name="to"/><br/>
-          <input type="submit" value="Submit" />
+          <TextField
+          required
+          id="fnum"
+          label="Flight Number"
+          name="fnum"
+          />
+          <TextField
+          required
+          id="deptime"
+          label="Departure Time"
+          name="deptime"
+          />
+          <TextField
+          required
+          id="arrtime"
+          label="Arrival Time"
+          name="arrtime"
+          />
+          <TextField
+          required
+          id="date"
+          label="Date"
+          name="date"
+          />
+          <TextField
+          required
+          id="ecseats"
+          label="Number of Economy Seats"
+          name="ecseats"
+          />
+          <TextField
+          required
+          id="busseats"
+          label="Number of Business Seats"
+          name="busseats"
+          />
+          <TextField
+          required
+          id="airport"
+          label="Airport"
+          name="airport"
+          />
+          <TextField
+          required
+          id="fromf"
+          label="From Terminal"
+          name="fromf"
+          />
+          <TextField
+          required
+          id="to"
+          label="To Terminal"
+          name="to"
+          />
+          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+              Submit
+          </Button>
         </form>
         </div>
-     
+
       );
     }
   
