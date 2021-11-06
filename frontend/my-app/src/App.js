@@ -8,7 +8,6 @@ import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
 function App() {
   return (
     <Router>
-      <h1> Flight title</h1>
       <Routes>
             <Route path='/' element={<MainPage/>} />
             <Route path='/schedule' element={<Schedule/>} />

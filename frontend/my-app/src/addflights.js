@@ -20,7 +20,7 @@ class Addflights extends Component{
     
 axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data) => {
   console.log("success");
-console.log(data)
+  console.log(data)
 }).catch(err => console.log(err));
 
 
