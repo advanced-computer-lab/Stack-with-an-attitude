@@ -15,11 +15,12 @@ class addflights extends Component{
       "to": e.target.to.value,
     }
      
+    console.log(flight);
     
 axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data) => {
   console.log("success");
-console.log(data)
-}).catch(err => console.log(err));
+  console.log(data)
+}).catch(err => console.log(err.message));
 
 
   }  
