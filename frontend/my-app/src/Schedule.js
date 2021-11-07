@@ -10,6 +10,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios' ;
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,51 +34,56 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// function createData(id,FlightNumber, date, arrivalTime, departureTime, to , from) {
-//   return {id,FlightNumber, date, arrivalTime, departureTime, to , from };
-// }
 
-
-// // const rows = [
-// //   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-// //   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-// //   createData('Eclair', 262, 16.0, 24, 6.0),
-// //   createData('Cupcake', 305, 3.7, 67, 4.3),
-// //   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// // ];
-
-
-// const componentDidMount = () => {
-
-//     axios.get('http://localhost:8000/allFlights').then(data => {
-        
-//     console.log(data);
-//         }).catch(err => {
-//             console.log(err);
-//         })
-// }
 
 function Schedule() {
 
-
-
-
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
+  const [state,setState] = useState([]);
+
+  const getAllFlights =async () => {
+
+        let flights = [];
+        await axios.get('http://localhost:8000/allFlights')                   
+        .then(result => {
+
+          result.data.forEach(flight => {
+
+            flights.push(flight);
+          });
+
+        }).catch(err => {
+                console.log(err);
+                });
+        setRows(flights);
+        console.log(flights);    
+  }    
+  
 
   useEffect(() => {  //use useEffect as a method that runs when the component is created
-  
-  axios.get('http://localhost:8000/allFlights').then(result => {
+     // by default useEffect runs both on creation and update we do change the state when we update row causing an infinite loop 
+     // therefore add this second param [] to useEffect after the method to make it run on creation only
+     // equivelent to componentDidMount and componentDidUpdate
+    
+    const interval = setInterval(() => {getAllFlights()},10000);
+    return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
+    
+  },[]);
 
-    result.data.forEach(flight => {
-      setRows(old => old.concat(flight));
-      console.log(flight)
-    });
-        }).catch(err => {
-            console.log(err);
-        });
-      },[]);  // by default useEffect runs both on creation and update we do change the state when we update row causing an infinite loop 
-      // therefore add this second param [] to useEffect after the method to make it run on creation only
-      // equivelent to componentDidMount and componentDidUpdate
+  useEffect(() => {
+    getAllFlights();
+  },[state]);
+
+  const handleDeleteClick = async (e) => {
+
+    await axios.delete(`http://localhost:8000/deleteFlight/${e.currentTarget.id}`)
+    .then(data => console.log('DELETED!'));
+
+    setState();
+    
+  }
+
+
 
 
       //Link to direct back to home
@@ -87,12 +95,13 @@ function Schedule() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>flight number</StyledTableCell>
-            <StyledTableCell align="right">Date</StyledTableCell>
-            <StyledTableCell align="right">ArrivalTime</StyledTableCell>
-            <StyledTableCell align="right">DepartureTime</StyledTableCell>
-            <StyledTableCell align="right">Destination</StyledTableCell>
-            <StyledTableCell align="right">Departure</StyledTableCell>
+            <StyledTableCell>Flight number</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Date</StyledTableCell>
+            <StyledTableCell>ArrivalTime</StyledTableCell>
+            <StyledTableCell>DepartureTime</StyledTableCell>
+            <StyledTableCell>Departure</StyledTableCell>
+            <StyledTableCell>Destination</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -101,11 +110,21 @@ function Schedule() {
               <StyledTableCell component="th" scope="row">
                 {row.flightNumber}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.date}</StyledTableCell>
-              <StyledTableCell align="right">{row.arrivalTime}</StyledTableCell>
-              <StyledTableCell align="right">{row.departureTime}</StyledTableCell>
-              <StyledTableCell align="right">{row.to}</StyledTableCell>
-              <StyledTableCell align="right">{row.from}</StyledTableCell>
+              <StyledTableCell>
+                <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
+                  <DeleteIcon />
+                </IconButton>
+                <Link to={"/updateflight/" + row._id}>
+                  <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
+              </StyledTableCell>
+              <StyledTableCell>{row.date}</StyledTableCell>
+              <StyledTableCell>{row.arrivalTime}</StyledTableCell>
+              <StyledTableCell>{row.departureTime}</StyledTableCell>
+              <StyledTableCell>{row.from}</StyledTableCell>
+              <StyledTableCell>{row.to}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
