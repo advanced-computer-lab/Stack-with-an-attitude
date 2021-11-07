@@ -7,8 +7,11 @@ import SendIcon from '@mui/icons-material/Send';
 
 
 class Addflights extends Component{
+  state={
+    inserted:false
+  }
   
-  submit(e){
+  submit= (e) => {
     e.preventDefault();
     const flight = {
       "flightNumber": e.target.fnum.value,
@@ -25,6 +28,16 @@ class Addflights extends Component{
 axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data) => {
   console.log("success");
   console.log(data)
+
+  e.target.fnum.value='';
+  e.target.deptime.value='';
+  e.target.arrtime.value='';
+  e.target.date.value='';
+  e.target.ecseats.value='';
+  e.target.busseats.value='';
+  e.target.fromf.value='';
+  e.target.to.value='';
+  this.setState({inserted:true});
 }).catch(err => console.log(err));
 
 
@@ -36,6 +49,7 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
           <Link to='/'><h2>Home</h2></Link>
           <br/>
         <h1>Create a New Flight</h1>  
+       {this.state.inserted && <h2 className="feedback-header"> inserted flight successfully</h2>}
         <form onSubmit={this.submit} id="form">
           <TextField
           required
@@ -72,12 +86,6 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
           id="busseats"
           label="Number of Business Seats"
           name="busseats"
-          />
-          <TextField
-          required
-          id="airport"
-          label="Airport"
-          name="airport"
           />
           <TextField
           required
