@@ -65,7 +65,6 @@ function Schedule() {
      // therefore add this second param [] to useEffect after the method to make it run on creation only
      // equivelent to componentDidMount and componentDidUpdate
     
-
     const interval = setInterval(() => {getAllFlights()},10000);
     return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
     
@@ -115,9 +114,11 @@ function Schedule() {
                 <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                   <DeleteIcon />
                 </IconButton>
-                <IconButton color="primary" aria-label="upload picture" component="span">
-                  <EditIcon />
-                </IconButton>
+                <Link to={"/updateflight/" + row._id}>
+                  <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
               </StyledTableCell>
               <StyledTableCell>{row.date}</StyledTableCell>
               <StyledTableCell>{row.arrivalTime}</StyledTableCell>

@@ -14,7 +14,7 @@ class MainPage extends Component{
         </div>
         <div>
           <br/>
-        <Link to="/Addflight"><h2>add flight</h2></Link>
+        <Link to="/addFlight"><h2>add flight</h2></Link>
         </div>
         </div>
      
