@@ -4,7 +4,7 @@ import Schedule from "./Schedule";
 import MainPage from "./MainPage";
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
-import { PromiseProvider } from 'mongoose';
+
 // import {Switch} from 'react-router';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             <Route path='/' element={<MainPage/>} />
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
-            <Route path='/updateFlight/:updateID' element={<Updateflight updateID={updateID}/>} />
+            <Route path='/updateflight/:id' element={<Updateflight/>}/>
       </Routes>
     </Router>
   );

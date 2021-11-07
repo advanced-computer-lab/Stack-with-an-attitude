@@ -1,111 +1,87 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import {Link,useParams} from 'react-router-dom'
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 
-class Updateflight extends Component{
-  
-  constructor(props) {
-    super(props);
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
 
 
-  async componentDidMount() {
+function Updateflight(){
+  const [updated,setUpdated]=useState(false);
+  const [flight,setFlight] = useState([]);
+  const {id} = useParams();
 
-    const id = this.props.updateID;
 
-    await axios.get('http://localhost:8000/getFlight/'+ id)
-    .then(res => res.json())
-    .then(result => console.log(result));
-  }
-
-  submit(e){
+  const handleSubmit=(e)=>{
     e.preventDefault();
-    const flight = {
-      "flightNumber": e.target.fnum.value,
-      "departureTime": e.target.deptime.value,
-      "arrivalTime": e.target.arrtime.value,
-      "date": e.target.date.value,
-      "economySeats": e.target.ecseats.value,
-      "businessSeats": e.target.busseats.value,
-      "from": e.target.fromf.value,
-      "to": e.target.to.value,
+    const update = {
+      "flightNumber":e.target.flightNumber.value,
+      "departureTime":e.target.departureTime.value,
+      "arrivalTime":e.target.arrivalTime.value,
+      "date":e.target.date.value,
+      "economySeats":e.target.economySeats.value,
+      "businessSeats":e.target.businessSeats.value,
+      "from":e.target.from.value,
+      "to":e.target.to.value
     }
-     
-    
-axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data) => {
-  console.log("success");
-  console.log(data)
-}).catch(err => console.log(err));
+    console.log(update);
+    axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})
+    .then(data=>{
+      console.log(data.data);
+      console.log("updated successfully")
+
+      e.target.flightNumber.value='';
+  e.target.departureTime.value='';
+  e.target.arrivalTime.value='';
+  e.target.date.value='';
+  e.target.economySeats.value='';
+  e.target.businessSeats.value='';
+  e.target.from.value='';
+  e.target.to.value='';
+    setUpdated(true);
+    }).catch(error=>{
+      console.log(error)
+    })
+  }
+
+  useEffect(()=>{
+  },[updated])
+
+  useEffect(()=>{
+    async function fetchData(){
+    let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
+    setFlight(data);
+    console.log(data);
+    }
 
 
-  }  
-  render(){
+    fetchData();
+  },[id])
+  
+  useEffect(()=>{
+  },[flight])
+
       return(
         <div>
 
           <Link to='/'><h2>Home</h2></Link>
           <br/>
-        <h1>Create a New Flight</h1>  
-        <form onSubmit={this.submit} id="form">
+        <h1>update flight with flight number {flight.flightNumber}</h1> 
+        {updated && <h2 className="feedback-header">updated flight successfully </h2>}
+        <form onSubmit={handleSubmit} id="form">
+          {(Object.keys(flight).slice(1,9)).map((f)=>(
           <TextField
           required
-          id="fnum"
-          label="Flight Number"
-          name="fnum"
+          key={f}
+          id={f}
+          label={f}
+          name={f}
+          defaultValue={flight[f]}
           />
-          <TextField
-          required
-          id="deptime"
-          label="Departure Time"
-          name="deptime"
-          />
-          <TextField
-          required
-          id="arrtime"
-          label="Arrival Time"
-          name="arrtime"
-          />
-          <TextField
-          required
-          id="date"
-          label="Date"
-          name="date"
-          />
-          <TextField
-          required
-          id="ecseats"
-          label="Number of Economy Seats"
-          name="ecseats"
-          />
-          <TextField
-          required
-          id="busseats"
-          label="Number of Business Seats"
-          name="busseats"
-          />
-          <TextField
-          required
-          id="airport"
-          label="Airport"
-          name="airport"
-          />
-          <TextField
-          required
-          id="fromf"
-          label="From Terminal"
-          name="fromf"
-          />
-          <TextField
-          required
-          id="to"
-          label="To Terminal"
-          name="to"
-          />
+          ))}
+         
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
@@ -115,8 +91,5 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
       );
     }
   
-
-
-}
 
 export default Updateflight ;
