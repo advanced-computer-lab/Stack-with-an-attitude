@@ -26,7 +26,7 @@ export default function AlertDialog(props) {
     .then(data => console.log('DELETED!'));
 
     handleClose();
-    props.state();
+    props.state([]);
     
   }
 

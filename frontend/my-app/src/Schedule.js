@@ -98,6 +98,7 @@ function Schedule() {
           <TableRow>
             <StyledTableCell>Flight number</StyledTableCell>
             <StyledTableCell></StyledTableCell>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell>Date</StyledTableCell>
             <StyledTableCell>ArrivalTime</StyledTableCell>
             <StyledTableCell>DepartureTime</StyledTableCell>
@@ -112,10 +113,12 @@ function Schedule() {
                 {row.flightNumber}
               </StyledTableCell>
               <StyledTableCell>
+                <AlertDialog id={row._id} state={(d) => setState(d)}/>
+              </StyledTableCell>  
+              <StyledTableCell>
                 {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                   <DeleteIcon />
                 </IconButton> */}
-                <AlertDialog id={row._id} state={setState}/>
                 <Link to={"/updateflight/" + row._id}>
                   <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
                     <EditIcon />
