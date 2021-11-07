@@ -14,7 +14,7 @@ function App() {
             <Route path='/' element={<MainPage/>} />
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
-            <Route path='/updateFlight/:updateID' element={<Updateflight updateID={updateID}/>} />
+            <Route path='/updateFlight/:updateID' element={<Updateflight/>} />
       </Routes>
     </Router>
   );
