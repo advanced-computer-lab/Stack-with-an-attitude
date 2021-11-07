@@ -5,6 +5,7 @@ const flightSchema = new Schema ({
     flightNumber: {
         type: String,
         required: true,
+        unique: true,
         validate: {
             message: "Characters and Digits Only",
             validator: (input) => {

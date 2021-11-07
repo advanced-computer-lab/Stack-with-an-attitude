@@ -52,6 +52,10 @@ router.post("/", (req, res) => {
           
                 return res.status(400).send(errors);
               }
+            
+            if (err.name === "MongoServerError") {
+                return res.status(400).send("duplicate key error");
+            }
 
             res.status(500).send(err.name)
             console.log(err.message)})
@@ -62,7 +66,7 @@ router.post("/", (req, res) => {
 router.put("/:updateID", (req, res) => {
     let ID = req.params.updateID
 
-    Flight.findByIdAndUpdate(ID, req.body.flight, {new: true})
+    Flight.findByIdAndUpdate(ID, req.body.flight, {new: true, runValidators: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
@@ -78,6 +82,10 @@ router.put("/:updateID", (req, res) => {
                 return res.status(400).send(errors);
               }
 
+            if (err.name === "MongoServerError") {
+                return res.status(400).send("duplicate key error");
+            }
+            
             res.status(500).send(err.name)
             console.log(err.message)})
 })
