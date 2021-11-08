@@ -13,7 +13,7 @@ exports.searchFlight = async function(req,res) {
         flight.departureTime = parseInt(query.departureTime); 
     }
     if(query.arrivalTime){
-        flight.arrivalTime = parseInt(query.arrivalTime); 
+        flight.arrivalTime = parseInt(query.arrivalTime);
     }
     if(query.airport){
         flight.airport = query.airport; 
@@ -65,7 +65,6 @@ exports.getFlightById = async function(req,res) {
 exports.newFlight = async function(req,res) {
 
     let newFlight = new Flight(req.body.flight);
-    console.log("e4t8l b2a")
     await newFlight.save()
         .then( (flight) => {
             res.status(200)
