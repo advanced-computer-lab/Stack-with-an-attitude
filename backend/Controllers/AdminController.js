@@ -10,23 +10,26 @@ exports.searchFlight = async function(req,res) {
         flight.flightNumber = query.flightNumber; 
     }
     if(query.departureTime){
-        flight.departureTime = parseInt(query.departureTime); 
+        flight.departureTime = query.departureTime; 
     }
     if(query.arrivalTime){
-        flight.arrivalTime = parseInt(query.arrivalTime);
+        flight.arrivalTime = query.arrivalTime;
     }
-    if(query.airport){
-        flight.airport = query.airport; 
+    if(query.from){
+        flight.from = query.from; 
     }
-    // date condition missing!!!
-    if(query.date){
-        flight.date = query.date;
+    if(query.to){
+        flight.to = query.to;
     }
     
-    const flightResults = await Flight.find(flight).exec();
-
-    res.status(200).send(flightResults);
-    // then send it to FE.
+     await Flight.find(flight)
+            .then( (flights) => {
+                res.status(200)
+                res.json(flights)
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
 }
 
 exports.getAllFlights = async function(req,res) {
@@ -37,7 +40,7 @@ exports.getAllFlights = async function(req,res) {
                 res.json(flights)
             })
             .catch( (err) => {
-                res.send(err.status)
+                res.send({statusCode : err.status, message : err.message})
                 console.log(err.status)})
 
     // then send it to FE.
@@ -53,7 +56,7 @@ exports.getFlightById = async function(req,res) {
         res.json(flights)
     })
     .catch( (err) => {
-        res.send(err.status)
+        res.send({statusCode : err.status, message : err.message})
         console.log(err.status)})
 }
 
@@ -69,21 +72,23 @@ exports.newFlight = async function(req,res) {
             res.json(flight)
         })
         .catch( (err) => {
-            if(err.name === "ValidationError") {
-                let errors = {};
+            // if(err.name === "ValidationError") {
+            //     let errors = {};
           
-                Object.keys(err.errors).forEach((key) => {
-                  errors[key] = err.errors[key].message;
-                });
+            //     Object.keys(err.errors).forEach((key) => {
+            //       errors[key] = err.errors[key].message;
+            //     });
           
-                return res.status(400).send(errors);
-              }
+            //     return res.status(400).send(errors);
+            //   }
             if (err.name === "MongoServerError"){
-                return res.send("duplicate key error")
+                return res.status(400).send({statusCode : 400, message : "duplicate key error"})
             }
 
-            res.send(err.status)
-            console.log(err.status)})
+            res.status(400).send({statusCode : 400, message : err.message})
+            res.status(404).send({statusCode : 404, message : err.message})
+            res.status(500).send({statusCode : 500, message : err.message})
+            console.log(400)})
 }
 
 
@@ -111,10 +116,10 @@ exports.updateFlightById = async function(req,res) {
                 return res.status(400).send(errors);
               }
               if (err.name === "MongoServerError"){
-                return res.send("duplicate key error")
+                return res.send({statusCode : err.status, message : "duplicate key error"})
             }
 
-            res.send(err.status)
+            res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
 }
 
@@ -131,7 +136,7 @@ exports.deleteFlightById = async function(req,res) {
             res.json(flights)
         })
         .catch( (err) => {
-            res.send(err.status)
+            res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
 }
 

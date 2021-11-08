@@ -26,7 +26,6 @@ const flightSchema = new Schema ({
     },
     date: {
         type: Date,
-        required: true
     },
     economySeats: {
         type: Number,
