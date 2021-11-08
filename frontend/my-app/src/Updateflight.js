@@ -21,7 +21,8 @@ function Updateflight(){   //function component declaration
       "flightNumber":e.target.flightNumber.value,
       "departureTime":e.target.departureTime.value,
       "arrivalTime":e.target.arrivalTime.value,
-      // "date":e.target.date.value,
+      "departureDate":e.target.departureDate.value,
+      "arrivalDate":e.target.arrivalDate.value,
       "economySeats":e.target.economySeats.value,
       "businessSeats":e.target.businessSeats.value,
       "from":e.target.from.value,
@@ -38,7 +39,8 @@ function Updateflight(){   //function component declaration
       e.target.flightNumber.value='';
       e.target.departureTime.value='';
       e.target.arrivalTime.value='';
-      // e.target.date.value='';
+      e.target.departureDate.value='';
+      e.target.arrivalDate.value='';
       e.target.economySeats.value='';
       e.target.businessSeats.value='';
       e.target.from.value='';
@@ -88,14 +90,17 @@ function Updateflight(){   //function component declaration
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         <form onSubmit={handleSubmit} id="form">
-          {(Object.keys(flight).slice(1,9)).map((f)=>(//loop over the flight info and map them to fields with their default value
+          {(Object.keys(flight).slice(1,10)).map((f)=>(//loop over the flight info and map them to fields with their default value
           <TextField
           required
           key={f}
+          type={f}
+          helperText={(f.includes('Time') ? 'Please use HH:MM' : (f.includes('Date') ? 'Please use YYYY-MM-DD' : ''))}
           id={f}
           label={f}
           name={f}
           defaultValue={flight[f]}
+          margin='normal'
           />
           ))}
          

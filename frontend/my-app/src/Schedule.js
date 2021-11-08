@@ -99,9 +99,10 @@ function Schedule() {
             <StyledTableCell>Flight number</StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Date</StyledTableCell>
-            <StyledTableCell>ArrivalTime</StyledTableCell>
-            <StyledTableCell>DepartureTime</StyledTableCell>
+            <StyledTableCell>Arrival Date</StyledTableCell>
+            <StyledTableCell>Arrival Time</StyledTableCell>
+            <StyledTableCell>Departure Date</StyledTableCell>
+            <StyledTableCell>Departure Time</StyledTableCell>
             <StyledTableCell>Departure</StyledTableCell>
             <StyledTableCell>Destination</StyledTableCell>
           </TableRow>
@@ -125,8 +126,9 @@ function Schedule() {
                   </IconButton>
                 </Link>
               </StyledTableCell>
-              <StyledTableCell>{row.date}</StyledTableCell>
+              <StyledTableCell>{row.arrivalDate}</StyledTableCell>
               <StyledTableCell>{row.arrivalTime}</StyledTableCell>
+              <StyledTableCell>{row.departureDate}</StyledTableCell>
               <StyledTableCell>{row.departureTime}</StyledTableCell>
               <StyledTableCell>{row.from}</StyledTableCell>
               <StyledTableCell>{row.to}</StyledTableCell>

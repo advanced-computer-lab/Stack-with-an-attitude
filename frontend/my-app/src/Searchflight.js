@@ -50,6 +50,8 @@ class Searchflight extends Component{
       "flightNumber": e.target.fnum.value,
       "departureTime": e.target.deptime.value,
       "arrivalTime": e.target.arrtime.value,
+      "departureDate": e.target.depdate.value,
+      "arrivalDate": e.target.arrdate.value,
       "from": e.target.fromf.value,
       "to": e.target.to.value,
     }
@@ -63,6 +65,8 @@ class Searchflight extends Component{
       e.target.fnum.value='';
       e.target.deptime.value='';
       e.target.arrtime.value='';
+      e.target.depdate.value='';
+      e.target.arrdate.value='';
       e.target.fromf.value='';
       e.target.to.value='';
       
@@ -86,17 +90,28 @@ class Searchflight extends Component{
             name="fnum"
             />
             <TextField
+            id="depdate"
+            label="Departure Date"
+            name="depdate"
+            type="date"
+            />
+            <TextField
             id="deptime"
             label="Departure Time"
             name="deptime"
-            type="datetime-local"
+            type="time"
+            />
+            <TextField
+            id="arrdate"
+            label="Arrival Date"
+            name="arrdate"
+            type="date"
             />
             <TextField
             id="arrtime"
             label="Arrival Time"
             name="arrtime"
-            type="datetime-local"
-      
+            type="time"
             />
             <TextField
             id="fromf"
@@ -119,8 +134,10 @@ class Searchflight extends Component{
                     <StyledTableCell>Flight number</StyledTableCell>
                     <StyledTableCell></StyledTableCell>
                     <StyledTableCell></StyledTableCell>
-                    <StyledTableCell>ArrivalTime</StyledTableCell>
-                    <StyledTableCell>DepartureTime</StyledTableCell>
+                    <StyledTableCell>Arrival Date</StyledTableCell>
+                    <StyledTableCell>Arrival Time</StyledTableCell>
+                    <StyledTableCell>Departure Date</StyledTableCell>
+                    <StyledTableCell>Departure Time</StyledTableCell>
                     <StyledTableCell>Departure</StyledTableCell>
                     <StyledTableCell>Destination</StyledTableCell>
                   </TableRow>
@@ -144,7 +161,9 @@ class Searchflight extends Component{
                           </IconButton>
                         </Link>
                       </StyledTableCell>
+                      <StyledTableCell>{row.arrivalDate}</StyledTableCell>
                       <StyledTableCell>{row.arrivalTime}</StyledTableCell>
+                      <StyledTableCell>{row.departureDate}</StyledTableCell>
                       <StyledTableCell>{row.departureTime}</StyledTableCell>
                       <StyledTableCell>{row.from}</StyledTableCell>
                       <StyledTableCell>{row.to}</StyledTableCell>

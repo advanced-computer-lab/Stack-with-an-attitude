@@ -14,19 +14,22 @@ const flightSchema = new Schema ({
             }
         }
     },
+    departureDate: {
+        type : String, 
+        required: true,
+    },
+    arrivalDate: {
+        type : String,
+        required: true,
+    },
     departureTime: {
-         type : Date, 
-         default: Date.now ,
-        required: true,
-    },
-    arrivalTime: {
-        type : Date, 
-        default: Date.now ,
-        required: true,
-    },
-    date: {
-        type: Date,
-    },
+        type : String, 
+       required: true,
+   },
+   arrivalTime: {
+       type : String,
+       required: true,
+   },
     economySeats: {
         type: Number,
         required: true,
