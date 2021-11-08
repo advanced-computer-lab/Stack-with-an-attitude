@@ -11,11 +11,11 @@ const Flight = require("../Models/Flight")
 router.get("/", (req, res) => {
     Flight.find()
         .then( (flights) => {
-            res.status(200)
+            //res.status(200)
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
+            //res.status(404)
             console.log(err)})
 })
 
@@ -24,11 +24,11 @@ router.get("/:getID", (req, res) => {
 
     Flight.findById(ID)
         .then( (flights) => {
-            res.status(200)
+            //res.status(200)
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
+            //res.status(404)
             console.log(err)})
 })
 
@@ -39,25 +39,28 @@ router.post("/", (req, res) => {
 
     newFlight.save()
         .then( (flight) => {
-            res.status(200)
+            //res.status(200)
             res.json(flight)
         })
         .catch( (err) => {
             if (err.name === "ValidationError") {
-                let errors = {};
+                let errors = {}
           
                 Object.keys(err.errors).forEach((key) => {
-                  errors[key] = err.errors[key].message;
-                });
+                  errors[key] = err.errors[key].message
+                })
           
-                return res.status(400).send(errors);
+                //return res.status(400).send(errors)
+                return res.send(errors)
               }
             
             if (err.name === "MongoServerError") {
-                return res.status(400).send("duplicate key error");
+                //return res.status(400).send("duplicate key error")
+                return res.send("duplicate key error")
             }
 
-            res.status(500).send(err.name)
+            //res.status(500).send(err.name)
+            res.send(err.name)
             console.log(err.message)})
 })
 
@@ -68,25 +71,28 @@ router.put("/:updateID", (req, res) => {
 
     Flight.findByIdAndUpdate(ID, req.body.flight, {new: true, runValidators: true})
         .then( (flights) => {
-            res.status(200)
+            //res.status(200)
             res.json(flights)
         })
         .catch( (err) => {
             if (err.name === "ValidationError") {
-                let errors = {};
+                let errors = {}
           
                 Object.keys(err.errors).forEach((key) => {
-                  errors[key] = err.errors[key].message;
-                });
+                  errors[key] = err.errors[key].message
+                })
           
-                return res.status(400).send(errors);
+                //return res.status(400).send(errors)
+                return res.send(errors)
               }
 
             if (err.name === "MongoServerError") {
-                return res.status(400).send("duplicate key error");
+                //return res.status(400).send("duplicate key error")
+                return res.send("duplicate key error")
             }
             
-            res.status(500).send(err.name)
+            //res.status(500).send(err.name)
+            res.send(err.name)
             console.log(err.message)})
 })
 
@@ -97,11 +103,11 @@ router.delete("/:deleteID", (req, res) => {
 
     Flight.findByIdAndDelete(ID)
         .then( (flights) => {
-            res.status(200)
+            //res.status(200)
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
+            //res.status(404)
             console.log(err)})
 })
 
