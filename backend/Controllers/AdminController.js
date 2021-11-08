@@ -37,8 +37,8 @@ exports.getAllFlights = async function(req,res) {
                 res.json(flights)
             })
             .catch( (err) => {
-                res.status(404)
-                console.log(err)})
+                res.send(err.status)
+                console.log(err.status)})
 
     // then send it to FE.
 }
@@ -53,8 +53,8 @@ exports.getFlightById = async function(req,res) {
         res.json(flights)
     })
     .catch( (err) => {
-        res.status(404)
-        console.log(err)})
+        res.send(err.status)
+        console.log(err.status)})
 }
 
 // router.get("/:getID", (req, res) =>
@@ -78,9 +78,12 @@ exports.newFlight = async function(req,res) {
           
                 return res.status(400).send(errors);
               }
+            if (err.name === "MongoServerError"){
+                return res.send("duplicate key error")
+            }
 
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 
@@ -92,7 +95,7 @@ exports.updateFlightById = async function(req,res) {
 
     let ID = req.params.updateID;
 
-    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true})
+    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true, runValidators: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
@@ -107,9 +110,12 @@ exports.updateFlightById = async function(req,res) {
           
                 return res.status(400).send(errors);
               }
+              if (err.name === "MongoServerError"){
+                return res.send("duplicate key error")
+            }
 
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 // router.put("/:updateID", (req, res) => {
@@ -125,8 +131,8 @@ exports.deleteFlightById = async function(req,res) {
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
-            console.log(err)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 

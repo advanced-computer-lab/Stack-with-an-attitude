@@ -38,7 +38,7 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
   e.target.fromf.value='';
   e.target.to.value='';
   this.setState({inserted:true});
-}).catch(err => console.log(err));
+}).catch(err => console.log(err.message));
 
 
   }  
@@ -62,30 +62,39 @@ axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data)
           id="deptime"
           label="Departure Time"
           name="deptime"
+          type="datetime-local"
+          
           />
           <TextField
           required
           id="arrtime"
           label="Arrival Time"
           name="arrtime"
+          type="datetime-local"
+     
           />
           <TextField
           required
           id="date"
           label="Date"
           name="date"
+          type="date"
           />
           <TextField
           required
           id="ecseats"
           label="Number of Economy Seats"
           name="ecseats"
+          type="number"
+          min="0"
           />
           <TextField
           required
           id="busseats"
           label="Number of Business Seats"
           name="busseats"
+          type="number"
+          min="0"
           />
           <TextField
           required
