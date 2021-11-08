@@ -10,11 +10,15 @@ class MainPage extends Component{
         <div>
           <div>
           <br/>
-        <Link to="/schedule"><h2>schedule</h2></Link>
+        <Link to="/schedule"><h2>View schedule</h2></Link>
         </div>
         <div>
           <br/>
-        <Link to="/addFlight"><h2>add flight</h2></Link>
+        <Link to="/addFlight"><h2>Add a flight</h2></Link>
+        </div>
+        <div>
+          <br/>
+        <Link to="/searchflight"><h2>Search for a flight</h2></Link>
         </div>
         </div>
      

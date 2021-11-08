@@ -4,6 +4,7 @@ import Schedule from "./Schedule";
 import MainPage from "./MainPage";
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
+import Searchflight from './Searchflight';
 
 // import {Switch} from 'react-router';
 
@@ -15,6 +16,7 @@ function App() {
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
+            <Route path='/searchflight' element={<Searchflight/>} />
       </Routes>
     </Router>
   );

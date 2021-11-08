@@ -21,7 +21,7 @@ function Updateflight(){   //function component declaration
       "flightNumber":e.target.flightNumber.value,
       "departureTime":e.target.departureTime.value,
       "arrivalTime":e.target.arrivalTime.value,
-      "date":e.target.date.value,
+      // "date":e.target.date.value,
       "economySeats":e.target.economySeats.value,
       "businessSeats":e.target.businessSeats.value,
       "from":e.target.from.value,
@@ -30,20 +30,22 @@ function Updateflight(){   //function component declaration
     console.log(update);
     axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})  //the update request
     .then(data=>{
-      console.log(data.data);
+      console.log(data);
       console.log("updated successfully")
         //in the then part meaning if the request is successful clear the feilds and set a flag "updated" to true 
         //its part of the state of the component so if you have a listener for it (the useEffect) it will sense that the flag is updated
         //therefore reupdating the component 
       e.target.flightNumber.value='';
-  e.target.departureTime.value='';
-  e.target.arrivalTime.value='';
-  e.target.date.value='';
-  e.target.economySeats.value='';
-  e.target.businessSeats.value='';
-  e.target.from.value='';
-  e.target.to.value='';
-    setUpdated(true);
+      e.target.departureTime.value='';
+      e.target.arrivalTime.value='';
+      // e.target.date.value='';
+      e.target.economySeats.value='';
+      e.target.businessSeats.value='';
+      e.target.from.value='';
+      e.target.to.value='';
+
+      setUpdated(true);
+
     }).catch(error=>{
       console.log(error)
     })
@@ -83,8 +85,8 @@ function Updateflight(){   //function component declaration
 
           <Link to='/'><h2>Home</h2></Link>
           <br/>
-        <h1>update flight with flight number {flight.flightNumber}</h1> 
-        {updated && <h2 className="feedback-header">updated flight successfully </h2>}
+        <h1>Update flight with flight number {flight.flightNumber}</h1> 
+        {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         <form onSubmit={handleSubmit} id="form">
           {(Object.keys(flight).slice(1,9)).map((f)=>(//loop over the flight info and map them to fields with their default value
           <TextField
