@@ -8,14 +8,15 @@ import SendIcon from '@mui/icons-material/Send';
 
 
 
-function Updateflight(){
-  const [updated,setUpdated]=useState(false);
+function Updateflight(){   //function component declaration
+  const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
+  //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
 
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
+  const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
+    e.preventDefault();//prevent refresh
     const update = {
       "flightNumber":e.target.flightNumber.value,
       "departureTime":e.target.departureTime.value,
@@ -27,11 +28,13 @@ function Updateflight(){
       "to":e.target.to.value
     }
     console.log(update);
-    axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})
+    axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})  //the update request
     .then(data=>{
       console.log(data.data);
       console.log("updated successfully")
-
+        //in the then part meaning if the request is successful clear the feilds and set a flag "updated" to true 
+        //its part of the state of the component so if you have a listener for it (the useEffect) it will sense that the flag is updated
+        //therefore reupdating the component 
       e.target.flightNumber.value='';
   e.target.departureTime.value='';
   e.target.arrivalTime.value='';
@@ -45,11 +48,15 @@ function Updateflight(){
       console.log(error)
     })
   }
-
+  //the useEffects aka the listeners who does a update method initially when the component is created
+  // and when the prameter which it is listining to is updated
+  // the list of dependencies(sensed/listened to) variables are passed as a second paramater to the useEffect
+  //in this case its the state variable updated 
+  //the update method itself is  an emtpy method body meaning it just rerenders the component whithout doing any computations or fetchs
   useEffect(()=>{
   },[updated])
-
-  useEffect(()=>{
+  //in this one the update method fetches
+   useEffect(()=>{
     async function fetchData(){
     let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
     setFlight(data);
@@ -58,7 +65,7 @@ function Updateflight(){
 
 
     fetchData();
-  },[id])
+  },[])
   
   useEffect(()=>{
   },[flight])
