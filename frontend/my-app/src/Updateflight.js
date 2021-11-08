@@ -94,8 +94,11 @@ function Updateflight(){   //function component declaration
           <TextField
           required
           key={f}
-          type={f}
-          helperText={(f.includes('Time') ? 'Please use HH:MM' : (f.includes('Date') ? 'Please use YYYY-MM-DD' : ''))}
+          type={(f.includes('Time') ? 'time' : 
+                (f.includes('Date') ? 'date' : 
+                (f.includes('Seats') ? 'number' : 'string')))}
+          helperText={(f.includes('Time') ? 'Please use HH:MM' : 
+                      (f.includes('Date') ? 'Please use YYYY-MM-DD' : ''))}
           id={f}
           label={f}
           name={f}
