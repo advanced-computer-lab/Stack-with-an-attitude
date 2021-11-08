@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://dbUser:dbUser@ourcluster.djjyo.mongodb.net/sample_ProjectDb?retryWrites=true&w=majority",
+    "sessionSecret":"titans are apes"
+}
