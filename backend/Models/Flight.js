@@ -15,24 +15,14 @@ const flightSchema = new Schema ({
         }
     },
     departureTime: {
-        type: Number,
+         type : Date, 
+         default: Date.now ,
         required: true,
-        validate: {
-            message: "Out of Range",
-            validator: (input) => {
-                return 0<=input && input<24
-            }
-        }
     },
     arrivalTime: {
-        type: Number,
+        type : Date, 
+        default: Date.now ,
         required: true,
-        validate: {
-            message: "Out of Range",
-            validator: (input) => {
-                return 0<=input && input<24
-            }
-        }
     },
     date: {
         type: Date,

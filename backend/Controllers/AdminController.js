@@ -80,6 +80,9 @@ exports.newFlight = async function(req,res) {
           
                 return res.status(400).send(errors);
               }
+            if (err.name === "MongoServerError"){
+                return res.send("duplicate key error")
+            }
 
             res.send(err.status)
             console.log(err.status)})
@@ -94,7 +97,7 @@ exports.updateFlightById = async function(req,res) {
 
     let ID = req.params.updateID;
 
-    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true})
+    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true, runValidators: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
@@ -109,6 +112,9 @@ exports.updateFlightById = async function(req,res) {
           
                 return res.status(400).send(errors);
               }
+              if (err.name === "MongoServerError"){
+                return res.send("duplicate key error")
+            }
 
             res.send(err.status)
             console.log(err.status)})
