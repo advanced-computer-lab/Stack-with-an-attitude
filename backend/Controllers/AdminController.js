@@ -39,8 +39,8 @@ exports.getAllFlights = async function(req,res) {
                 res.json(flights)
             })
             .catch( (err) => {
-                res.status(404)
-                console.log(err)})
+                res.send(err.status)
+                console.log(err.status)})
 
     // then send it to FE.
 }
@@ -55,8 +55,8 @@ exports.getFlightById = async function(req,res) {
         res.json(flights)
     })
     .catch( (err) => {
-        res.status(404)
-        console.log(err)})
+        res.send(err.status)
+        console.log(err.status)})
 }
 
 // router.get("/:getID", (req, res) =>
@@ -82,8 +82,8 @@ exports.newFlight = async function(req,res) {
                 return res.status(400).send(errors);
               }
 
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 
@@ -111,8 +111,8 @@ exports.updateFlightById = async function(req,res) {
                 return res.status(400).send(errors);
               }
 
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 // router.put("/:updateID", (req, res) => {
@@ -128,8 +128,8 @@ exports.deleteFlightById = async function(req,res) {
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
-            console.log(err)})
+            res.send(err.status)
+            console.log(err.status)})
 }
 
 
