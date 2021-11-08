@@ -47,7 +47,7 @@ app.use(session({
 }));
 
 //Routes
-app.get('/searchFlights', adminController.searchFlight);
+app.post('/searchFlights', adminController.searchFlight);
 
 app.get('/allFlights', adminController.getAllFlights);
 

@@ -72,7 +72,7 @@ function Updateflight(){   //function component declaration
 
 
     fetchData();
-  },[]) //<==== empty dependency list meaning it only runs (initially) on creation of the component only 
+  },[id]) //<==== empty dependency list meaning it only runs (initially) on creation of the component only 
   
 
   //when the flight data arrives or when the flight variable is updated just rerender the component and populate the fields

@@ -4,16 +4,18 @@ exports.searchFlight = async function(req,res) {
 
     let flight = {};
 
-    const query = req.query;
+    let query = req.body;
+
+    console.log(req.body.departureTime);
 
     if(query.flightNumber){
         flight.flightNumber = query.flightNumber; 
     }
     if(query.departureTime){
-        flight.departureTime = query.departureTime; 
+        flight.departureTime = query.departureTime + ':00.000Z'; 
     }
     if(query.arrivalTime){
-        flight.arrivalTime = query.arrivalTime;
+        flight.arrivalTime = query.arrivalTime + ':00.000Z';
     }
     if(query.from){
         flight.from = query.from; 

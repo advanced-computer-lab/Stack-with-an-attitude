@@ -45,15 +45,25 @@ form {
 
 form div  {
   margin : 10px;
-  width: 50%;
+  width: 100%;
 }
 
 form button {
   margin : 10px 1rem;
-  width: 20%;
 }
 .feedback-header{
 
   color: green;
   margin-left: 30px;
+}
+
+.containerS{
+  display: flex;
+  flex-direction: row;
+}
+.form{
+  width: 20%;
+}
+.shed{
+  width: 100%;
 }
