@@ -19,11 +19,9 @@ exports.searchFlight = async function(req,res) {
         flight.airport = query.airport; 
     }
     // date condition missing!!!
-
-
-
-    console.log(req.query);
-    console.log(flight);
+    if(query.date){
+        flight.date = query.date;
+    }
     
     const flightResults = await Flight.find(flight).exec();
 
