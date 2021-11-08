@@ -53,14 +53,11 @@ class Searchflight extends Component{
       "from": e.target.fromf.value,
       "to": e.target.to.value,
     }
-     
-    console.log(flight.departureTime);
 
     await axios.post('http://localhost:8000/searchFlights', flight).then((data) => {
       console.log("search successful!");
 
-      console.log(data.data[0].departureTime);
-      
+      console.log(data.data);
       this.setState({rows:data.data , state : []});
 
       e.target.fnum.value='';
@@ -93,7 +90,6 @@ class Searchflight extends Component{
             label="Departure Time"
             name="deptime"
             type="datetime-local"
-            
             />
             <TextField
             id="arrtime"

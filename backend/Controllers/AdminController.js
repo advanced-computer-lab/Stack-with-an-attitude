@@ -6,22 +6,23 @@ exports.searchFlight = async function(req,res) {
 
     let query = req.body;
 
-    console.log(req.body.departureTime);
-
     if(query.flightNumber){
         flight.flightNumber = query.flightNumber; 
     }
     if(query.departureTime){
-        flight.departureTime = query.departureTime + ':00.000Z'; 
+        flight.departureTime = query.departureTime + ':00.000Z';
+        // flight.departureTime = new RegExp('/11-08/|/19:01/');
+
     }
     if(query.arrivalTime){
         flight.arrivalTime = query.arrivalTime + ':00.000Z';
     }
     if(query.from){
-        flight.from = query.from; 
+        flight.from = new RegExp(query.from , 'i') ;
+
     }
     if(query.to){
-        flight.to = query.to;
+        flight.to = new RegExp(query.to , 'i') ;
     }
     
      await Flight.find(flight)
