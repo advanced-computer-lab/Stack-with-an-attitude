@@ -18,6 +18,7 @@ function ViewFlight(){   //function component declaration
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
 
+
   //the useEffects aka the listeners who does a update method initially when the component is created
   // and when the prameter which it is listining to is updated
   // the list of dependencies(sensed/listened to) variables are passed as a second paramater to the useEffect
@@ -48,16 +49,19 @@ function ViewFlight(){   //function component declaration
   useEffect(()=>{
   },[flight])
 
-var dephour = flight["departureTime"][0]+""+flight["departureTime"][1];
-var arrhour = flight["arrivalTime"][0]+""+flight["arrivalTime"][1];
-var depsec = flight["departureTime"][3]+""+flight["departureTime"][4];
-var arrsec = flight["arrivalTime"][3]+""+flight["arrivalTime"][4];
- var dep = new Date(flight["departureDate"]);
- var arr = new Date(flight["arrivalDate"]);
- dep.setHours(dephour);
- arr.setHours(arrhour);
- dep.setMinutes(depsec);
- arr.setMinutes(arrsec);
+  let depstr = flight["departureTime"]+"";
+let dephour = depstr[0]+""+depstr[1];
+let depsec = depstr[3]+""+depstr[4];
+  let arrstr = flight["arrivalTime"]+"";
+  let arrhour = arrstr[0]+""+arrstr[1];
+  let arrsec = arrstr[3]+""+arrstr[4];
+   let dep = new Date(flight["departureDate"]);
+   let arr = new Date(flight["arrivalDate"]);
+   dep.setHours(dephour);
+   arr.setHours(arrhour);
+   dep.setMinutes(depsec);
+   arr.setMinutes(arrsec);
+
       return(
         <div>
 <Link to='/user'><h2>Home</h2></Link>
@@ -85,7 +89,7 @@ var arrsec = flight["arrivalTime"][3]+""+flight["arrivalTime"][4];
         arrival time : {flight["arrivalTime"]}
         </Typography>
         <Typography variant="body2">
-        trip duration : { (arr - dep)/3600000} hours
+        trip duration: {(arr-dep)/3600000} hours
         </Typography>
         <Typography variant="body2">
         baggage allowance : 2
