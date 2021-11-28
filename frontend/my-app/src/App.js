@@ -1,6 +1,7 @@
 import './App.css';
 import Addflights from "./Addflight" ;
 import Schedule from "./Schedule";
+import AdminPage from "./AdminPage";
 import MainPage from "./MainPage";
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
@@ -12,6 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
+            <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
