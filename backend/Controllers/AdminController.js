@@ -96,12 +96,11 @@ exports.newFlight = async function(req,res) {
             //   }
             if (err.name === "MongoServerError"){
                 return res.status(400).send({statusCode : 400, message : "duplicate key error"})
-            }
-
+            }else{
             res.status(400).send({statusCode : 400, message : err.message})
-            res.status(404).send({statusCode : 404, message : err.message})
-            res.status(500).send({statusCode : 500, message : err.message})
-            console.log(400)})
+            console.log(400)
+            }
+        })
 }
 
 

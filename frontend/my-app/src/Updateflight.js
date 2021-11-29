@@ -90,7 +90,7 @@ function Updateflight(){   //function component declaration
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         <form onSubmit={handleSubmit} id="form">
-          {(Object.keys(flight).slice(1,10)).map((f)=>(//loop over the flight info and map them to fields with their default value
+          {(Object.keys(flight).slice(2,11)).map((f)=>(//loop over the flight info and map them to fields with their default value
           <TextField
           required
           key={f}
