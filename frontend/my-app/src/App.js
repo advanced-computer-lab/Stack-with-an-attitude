@@ -3,7 +3,6 @@ import Addflights from "./Addflight" ;
 import Schedule from "./Schedule";
 import AdminPage from "./AdminPage";
 import MainPage from "./MainPage";
-import Searchflight from './searchFlight';
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
 import Searchflight from './Searchflight';
