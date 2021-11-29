@@ -14,19 +14,22 @@ const flightSchema = new Schema ({
             }
         }
     },
+    departureDate: {
+        type : String, 
+        required: true,
+    },
+    arrivalDate: {
+        type : String,
+        required: true,
+    },
     departureTime: {
-         type : Date, 
-         default: Date.now ,
-        required: true,
-    },
-    arrivalTime: {
-        type : Date, 
-        default: Date.now ,
-        required: true,
-    },
-    date: {
-        type: Date,
-    },
+        type : String, 
+       required: true,
+   },
+   arrivalTime: {
+       type : String,
+       required: true,
+   },
     economySeats: {
         type: Number,
         required: true,
@@ -40,6 +43,17 @@ const flightSchema = new Schema ({
     businessSeats: {
         type: Number,
         required: true,
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
+    },
+    totalSeats: {
+        type: Number,
+        required: true,
+        default: ()=> {economySeats + businessSeats},
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
@@ -68,7 +82,32 @@ const flightSchema = new Schema ({
                 return pattern.test(input)
             }
         }
-    }
+    },
+    returnDate: {
+        type : String, 
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
+    },
+    baggageAllowance: {
+        type: Number,
+        required: true,
+        default: 2,
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
+    },
 }, {timestamps:true})
 
 const Flight = mongoose.model('Flight',flightSchema);

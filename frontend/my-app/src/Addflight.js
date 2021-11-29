@@ -17,7 +17,8 @@ class Addflights extends Component{
       "flightNumber": e.target.fnum.value,
       "departureTime": e.target.deptime.value,
       "arrivalTime": e.target.arrtime.value,
-      // "date": e.target.date.value,
+      "departureDate": e.target.depdate.value,
+      "arrivalDate": e.target.arrdate.value,
       "economySeats": e.target.ecseats.value,
       "businessSeats": e.target.busseats.value,
       "from": e.target.fromf.value,
@@ -32,7 +33,8 @@ class Addflights extends Component{
       e.target.fnum.value='';
       e.target.deptime.value='';
       e.target.arrtime.value='';
-      // e.target.date.value='';
+      e.target.depdate.value='';
+      e.target.arrdate.value='';
       e.target.ecseats.value='';
       e.target.busseats.value='';
       e.target.fromf.value='';
@@ -64,22 +66,27 @@ class Addflights extends Component{
           id="deptime"
           label="Departure Time"
           name="deptime"
-          type="datetime-local"
+          type="time"
           />
           <TextField
           required
           id="arrtime"
           label="Arrival Time"
           name="arrtime"
-          type="datetime-local"
+          type="time"
           />
-          {/* <TextField
-          required
-          id="date"
-          label="Date"
-          name="date"
+          <TextField
+          id="depdate"
+          label="Departure Date"
+          name="depdate"
           type="date"
-          /> */}
+          />
+          <TextField
+          id="arrdate"
+          label="Arrival Date"
+          name="arrdate"
+          type="date"
+          />
           <TextField
           required
           id="ecseats"

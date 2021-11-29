@@ -4,23 +4,36 @@ exports.searchFlight = async function(req,res) {
 
     let flight = {};
 
-    const query = req.query;
+    let query = req.body;
+
+    console.log(query);
 
     if(query.flightNumber){
         flight.flightNumber = query.flightNumber; 
     }
     if(query.departureTime){
-        flight.departureTime = query.departureTime; 
+        flight.departureTime = query.departureTime;
     }
     if(query.arrivalTime){
-        flight.arrivalTime = query.arrivalTime;
+        flight.arrivalTime = query.arrivalTime ;
+
+        console.log(query.arrivalTime);
     }
+    if(query.departureDate){
+        flight.departureDate = query.departureDate ;
+    }
+    if(query.arrivalDate){
+        flight.arrivalDate = query.arrivalDate ;
+    }
+    
     if(query.from){
-        flight.from = query.from; 
+        flight.from = new RegExp(query.from , 'i') ;
+
     }
     if(query.to){
-        flight.to = query.to;
+        flight.to = new RegExp(query.to , 'i') ;
     }
+
     
      await Flight.find(flight)
             .then( (flights) => {
