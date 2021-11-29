@@ -5,6 +5,7 @@ const flightSchema = new Schema ({
     flightNumber: {
         type: String,
         required: true,
+        unique: true,
         validate: {
             message: "Characters and Digits Only",
             validator: (input) => {
@@ -14,28 +15,17 @@ const flightSchema = new Schema ({
         }
     },
     departureTime: {
-        type: Number,
+         type : Date, 
+         default: Date.now ,
         required: true,
-        validate: {
-            message: "Out of Range",
-            validator: (input) => {
-                return 0<=input && input<24
-            }
-        }
     },
     arrivalTime: {
-        type: Number,
+        type : Date, 
+        default: Date.now ,
         required: true,
-        validate: {
-            message: "Out of Range",
-            validator: (input) => {
-                return 0<=input && input<24
-            }
-        }
     },
     date: {
         type: Date,
-        required: true
     },
     economySeats: {
         type: Number,
