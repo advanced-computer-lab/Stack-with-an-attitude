@@ -2,6 +2,7 @@ import './App.css';
 import Addflights from "./Addflight" ;
 import Schedule from "./Schedule";
 import MainPage from "./MainPage";
+import Searchflight from './searchFlight';
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ function App() {
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
+            <Route path='/searchflight' element={<Searchflight/>} />
       </Routes>
     </Router>
   );
