@@ -1,6 +1,9 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
-import axios from 'axios' ;
+import React, { useEffect, useState } from 'react'
+import {Link,useParams} from 'react-router-dom'
+import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 
 
@@ -73,31 +76,14 @@ function Updateflight(){   //function component declaration
     fetchData();
   },[id]) //<==== empty dependency list meaning it only runs (initially) on creation of the component only 
   
-  submit(e){
-    e.preventDefault();
-    const flight = {
-      "flightNumber": e.target.fnum.value,
-      "departureTime": e.target.deptime.value,
-      "arrivalTime": e.target.arrtime.value,
-      "date": e.target.date.value,
-      "economySeats": e.target.ecseats.value,
-      "businessSeats": e.target.busseats.value,
-      "from": e.target.fromf.value,
-      "to": e.target.to.value,
-    }
-     
-    
-axios.post('http://localhost:8000/createFlight',{"flight" : flight}).then((data) => {
-  console.log("success");
-console.log(data)
-}).catch(err => console.log(err));
 
+  //when the flight data arrives or when the flight variable is updated just rerender the component and populate the fields
+  //with the flight data captured from the request
+  useEffect(()=>{
+  },[flight])
 
-  }  
-  render(){
       return(
         <div>
-
 
           <Link to='/'><h2>Home</h2></Link>
           <br/>
@@ -126,12 +112,9 @@ console.log(data)
           </Button>
         </form>
         </div>
-     
+
       );
     }
   
 
-
-}
-
-export default Addflights ;
+export default Updateflight ;
