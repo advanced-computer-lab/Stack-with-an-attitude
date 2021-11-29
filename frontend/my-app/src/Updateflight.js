@@ -27,7 +27,8 @@ function Updateflight(){   //function component declaration
       "businessSeats":e.target.businessSeats.value,
       "totalSeats": parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
       "from":e.target.from.value,
-      "to":e.target.to.value
+      "to":e.target.to.value,
+      "returnDate":e.target.returnDate.value
     }
     console.log(update);
     axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})  //the update request
@@ -91,8 +92,8 @@ function Updateflight(){   //function component declaration
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         <form onSubmit={handleSubmit} id="form">
-          {(Object.keys(flight).slice(2,11)).map((f)=>(//loop over the flight info and map them to fields with their default value
-          <TextField
+          {(Object.keys(flight).slice(2,12)).map((f)=>(//loop over the flight info and map them to fields with their default value
+          (f!='totalSeats')&&(<TextField
           required
           key={f}
           type={(f.includes('Time') ? 'time' : 
@@ -105,7 +106,7 @@ function Updateflight(){   //function component declaration
           name={f}
           defaultValue={flight[f]}
           margin='normal'
-          />
+          />)
           ))}
          
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
