@@ -13,7 +13,7 @@ class MainPage extends Component{
   render(){
       return(
         <div>
-            <Header color='info' brand='Airport' transparent rightLinks={<HeaderLinks/>} />
+            <Header color='info' brand='Airport' transparent rightLinks={<HeaderLinks/>} fixed/>
             <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} />
             <Card style={{margin: 'auto', maxWidth: 750}}><CardBody>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ante dui, ornare vel porttitor pulvinar, egestas vitae neque. Nam luctus vehicula mauris vel consequat. Quisque congue dictum augue, quis maximus tortor commodo eu. Phasellus placerat neque sem, vel tristique massa dictum vel. Aliquam mattis ante nec sapien porttitor, lacinia sodales diam ultricies. Mauris auctor aliquet enim, eget sollicitudin leo rutrum eu. Etiam id dapibus ligula. Aenean rhoncus eros quis tincidunt convallis. Praesent ultricies nibh non volutpat bibendum. Sed blandit faucibus dolor, ac euismod dolor tincidunt eget. Etiam sed porta libero. Ut elementum ornare tellus a suscipit.
 
