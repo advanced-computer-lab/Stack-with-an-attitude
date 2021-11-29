@@ -98,7 +98,7 @@ exports.newFlight = async function(req,res) {
                 return res.status(400).send({statusCode : 400, message : "duplicate key error"})
             }else{
             res.status(400).send({statusCode : 400, message : err.message})
-            console.log(400)
+            console.log(err.message)
             }
         })
 }

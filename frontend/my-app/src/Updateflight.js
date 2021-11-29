@@ -25,6 +25,7 @@ function Updateflight(){   //function component declaration
       "arrivalDate":e.target.arrivalDate.value,
       "economySeats":e.target.economySeats.value,
       "businessSeats":e.target.businessSeats.value,
+      "totalSeats": parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
       "from":e.target.from.value,
       "to":e.target.to.value
     }
