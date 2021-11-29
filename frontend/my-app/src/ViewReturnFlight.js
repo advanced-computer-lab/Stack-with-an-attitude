@@ -14,7 +14,7 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 
 
-function ViewFlight(){   //function component declaration
+function ViewReturnFlight(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
@@ -94,7 +94,7 @@ let depsec = depstr[3]+""+depstr[4];
         trip duration: {(arr-dep)/3600000} hours
         </Typography>
         <Typography variant="body2">
-        baggage allowance : 2
+        baggage allowance : {flight["baggageAllowance"]}
         </Typography>
       </CardContent>
       <CardActions>
@@ -102,18 +102,10 @@ let depsec = depstr[3]+""+depstr[4];
               reserve seats
           </Button>
       </CardActions>
-      <CardActions>
-      <Link to={"/SearchReturnFlight/" + flight["to"] +"/"+ flight["from"]}>
-        <Button value="Submit" variant="contained">
-              view return flights
-          </Button>
-      </Link>
-      </CardActions>
-
     </Card>
     </div>
       );
     
     }
 
-export default ViewFlight ;
+export default ViewReturnFlight ;
