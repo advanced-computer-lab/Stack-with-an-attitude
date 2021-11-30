@@ -24,7 +24,7 @@ import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks(props) {
+export default function HeaderLinksLoggedIn(props) {
   const classes = useStyles();
 
   return (
@@ -59,8 +59,8 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-          <Link style={{padding:0}} to="/user" className={classes.dropdownLink}>
-              Login
+          <Link style={{padding:0}} to="/user/profile" className={classes.dropdownLink}>
+              <AccountCircleIcon/>
           </Link>
         </Button>
       </ListItem>

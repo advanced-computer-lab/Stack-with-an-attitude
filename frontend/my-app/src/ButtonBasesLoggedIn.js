@@ -9,8 +9,14 @@ const images = [
   {
     url: '/static/images/buttons/breakfast.jpg',
     title: 'Search for available flights',
-    width: '100%',
+    width: '60%',
     link: '/searchflightuser'
+  },
+  {
+    url: '/static/images/buttons/burgers.jpg',
+    title: 'Cancel a Reservation',
+    width: '40%',
+    link: ''
   },
 ];
 
