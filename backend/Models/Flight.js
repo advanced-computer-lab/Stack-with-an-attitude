@@ -104,12 +104,22 @@ const flightSchema = new Schema ({
             }
         }
     },
-    seats: {
+    reservedBusinessSeats: {
         type: Array,
         required: true,
         default: ()=> {
                         let seatsArray = [];
-                        for (let i = 0; i < totalSeats; i++) {
+                        for (let i = 0; i < businessSeats; i++) {
+                            seatsArray[i] = false; 
+                        }
+                        },
+    },
+    reservedEconomySeats: {
+        type: Array,
+        required: true,
+        default: ()=> {
+                        let seatsArray = [];
+                        for (let i = 0; i < economySeats; i++) {
                             seatsArray[i] = false; 
                         }
                         },
