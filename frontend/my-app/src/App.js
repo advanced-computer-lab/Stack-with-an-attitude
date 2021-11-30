@@ -9,6 +9,7 @@ import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
 import Searchflight from './Searchflight';
 import SearchflightUser from './SearchflightUser';
 import ViewFlight from './ViewFlight';
+import PlaneView from './PlaneView';
 
 // import {Switch} from 'react-router';
 
@@ -25,6 +26,7 @@ function App() {
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
             <Route path='/viewflight/:id' element={<ViewFlight/>} />
+            <Route path='/PlaneView/:id' element={<PlaneView/>} />
       </Routes>
     </Router>
   );
