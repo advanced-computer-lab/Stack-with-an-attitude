@@ -4,7 +4,7 @@ const Flight = require('../Models/Flight');
 
 exports.reserveSelectedSeats = async function(req,res) {
 
-    let ID = req.params.updateID;
+    let ID = req.params.id;
 
     let reservedSeats = req.body;
 
@@ -30,4 +30,32 @@ exports.reserveSelectedSeats = async function(req,res) {
             res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
 
+}
+
+exports.getUserById = async function(req,res) {
+
+  let ID = req.params.id;
+
+  await User.findById(ID)
+  .then( (user) => {
+      res.status(200)
+      res.json(user)
+  })
+  .catch( (err) => {
+      res.send({statusCode : err.status, message : err.message})
+      console.log(err.status)})
+}
+
+exports.updateUserById = async function(req,res) {
+
+  let ID = req.params.id;
+
+  await User.findByIdAndUpdate(ID, req.body.user, {new: true, runValidators: true})
+      .then( (user) => {
+          res.status(200)
+          res.json(user)
+      })
+      .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
 }

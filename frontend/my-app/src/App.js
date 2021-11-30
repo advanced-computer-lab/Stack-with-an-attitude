@@ -3,12 +3,13 @@ import Addflights from "./Addflight" ;
 import Schedule from "./Schedule";
 import AdminPage from "./AdminPage";
 import MainPage from "./MainPage";
-import MainPageUser from "./MainPageUser";
+import MainPageLoggedIn from "./MainPageLoggedIn";
 import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
 import Searchflight from './Searchflight';
 import SearchflightUser from './SearchflightUser';
 import ViewFlight from './ViewFlight';
+import ViewProfile from './ViewProfile';
 
 // import {Switch} from 'react-router';
 
@@ -18,7 +19,8 @@ function App() {
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
-            <Route path='/user' element={<MainPageUser/>} />
+            <Route path='/user' element={<MainPageLoggedIn/>} />
+            <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
