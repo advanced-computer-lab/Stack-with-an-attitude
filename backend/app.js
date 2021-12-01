@@ -62,10 +62,28 @@ app.put('/updateFlight/:updateID', adminController.updateFlightById);
 app.post('/createFlight',adminController.newFlight);
 
 app.delete('/deleteFlight/:deleteID',adminController.deleteFlightById);
+
+app.get('/allreservedflights', adminController.getAllreservedFlights);
+
+app.delete('/deletereservedFlight/:deleteID',adminController.deletereservedflight);
 //-------------
 
 //------------User
-app.put('/reserveSeats',userController.reserveSelectedSeats);
+app.put('/user/reserveSeats/:id',userController.reserveSelectedSeats);
+
+app.put('/user/update/:id', userController.updateUserById);
+
+app.get('/user/getInfo/:id', userController.getUserById);
+
+app.get('/user/reservedSeats', userController.getAllReservedSeats);
+
+app.get('/user/reservedFlight/:id', userController.getReservedFlightById);
+
+app.post('/user/createReservedFlight', userController.createReservedFlight);
+
+app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
+
+app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!

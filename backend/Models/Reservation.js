@@ -33,8 +33,8 @@ const reservationSchema = new Schema ({
         }
     },
     assignedSeats: {
-        type:  Array,
-        required: true,
+        type: Array,
+        required: true
     },
     price: {
         type : Number, 
