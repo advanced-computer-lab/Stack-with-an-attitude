@@ -14,11 +14,51 @@ import ViewProfile from './ViewProfile';
 import ViewFlightHandler from './viewFlightHandler';
 import ViewReturnFlight from './ViewReturnFlight';
 import SearchReturnFlight from './SearchReturnFlight';
+import Cancelflight from './Cancelflight';
+import Cancres from './Cancres';
 
-
-// import {Switch} from 'react-router';
 
 function App() {
+
+
+
+  const reserveddflights= [
+
+
+    {   
+      "username": 'ahmed1',
+      "password":'abc',
+      "email":'hossamnew16@gmail.com',
+      "flightnumber":1,
+      "isreserved":true,
+      "price":500
+  },
+  
+  
+  
+  {   
+      "username": 'ahmed2',
+      "password":'abc',
+      "email":'hossamnew16@gmail.com',
+      "flightnumber":1,
+      "isreserved":true,
+      "price":700
+  },
+  
+  
+  
+  {   
+      "username": 'ahmed3',
+      "password":'abc',
+      "email":'hossamnew16@gmail.com',
+      "flightnumber":1,
+      "isreserved":false,
+      "price":900
+  }
+
+  ]
+
+
   return (
     <Router>
       <Routes>
@@ -37,6 +77,8 @@ function App() {
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
             <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} />
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
+            <Route path='/cancelflight' element={<Cancelflight/>} />
+            <Route path='/Cancres' element={<Cancres/>} />
       </Routes>
     </Router>
   );

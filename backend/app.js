@@ -72,6 +72,16 @@ app.put('/user/update/:id', userController.updateUserById);
 app.get('/user/getInfo/:id', userController.getUserById);
 //--------------
 
+
+
+
+app.get('/allreservedflights', adminController.getAllreservedFlights);
+
+app.delete('/deletereservedFlight/:deleteID',adminController.deletereservedflight);
+
+
+
+
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
 app.post('/admin/login',(req,res)=>{
