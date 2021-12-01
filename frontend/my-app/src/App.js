@@ -24,7 +24,7 @@ function App() {
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
-            <Route path='/viewflight/:id' element={<ViewFlight/>} />
+            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
       </Routes>
     </Router>
   );

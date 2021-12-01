@@ -51,6 +51,8 @@ app.use(session({
 //------------Admin
 app.post('/searchFlights', adminController.searchFlight);
 
+app.post('/searchFlightsuser', adminController.searchFlightuser);
+
 app.get('/allFlights', adminController.getAllFlights);
 
 app.get('/getFlight/:getID', adminController.getFlightById);

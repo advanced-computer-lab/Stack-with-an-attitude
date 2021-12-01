@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
+import HomeIcon from '@mui/icons-material/Home';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -79,7 +80,11 @@ class Searchflight extends Component{
     return(
       <div>
 
-          <Link to='/'><h2>Home</h2></Link>
+<Link to="/admin">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link>
           <br/>
         <h1>Search for a Flight</h1>  
         <div className='containerS'>

@@ -9,6 +9,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import HomeIcon from '@mui/icons-material/Home';
+
   
 
 
@@ -16,7 +18,7 @@ function ViewFlight(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id} = useParams();
+  const {id,cabinclass,numofresseats} = useParams();
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -61,10 +63,15 @@ let depsec = depstr[3]+""+depstr[4];
    arr.setHours(arrhour);
    dep.setMinutes(depsec);
    arr.setMinutes(arrsec);
+   console.log(numofresseats);
 
       return(
         <div>
-<Link to='/user'><h2>Home</h2></Link>
+ <Link to="/user">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link>
 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
       <CardContent>
         <Typography variant="body2">
@@ -92,7 +99,13 @@ let depsec = depstr[3]+""+depstr[4];
         trip duration: {(arr-dep)/3600000} hours
         </Typography>
         <Typography variant="body2">
-        baggage allowance : 2
+        baggage allowance : {flight["baggageAllowance"]}
+        </Typography>
+        <Typography variant="body2">
+        cabin class : {cabinclass}
+        </Typography>
+        <Typography variant="h7" component="div" color="red">
+          you will reserve {numofresseats} seats in {cabinclass} class
         </Typography>
       </CardContent>
       <CardActions>
