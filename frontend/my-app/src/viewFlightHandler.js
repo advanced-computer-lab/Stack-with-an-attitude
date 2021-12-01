@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom'
 import ViewFlight from 'ViewFlight';
 import Button from '@mui/material/Button';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
-function ViewProfileHandler(){
+function ViewFlightHandler(){
     const {id}=useParams()
 
 
@@ -17,4 +17,4 @@ function ViewProfileHandler(){
         </div>
     );
 }
-export default ViewProfileHandler ;
+export default ViewFlightHandler ;
