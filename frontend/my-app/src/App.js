@@ -5,12 +5,13 @@ import AdminPage from "./AdminPage";
 import MainPage from "./MainPage";
 import MainPageLoggedIn from "./MainPageLoggedIn";
 import Updateflight from "./Updateflight";
-import {BrowserRouter as Router , Route ,Routes } from 'react-router-dom';
+import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
 import Searchflight from './Searchflight';
 import SearchflightUser from './SearchflightUser';
 import ViewFlight from './ViewFlight';
 import PlaneView from './PlaneView';
 import ViewProfile from './ViewProfile';
+import ViewFlightHandler from './viewFlightHandler';
 
 // import {Switch} from 'react-router';
 
@@ -27,7 +28,7 @@ function App() {
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
-            <Route path='/viewflight/:id' element={<ViewFlight/>} />
+            <Route path='/viewflight/:id' element={<ViewFlightHandler />} />
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
       </Routes>
     </Router>

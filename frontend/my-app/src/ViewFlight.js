@@ -12,11 +12,12 @@ import Typography from '@mui/material/Typography';
   
 
 
-function ViewFlight(){   //function component declaration
+function ViewFlight(props){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
+  console.log("id:"+props.id)
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -96,9 +97,7 @@ let depsec = depstr[3]+""+depstr[4];
         </Typography>
       </CardContent>
       <CardActions>
-      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
-              reserve seats
-          </Button>
+      
       </CardActions>
     </Card>
     </div>
