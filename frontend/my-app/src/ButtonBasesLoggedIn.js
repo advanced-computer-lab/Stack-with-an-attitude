@@ -118,3 +118,17 @@ export default function ButtonBases() {
     </Box>
   );
 }
+
+{/* <div>
+<br/>
+<Link to="/cancelflight"><h2>cancel a reserved flight</h2></Link>
+</div>
+
+
+
+<div>
+<br/>
+<Link to="/cancres"><h2>cancel test</h2></Link>
+</div>
+ */}
+
