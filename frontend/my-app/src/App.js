@@ -36,6 +36,7 @@ function App() {
             <Route path='/viewflight/:id' element={<ViewFlight/>} />
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
             <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} />
+            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
@@ -17,6 +18,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import HomeIcon from '@mui/icons-material/Home';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,14 +46,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-class SearchflightUser extends Component{
+export default function SearchflightUser() {
+  const [cabinclass, setCabinclass] = React.useState('economy');
+  const [numofresseats, setNumofresseats] = React.useState(0);
+
+  const handleChange = (e) => {
+    setCabinclass(e.target.value);
+  };
+
+  const [state,setState] = React.useState([]);
+  const [rows,setRows] = React.useState([]);
   
-  constructor(props){
-    super(props);
-    this.state = {rows:[],state:[]};
-  }
-  
-  submit= async (e) => {
+  const submit= async (e) => {
     e.preventDefault();
     const flight = {
       "departureTime": e.target.deptime.value,
@@ -53,37 +65,65 @@ class SearchflightUser extends Component{
       "departureDate": e.target.depdate.value,
       "arrivalDate": e.target.arrdate.value,
       "from": e.target.fromf.value,
-      "to": e.target.to.value,
+      "to": e.target.to.value
     }
-
-    await axios.post('http://localhost:8000/searchFlights', flight).then((data) => {
+    const selected = {
+      "select" : cabinclass,
+      "numofseats" : e.target.numofseats.value
+    }
+    setNumofresseats(e.target.numofseats.value);
+    await axios.post('http://localhost:8000/searchFlightsuser', {"flight" : flight , "selected":selected}).then((data) => {
       console.log("search successful!");
 
-      console.log(data.data);
-      this.setState({rows:data.data , state : []});
 
-      e.target.fnum.value='';
+      console.log(data.data);
+      setState([]);
+      setRows(data.data);
+
       e.target.deptime.value='';
       e.target.arrtime.value='';
       e.target.depdate.value='';
       e.target.arrdate.value='';
       e.target.fromf.value='';
       e.target.to.value='';
+      e.target.fromf.value='';
       
 
     }).catch(err => console.log(err));
 
 
   }  
-  render(){
     return(
       <div>
-
-          <Link to='/user'><h2>Home</h2></Link>
+<Link to="/user">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link>
           <br/>
-        <h1>Search for a Flight</h1>  
+        <h1>Search and reserve your Flight seats</h1>  
         <div className='containerS'>
-          <form onSubmit={this.submit} id="form" className='form'>
+          <form onSubmit={submit} id="form" className='form'>
+          <FormControl sx={{ minWidth: 120 }}>
+        <InputLabel id="cabinclasslabel">Cabin Class</InputLabel>
+        <Select
+          labelId="cabinclasslabel"
+          id="cabinclass"
+          value = {cabinclass}
+          onChange = {handleChange}
+          label="cabinclass"
+        >
+          <MenuItem value="business">business</MenuItem>
+          <MenuItem value = "economy">Economy</MenuItem>
+        </Select>
+      </FormControl>
+            <TextField
+            required
+            id="numofseats"
+            label="number of seats"
+            name="numofseats"
+            type="number"
+            />
             <TextField
             id="depdate"
             label="Departure Date"
@@ -136,7 +176,7 @@ class SearchflightUser extends Component{
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.state.rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
+                  {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
                     <StyledTableRow key={row._id}>
                       <StyledTableCell>{row.arrivalDate}</StyledTableCell>
                       <StyledTableCell>{row.arrivalTime}</StyledTableCell>
@@ -148,7 +188,7 @@ class SearchflightUser extends Component{
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                           <DeleteIcon />
                         </IconButton> */}
-                        <Link to={"/viewflight/" + row._id}>
+                        <Link to={"/viewflight/" + row._id + "/" + cabinclass+"/"+numofresseats}>
                           <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
                             <PreviewIcon />
                           </IconButton>
@@ -163,10 +203,8 @@ class SearchflightUser extends Component{
       </div>
 
       );
-    }
+    
   
 
 
 }
-
-export default SearchflightUser ;

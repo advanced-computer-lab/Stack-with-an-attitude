@@ -4,6 +4,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 
@@ -87,7 +88,11 @@ function Updateflight(){   //function component declaration
       return(
         <div>
 
-          <Link to='/'><h2>Home</h2></Link>
+<Link to="/admin">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link>
           <br/>
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}

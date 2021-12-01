@@ -14,6 +14,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AlertDialog from './AlertDialog';
+import HomeIcon from '@mui/icons-material/Home';
+import Button from '@mui/material/Button';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -90,7 +92,11 @@ function Schedule() {
       //Link to direct back to home
   return (
     <div >
-      <Link to='/'><h2>Home</h2></Link>  
+     <Link to="/admin">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link> 
           <br/>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

@@ -45,6 +45,73 @@ exports.searchFlight = async function(req,res) {
                 console.log(err.status)})
 }
 
+exports.searchFlightuser = async function(req,res) {
+
+   
+
+    let query = req.body.flight;
+    let seatsres = req.body.selected
+    let numberseats = parseInt(seatsres.numofseats )
+
+    let bflight = {availableBusinessSeats: { $gte : numberseats}};
+    let eflight = {availableBusinessSeats: { $gte : numberseats}};
+
+    console.log(seatsres);
+
+    if(query.flightNumber){
+        bflight.flightNumber = query.flightNumber; 
+        eflight.flightNumber = query.flightNumber; 
+    }
+    if(query.departureTime){
+        bflight.departureTime = query.departureTime;
+        eflight.departureTime = query.departureTime; 
+    }
+    if(query.arrivalTime){
+        bflight.arrivalTime = query.arrivalTime ;
+        eflight.arrivalTime = query.arrivalTime ;
+
+        console.log(query.arrivalTime);
+    }
+    if(query.departureDate){
+        bflight.departureDate = query.departureDate ;
+        eflight.departureDate = query.departureDate ;
+    }
+    if(query.arrivalDate){
+        bflight.arrivalDate = query.arrivalDate ;
+        eflight.arrivalDate = query.arrivalDate ;
+    }
+    
+    if(query.from){
+        bflight.from = new RegExp(query.from , 'i') ;
+        eflight.from = new RegExp(query.from , 'i') ;
+
+    }
+    if(query.to){
+        bflight.to = new RegExp(query.to , 'i') ;
+        eflight.to = new RegExp(query.to , 'i') ;
+    }
+
+    if(seatsres.select === "business"){
+     await Flight.find(bflight)
+            .then( (flights) => {
+                res.status(200)
+                res.json(flights)
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})}
+    else if (seatsres.select === "economy"){
+        await Flight.find(eflight)
+        .then( (flights) => {
+            res.status(200)
+            res.json(flights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+    }
+}
+
 exports.getAllFlights = async function(req,res) {
 
     await Flight.find({})
