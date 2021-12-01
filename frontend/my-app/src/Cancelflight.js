@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -39,8 +39,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
   function Cancelflight() {
 
-
-
+    const {id} = useParams();
 
 
      const reserveddflights= [
@@ -90,8 +89,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   
     const getAllreservedFlights =async () => {
   
+      // get User ID from local storage then send it with get request below.
           let reservedflights = [];
-          await axios.get('http://localhost:8000/allreservedFlights')                   
+          await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)             
           .then(result => {
   
             result.data.forEach(flight => {
@@ -136,7 +136,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Flight number</StyledTableCell>
+                <StyledTableCell>Reservation Number</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell>Arrival Date</StyledTableCell>

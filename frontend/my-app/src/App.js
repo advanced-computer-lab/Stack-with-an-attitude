@@ -21,44 +21,6 @@ import Cancres from './Cancres';
 function App() {
 
 
-
-  const reserveddflights= [
-
-
-    {   
-      "username": 'ahmed1',
-      "password":'abc',
-      "email":'hossamnew16@gmail.com',
-      "flightnumber":1,
-      "isreserved":true,
-      "price":500
-  },
-  
-  
-  
-  {   
-      "username": 'ahmed2',
-      "password":'abc',
-      "email":'hossamnew16@gmail.com',
-      "flightnumber":1,
-      "isreserved":true,
-      "price":700
-  },
-  
-  
-  
-  {   
-      "username": 'ahmed3',
-      "password":'abc',
-      "email":'hossamnew16@gmail.com',
-      "flightnumber":1,
-      "isreserved":false,
-      "price":900
-  }
-
-  ]
-
-
   return (
     <Router>
       <Routes>

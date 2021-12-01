@@ -16,7 +16,7 @@ const images = [
     url: '/static/images/buttons/burgers.jpg',
     title: 'Cancel a Reservation',
     width: '40%',
-    link: ''
+    link: '/cancelflight'
   },
 ];
 

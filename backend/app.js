@@ -82,6 +82,8 @@ app.get('/user/reservedFlight/:id', userController.getReservedFlightById);
 app.post('/user/createReservedFlight', userController.createReservedFlight);
 
 app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
+
+app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!

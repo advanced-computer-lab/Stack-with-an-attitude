@@ -123,8 +123,20 @@ exports.createReservedFlight = async function(req,res) {
           console.log(err.message)})
 }
 
+exports.getAllreservedFlights = async function(req,res) {
 
+  let ID = req.params.id;
 
+  await Reservation.find({reservedUserID : ID + ''})
+          .then( (reservation) => {
+              res.send(reservation)
+          })
+          .catch( (err) => {
+              res.send({statusCode : err.status, message : err.message})
+              console.log(err.status)})
+
+  // then send it to FE.
+}
 
 exports.deleteReservedFlightById = async function(req,res) {
 

@@ -1,7 +1,6 @@
 const Flight = require('../Models/Flight');
-const Reservedflight = require('../Models/reservedflight');
 const nodemailer = require('nodemailer');
-const reservedflight = require('../Models/reservedflight');
+const Reservation = require('../Models/Reservation');
 
 //create transporter for sender data
 const transporter = nodemailer.createTransport({
@@ -11,8 +10,6 @@ const transporter = nodemailer.createTransport({
         pass:"Hossam2021"
     }
 });
-
-
 
 exports.searchFlight = async function(req,res) {
 
@@ -235,7 +232,7 @@ exports.deleteFlightById = async function(req,res) {
 
 exports.getAllreservedFlights = async function(req,res) {
 
-    await Reservedflight.find()
+    await Reservation.find()
             .then( (reservation) => {
                 res.send(reservation)
             })
@@ -248,10 +245,9 @@ exports.getAllreservedFlights = async function(req,res) {
 
 exports.deletereservedflight = async function(req,res){
 
-
     let ID = req.params.deleteID;
            
-    await Reservedflight.findByIdAndDelete(ID)
+    await Reservation.findByIdAndDelete(ID)
         .then( (reservation) => {
             
             //recevier info
