@@ -10,10 +10,10 @@ import { Checkbox } from '@mui/material';
 
 
 
-function PlaneView(){   //function component declaration
+function PlaneView(props){   //function component declaration
   const [selected,setSelected] = useState([]);
   const [flight,setFlight] = useState([]);
-  const {id} = useParams();
+  const {id} = props;
   let i =0;
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form

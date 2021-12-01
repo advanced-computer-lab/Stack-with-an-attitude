@@ -16,7 +16,7 @@ function ViewFlight(props){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id} = useParams();
+  const {id} = props;
   console.log("id:"+props.id)
 
 
