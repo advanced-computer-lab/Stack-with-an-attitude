@@ -21,8 +21,11 @@ class Addflights extends Component{
       "arrivalDate": e.target.arrdate.value,
       "economySeats": e.target.ecseats.value,
       "businessSeats": e.target.busseats.value,
+      "totalSeats":parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
       "from": e.target.fromf.value,
       "to": e.target.to.value,
+      "price":e.target.price.value,
+      "baggageAllowance":e.target.baggageAllowance.value
     }
      
     
@@ -39,6 +42,8 @@ class Addflights extends Component{
       e.target.busseats.value='';
       e.target.fromf.value='';
       e.target.to.value='';
+      e.target.price.value='';
+      e.target.baggageAllowance.value='';
 
       this.setState({inserted:true});
 
@@ -112,6 +117,19 @@ class Addflights extends Component{
           id="to"
           label="To Terminal"
           name="to"
+          />
+          <TextField
+          required
+          id="price"
+          label="price"
+          name="price"
+          type="number"
+          />
+          <TextField
+          required
+          id="baggageAllowance"
+          label="baggage Allowance"
+          name="baggageAllowance"
           />
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit

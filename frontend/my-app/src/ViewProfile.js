@@ -6,47 +6,34 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 
-
-
-function Updateflight(){   //function component declaration
+function ViewProfile(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
-  const [flight,setFlight] = useState([]);
+  const [userState,setuserState] = useState([]);
   const {id} = useParams();
-
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
     const update = {
-      "flightNumber":e.target.flightNumber.value,
-      "departureTime":e.target.departureTime.value,
-      "arrivalTime":e.target.arrivalTime.value,
-      "departureDate":e.target.departureDate.value,
-      "arrivalDate":e.target.arrivalDate.value,
-      "economySeats":e.target.economySeats.value,
-      "businessSeats":e.target.businessSeats.value,
-      "totalSeats": parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
-      "from":e.target.from.value,
-      "to":e.target.to.value,
-      "returnDate":e.target.returnDate.value
+      "firstName":e.target.firstName.value,
+      "lastName":e.target.lastName.value,
+      "passportNumber":e.target.passportNumber.value,
+      "password":e.target.password.value,
+      "email":e.target.email.value,
     }
     console.log(update);
-    axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})  //the update request
+    axios.put(`http://localhost:8000/user/update/${id}`,{user:update})  //the update request
     .then(data=>{
       console.log(data);
       console.log("updated successfully")
         //in the then part meaning if the request is successful clear the feilds and set a flag "updated" to true 
         //its part of the state of the component so if you have a listener for it (the useEffect) it will sense that the flag is updated
         //therefore reupdating the component 
-      e.target.flightNumber.value='';
-      e.target.departureTime.value='';
-      e.target.arrivalTime.value='';
-      e.target.departureDate.value='';
-      e.target.arrivalDate.value='';
-      e.target.economySeats.value='';
-      e.target.businessSeats.value='';
-      e.target.from.value='';
-      e.target.to.value='';
+        e.target.firstName.value='';
+        e.target.lastName.value='';
+        e.target.passportNumber.value='';
+        e.target.password.value='';
+        e.target.email.value='';
 
       setUpdated(true);
 
@@ -65,12 +52,12 @@ function Updateflight(){   //function component declaration
 
 
   //in this one the dependency list is empty it runs only on creation 
-  //so basically it does fetch the flight once by the id sets another variable to the result of the request
-  //notice that we have another listener for the flight variable meaning that when the data arrives it does sth which is basically a rerender
+  //so basically it does fetch the userState once by the id sets another variable to the result of the request
+  //notice that we have another listener for the userState variable meaning that when the data arrives it does sth which is basically a rerender
    useEffect(()=>{
     async function fetchData(){
-    let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
-    setFlight(data);
+    let data = (await axios.get(`http://localhost:8000/user/getInfo/${id}`)).data
+    setuserState(data);
     console.log(data);
     }
 
@@ -79,34 +66,30 @@ function Updateflight(){   //function component declaration
   },[id]) //<==== empty dependency list meaning it only runs (initially) on creation of the component only 
   
 
-  //when the flight data arrives or when the flight variable is updated just rerender the component and populate the fields
-  //with the flight data captured from the request
+  //when the userState data arrives or when the userState variable is updated just rerender the component and populate the fields
+  //with the userState data captured from the request
   useEffect(()=>{
-  },[flight])
+  },[userState])
 
       return(
         <div>
 
           <Link to='/'><h2>Home</h2></Link>
           <br/>
-        <h1>Update flight with flight number {flight.flightNumber}</h1> 
-        {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
+        <h1>Update Profile</h1> 
+        {updated && <h2 className="feedback-header">Updated Profile successfully </h2>}
+        {console.log(userState)};
         <form onSubmit={handleSubmit} id="form">
-          {(Object.keys(flight).slice(2,12)).map((f)=>(//loop over the flight info and map them to fields with their default value
-          (f!='totalSeats')&&(<TextField
+          {(Object.keys(userState).slice(1,6)).map((f)=>(//loop over the userState info and map them to fields with their default value
+          <TextField
           required
           key={f}
-          type={(f.includes('Time') ? 'time' : 
-                (f.includes('Date') ? 'date' : 
-                (f.includes('Seats') ? 'number' : 'string')))}
-          helperText={(f.includes('Time') ? 'Please use HH:MM' : 
-                      (f.includes('Date') ? 'Please use YYYY-MM-DD' : ''))}
           id={f}
           label={f}
           name={f}
-          defaultValue={flight[f]}
+          defaultValue={userState[f]}
           margin='normal'
-          />)
+          />
           ))}
          
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
@@ -119,4 +102,4 @@ function Updateflight(){   //function component declaration
     }
   
 
-export default Updateflight ;
+export default ViewProfile ;

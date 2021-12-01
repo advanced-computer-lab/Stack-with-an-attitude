@@ -9,6 +9,7 @@ const cors = require('cors');
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
+const userController = require('./Controllers/UserController');
 
 
 //App variables
@@ -47,6 +48,7 @@ app.use(session({
 }));
 
 //Routes
+//------------Admin
 app.post('/searchFlights', adminController.searchFlight);
 
 app.get('/allFlights', adminController.getAllFlights);
@@ -58,7 +60,15 @@ app.put('/updateFlight/:updateID', adminController.updateFlightById);
 app.post('/createFlight',adminController.newFlight);
 
 app.delete('/deleteFlight/:deleteID',adminController.deleteFlightById);
+//-------------
 
+//------------User
+app.put('/user/reserveSeats/:id',userController.reserveSelectedSeats);
+
+app.put('/user/update/:id', userController.updateUserById);
+
+app.get('/user/getInfo/:id', userController.getUserById);
+//--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 

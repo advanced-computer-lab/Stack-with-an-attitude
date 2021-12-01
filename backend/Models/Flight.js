@@ -83,10 +83,6 @@ const flightSchema = new Schema ({
             }
         }
     },
-    returnDate: {
-        type : String, 
-        required: true,
-    },
     price: {
         type: Number,
         required: true,
@@ -107,6 +103,26 @@ const flightSchema = new Schema ({
                 return 0<input
             }
         }
+    },
+    reservedBusinessSeats: {
+        type: Array,
+        required: true,
+        default: ()=> {
+                        let seatsArray = [];
+                        for (let i = 0; i < businessSeats; i++) {
+                            seatsArray[i] = false; 
+                        }
+                        },
+    },
+    reservedEconomySeats: {
+        type: Array,
+        required: true,
+        default: ()=> {
+                        let seatsArray = [];
+                        for (let i = 0; i < economySeats; i++) {
+                            seatsArray[i] = false; 
+                        }
+                        },
     },
 }, {timestamps:true})
 

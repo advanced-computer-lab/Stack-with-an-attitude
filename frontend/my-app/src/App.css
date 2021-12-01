@@ -67,3 +67,22 @@ form button {
 .shed{
   width: 100%;
 }
+
+.mainPageHeader{
+  margin: auto;
+  text-align:center;
+  z-index: 2;
+}
+
+.mainPageHeader h1{
+
+  font-size: 64px;
+  color: #a9bac8;
+
+}
+
+.mainPageHeader h3{
+
+  font-size: 24px;
+  color: #a9bac8;
+}
