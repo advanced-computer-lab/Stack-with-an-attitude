@@ -18,7 +18,7 @@ function ViewFlightHandler(){
                     <input type='text' defaultValue='61a7c74e08fb58bbc6f6feff' id='small' name='small'/>
                     <button>
                         <Button  value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
-                            reserve seats
+                            reserve 2nd flight by id
                         </Button>
                     </button>
               </form>
