@@ -14,7 +14,7 @@ class MainPageUser extends Component{
         </div>
         <div>
           <br/>
-        <Link to="/schedule"><h2>view your reserved flights</h2></Link>
+        <Link to="/yourreservedflights"><h2>view your reserved flights</h2></Link>
         </div>
         </div>
      

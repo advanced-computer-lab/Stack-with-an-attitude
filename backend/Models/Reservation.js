@@ -33,14 +33,8 @@ const reservationSchema = new Schema ({
         }
     },
     assignedSeats: {
-        type: Number,
+        type:  Array,
         required: true,
-        validate: {
-            message: "Must be a Positive Number",
-            validator: (input) => {
-                return 0<input
-            }
-        }
     },
     price: {
         type : Number, 
