@@ -14,12 +14,11 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 
 
-function ViewFlight(props){   //function component declaration
+function ViewReturnFlight(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id} = props;
-  console.log("id:"+props.id)
+  const {id} = useParams();
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -95,24 +94,18 @@ let depsec = depstr[3]+""+depstr[4];
         trip duration: {(arr-dep)/3600000} hours
         </Typography>
         <Typography variant="body2">
-        baggage allowance : 2
+        baggage allowance : {flight["baggageAllowance"]}
         </Typography>
       </CardContent>
       <CardActions>
-      
-      </CardActions>
-      <CardActions>
-      <Link to={"/SearchReturnFlight/" + flight["to"] +"/"+ flight["from"]}>
-        <Button value="Submit" variant="contained">
-              view return flights
+      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
+              reserve seats
           </Button>
-      </Link>
       </CardActions>
-
     </Card>
     </div>
       );
     
     }
 
-export default ViewFlight ;
+export default ViewReturnFlight ;
