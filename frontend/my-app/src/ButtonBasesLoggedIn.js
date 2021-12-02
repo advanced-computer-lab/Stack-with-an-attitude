@@ -16,7 +16,7 @@ const images = [
     url: '/static/images/buttons/burgers.jpg',
     title: 'View your reserved flights',
     width: '40%',
-    link: '/yourreservedflights/' + localStorage.getItem('userID'),
+    link: '/yourreservedflights/'+localStorage.getItem('userID') 
   },
 
 ];
