@@ -40,7 +40,6 @@ function App() {
             <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} />
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
             <Route path='/cancelflight' element={<Cancelflight/>} />
-            <Route path='/Cancres' element={<Cancres/>} />
       </Routes>
     </Router>
   );
