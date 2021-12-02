@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const flightSchema = new Schema ({
     flightNumber: {
         type: String,
@@ -124,6 +123,28 @@ const flightSchema = new Schema ({
                         }
                         },
     },
+    availableBusinessSeats: {
+        type : Number,
+        required: true,
+        default: ()=> {businessSeats - reservedBusinessSeats},
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
+    },
+    availableeconomySeats: {
+        type : Number,
+        required: true,
+        default: ()=> {economySeats - reservedEconomySeats },
+        validate: {
+            message: "Must be a Positive Number",
+            validator: (input) => {
+                return 0<input
+            }
+        }
+    }
 }, {timestamps:true})
 
 const Flight = mongoose.model('Flight',flightSchema);

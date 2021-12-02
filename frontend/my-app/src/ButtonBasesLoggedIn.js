@@ -16,7 +16,7 @@ const images = [
     url: '/static/images/buttons/burgers.jpg',
     title: 'Cancel a Reservation',
     width: '40%',
-    link: ''
+    link: '/cancelflight'
   },
 ];
 
@@ -118,3 +118,17 @@ export default function ButtonBases() {
     </Box>
   );
 }
+
+{/* <div>
+<br/>
+<Link to="/cancelflight"><h2>cancel a reserved flight</h2></Link>
+</div>
+
+
+
+<div>
+<br/>
+<Link to="/cancres"><h2>cancel test</h2></Link>
+</div>
+ */}
+

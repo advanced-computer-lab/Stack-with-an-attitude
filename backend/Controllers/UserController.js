@@ -59,3 +59,95 @@ exports.updateUserById = async function(req,res) {
         res.send({statusCode : err.status, message : err.message})
         console.log(err.status)})
 }
+
+exports.getAllReservedSeats = async function(req,res) {
+
+
+  Reservation.find()
+      .then( (reservedflights) => {
+          //res.status(200)
+          res.json(reservedflights)
+      })
+      .catch( (err) => {
+          //res.status(404)
+          console.log(err)})
+
+}
+
+exports.getReservedFlightById = async function(req,res) {
+
+
+  let ID = req.params.getID
+
+  Reservation.findById(ID)
+      .then( (reservedflights) => {
+          //res.status(200)
+          res.json(reservedflights)
+      })
+      .catch( (err) => {
+          //res.status(404)
+          console.log(err)})
+}
+
+
+// Create
+exports.createReservedFlight = async function(req,res) {
+
+
+  let newFlight = new Reservation(req.body.flight)
+
+  newFlight.save()
+      .then( (reservedflights) => {
+          //res.status(200)
+          res.json(reservedflights)
+      })
+      .catch( (err) => {
+          if (err.name === "ValidationError") {
+              let errors = {}
+        
+              Object.keys(err.errors).forEach((key) => {
+                errors[key] = err.errors[key].message
+              })
+        
+              //return res.status(400).send(errors)
+              return res.send(errors)
+            }
+          
+          if (err.name === "MongoServerError") {
+              //return res.status(400).send("duplicate key error")
+              return res.send("duplicate key error")
+          }
+
+          //res.status(500).send(err.name)
+          res.send(err.name)
+          console.log(err.message)})
+}
+
+exports.getAllreservedFlights = async function(req,res) {
+
+  let ID = req.params.id;
+
+  await Reservation.find({reservedUserID : ID + ''})
+          .then( (reservation) => {
+              res.send(reservation)
+          })
+          .catch( (err) => {
+              res.send({statusCode : err.status, message : err.message})
+              console.log(err.status)})
+
+  // then send it to FE.
+}
+
+exports.deleteReservedFlightById = async function(req,res) {
+
+  let ID = req.params.deleteID
+
+  Reservation.findByIdAndDelete(ID)
+      .then( (reservedflights) => {
+          //res.status(200)
+          res.json(reservedflights)
+      })
+      .catch( (err) => {
+          //res.status(404)
+          console.log(err)})
+}

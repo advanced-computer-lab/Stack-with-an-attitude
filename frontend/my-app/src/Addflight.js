@@ -4,6 +4,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 class Addflights extends Component{
@@ -21,11 +22,15 @@ class Addflights extends Component{
       "arrivalDate": e.target.arrdate.value,
       "economySeats": e.target.ecseats.value,
       "businessSeats": e.target.busseats.value,
-      "totalSeats":parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
+      "totalSeats":parseInt(e.target.ecseats.value)+ parseInt(e.target.busseats.value),
       "from": e.target.fromf.value,
       "to": e.target.to.value,
       "price":e.target.price.value,
-      "baggageAllowance":e.target.baggageAllowance.value
+      "baggageAllowance":e.target.baggageAllowance.value,
+      "availableeconomySeats" : e.target.ecseats.value,
+      "availableBusinessSeats" : e.target.busseats.value,
+      "reservedBusinessSeats" : [],
+      "reservedEconomySeats" : []
     }
      
     
@@ -55,7 +60,11 @@ class Addflights extends Component{
       return(
         <div>
 
-          <Link to='/'><h2>Home</h2></Link>
+<Link to="/admin">
+<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+</Link> 
           <br/>
         <h1>Create a New Flight</h1>  
        {this.state.inserted && <h2 className="feedback-header"> Inserted flight successfully</h2>}
