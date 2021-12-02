@@ -20,8 +20,7 @@ class MainPage extends Component{
               <CardBody> 
                 <ButtonBases/>
               </CardBody>
-            </Card>      
-                        
+            </Card>             
 
         </div>
       );
