@@ -121,14 +121,6 @@ app.get('/admin/logout',(req,res)=>{
 
 })
 
-// // Use Routes
-// app.use("/flights", Flights)
-
-// Database Connection
-mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.log(err))
-
 // Server is Listening
 app.listen(port, () => {console.log(`Listening to requests on http://localhost:${port}`)})
 

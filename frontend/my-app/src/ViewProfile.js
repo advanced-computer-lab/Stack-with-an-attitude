@@ -74,7 +74,7 @@ function ViewProfile(){   //function component declaration
       return(
         <div>
 
-          <Link to='/'><h2>Home</h2></Link>
+          <Link to='/user'><h2>Home</h2></Link>
           <br/>
         <h1>Update Profile</h1> 
         {updated && <h2 className="feedback-header">Updated Profile successfully </h2>}

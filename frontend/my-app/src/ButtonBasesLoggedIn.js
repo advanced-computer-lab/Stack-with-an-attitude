@@ -18,12 +18,6 @@ const images = [
     width: '40%',
     link: '/yourreservedflights/:id'
   },
-  {
-    url: '/static/images/buttons/burgers.jpg',
-    title: 'Cancel a Reservation',
-    width: '100%',
-    link: '/cancelflight'
-  },
 
 ];
 
