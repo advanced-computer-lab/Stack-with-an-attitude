@@ -1,45 +1,29 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios' ;
+import Header from 'components/Header/Header.js';
+import HeaderLinks from 'components/Header/HeaderLinks.js';
+import Parallax from "components/Parallax/Parallax.js";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import ButtonBases from 'ButtonBases';
 
 class MainPage extends Component{
   
-  ra
+  
   render(){
       return(
         <div>
-          <div>
-          <br/>
-        <Link to="/schedule"><h2>View schedule</h2></Link>
-        </div>
-        <div>
-          <br/>
-        <Link to="/addFlight"><h2>Add a flight</h2></Link>
-        </div>
-        <div>
-          <br/>
-        <Link to="/searchflight"><h2>Search for a flight</h2></Link>
-        </div>
-
-
-        <div>
-          <br/>
-        <Link to="/cancelflight"><h2>cancel a reserved flight</h2></Link>
-        </div>
-
-
-
-        <div>
-          <br/>
-        <Link to="/cancres"><h2>cancel test</h2></Link>
-        </div>
-
-        
-
-
+            <Header color='info' brand='Airport' transparent rightLinks={<HeaderLinks/>} fixed/>
+            <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} children={<div className={'mainPageHeader'}><h1>Welcome to our airport!</h1><h3>where quality meets excellence</h3></div>}/>
+            <Card style={{margin: 'auto', maxWidth: 750}}>
+              <CardBody> 
+                <ButtonBases/>
+              </CardBody>
+            </Card>      
+                        
 
         </div>
-     
       );
     }
   

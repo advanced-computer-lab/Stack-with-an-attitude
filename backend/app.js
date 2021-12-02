@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 const express = require("express");
 const mongoose = require('mongoose');
 const bodyparser = require("body-parser");
@@ -11,6 +9,7 @@ const cors = require('cors');
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
+const userController = require('./Controllers/UserController');
 
 
 //App variables
@@ -49,7 +48,10 @@ app.use(session({
 }));
 
 //Routes
+//------------Admin
 app.post('/searchFlights', adminController.searchFlight);
+
+app.post('/searchFlightsuser', adminController.searchFlightuser);
 
 app.get('/allFlights', adminController.getAllFlights);
 
@@ -61,15 +63,28 @@ app.post('/createFlight',adminController.newFlight);
 
 app.delete('/deleteFlight/:deleteID',adminController.deleteFlightById);
 
-
-
-
 app.get('/allreservedflights', adminController.getAllreservedFlights);
 
 app.delete('/deletereservedFlight/:deleteID',adminController.deletereservedflight);
+//-------------
 
+//------------User
+app.put('/user/reserveSeats/:id',userController.reserveSelectedSeats);
 
+app.put('/user/update/:id', userController.updateUserById);
 
+app.get('/user/getInfo/:id', userController.getUserById);
+
+app.get('/user/reservedSeats', userController.getAllReservedSeats);
+
+app.get('/user/reservedFlight/:id', userController.getReservedFlightById);
+
+app.post('/user/createReservedFlight', userController.createReservedFlight);
+
+app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
+
+app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
+//--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
@@ -117,4 +132,3 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true})
 // Server is Listening
 app.listen(port, () => {console.log(`Listening to requests on http://localhost:${port}`)})
 
->>>>>>> Stashed changes

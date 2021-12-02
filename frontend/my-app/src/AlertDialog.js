@@ -30,9 +30,6 @@ export default function AlertDialog(props) {
     
   }
 
-
-
-
   const handleDeletereserveClick = async (e) => {
 
     await axios.delete(`http://localhost:8000/deletereservedFlight/${props.id}`)
@@ -42,12 +39,6 @@ export default function AlertDialog(props) {
     props.state([]);
     
   }
-
-
-
-
-
-
 
   return (
     <div>
@@ -75,11 +66,6 @@ export default function AlertDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-
-
-
-
-
       <IconButton aria-label="cancelflight" onClick={handleClickOpen} id={props.id}>
         <DeleteIcon />
       </IconButton>
@@ -104,12 +90,6 @@ export default function AlertDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-
-
-
-
-
-
     </div>
 
     
