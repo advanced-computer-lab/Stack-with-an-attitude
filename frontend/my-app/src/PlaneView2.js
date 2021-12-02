@@ -20,7 +20,6 @@ function PlaneView(props){   //function component declaration
     e.preventDefault();//prevent refresh
     //replace with a method that sets parent state(seats of flight)
     setFunc(selected);
-
     console.log(selected);
   }
 //checkbtn
