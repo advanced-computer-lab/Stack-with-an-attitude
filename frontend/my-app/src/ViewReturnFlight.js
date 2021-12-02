@@ -51,18 +51,18 @@ function ViewReturnFlight(){   //function component declaration
   useEffect(()=>{
   },[flight])
 
-  let depstr = flight["departureTime"]+"";
-let dephour = depstr[0]+""+depstr[1];
-let depsec = depstr[3]+""+depstr[4];
-  let arrstr = flight["arrivalTime"]+"";
-  let arrhour = arrstr[0]+""+arrstr[1];
-  let arrsec = arrstr[3]+""+arrstr[4];
-   let dep = new Date(flight["departureDate"]);
-   let arr = new Date(flight["arrivalDate"]);
-   dep.setHours(dephour);
-   arr.setHours(arrhour);
-   dep.setMinutes(depsec);
-   arr.setMinutes(arrsec);
+    let depstr = flight["departureTime"]+"";
+    let dephour = depstr[0]+""+depstr[1];
+    let depsec = depstr[3]+""+depstr[4];
+    let arrstr = flight["arrivalTime"]+"";
+    let arrhour = arrstr[0]+""+arrstr[1];
+    let arrsec = arrstr[3]+""+arrstr[4];
+    let dep = new Date(flight["departureDate"]);
+    let arr = new Date(flight["arrivalDate"]);
+    dep.setHours(dephour);
+    arr.setHours(arrhour);
+    dep.setMinutes(depsec);
+    arr.setMinutes(arrsec);
 
       return(
         <div>

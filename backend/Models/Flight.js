@@ -20,6 +20,7 @@ const flightSchema = new Schema ({
     arrivalDate: {
         type : String,
         required: true,
+        validate : [dateValidator,'Arrival Date must be less than or equal Departure Date']
     },
     departureTime: {
         type : String, 
@@ -146,6 +147,12 @@ const flightSchema = new Schema ({
         }
     }
 }, {timestamps:true})
+
+
+// function that validate the startDate and endDate
+function dateValidator(value) {
+    return Date.parse(this.departureDate) <= Date.parse(value);
+}
 
 const Flight = mongoose.model('Flight',flightSchema);
 module.exports = Flight;    

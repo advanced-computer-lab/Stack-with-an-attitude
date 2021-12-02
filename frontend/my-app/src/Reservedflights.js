@@ -13,7 +13,7 @@ import axios from 'axios' ;
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
+import AlertDialogReservation from './AlertDialogReservation';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
 
@@ -99,6 +99,7 @@ function Reservedflights() {
             <StyledTableCell>price</StyledTableCell>
             <StyledTableCell>number of adults</StyledTableCell>
             <StyledTableCell>number of children</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,13 +107,16 @@ function Reservedflights() {
             <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
                 {row.flightNumber}
-              </StyledTableCell> 
+              </StyledTableCell>
               <StyledTableCell>{row.arrivalDate}</StyledTableCell>
               <StyledTableCell>{row.arrivalTime}</StyledTableCell>
               <StyledTableCell>{row.departureDate}</StyledTableCell>
               <StyledTableCell>{row.departureTime}</StyledTableCell>
               <StyledTableCell>{row.from}</StyledTableCell>
               <StyledTableCell>{row.to}</StyledTableCell>
+              <StyledTableCell>
+                <AlertDialogReservation id={row._id} state={(d) => this.setState(d)}/>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
