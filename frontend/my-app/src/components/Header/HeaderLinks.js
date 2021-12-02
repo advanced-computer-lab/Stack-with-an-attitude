@@ -59,7 +59,7 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-          <Link style={{padding:0}} to="/user" /* onClick={localStorage.setItem('userID','61a6aadce7399118577e3bc0')} */ className={classes.dropdownLink}>
+          <Link style={{padding:0}} to="/user"  onClick={localStorage.setItem('userID','61a6aadce7399118577e3bc0')} className={classes.dropdownLink}>
               Login
           </Link>
         </Button>
