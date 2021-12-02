@@ -1,34 +1,126 @@
 const Flight = require('../Models/Flight');
+const nodemailer = require('nodemailer');
+const Reservation = require('../Models/Reservation');
+
+//create transporter for sender data
+const transporter = nodemailer.createTransport({
+    service:"hotmail",
+    auth: {
+        user:"guccsen704@outlook.com",
+        pass:"Hossam2021"
+    }
+});
 
 exports.searchFlight = async function(req,res) {
 
     let flight = {};
 
-    const query = req.query;
+    let query = req.body;
+
+    console.log(query);
 
     if(query.flightNumber){
         flight.flightNumber = query.flightNumber; 
     }
     if(query.departureTime){
-        flight.departureTime = parseInt(query.departureTime); 
+        flight.departureTime = query.departureTime;
     }
     if(query.arrivalTime){
-        flight.arrivalTime = parseInt(query.arrivalTime);
+        flight.arrivalTime = query.arrivalTime ;
+
+        console.log(query.arrivalTime);
     }
-    if(query.airport){
-        flight.airport = query.airport; 
+    if(query.departureDate){
+        flight.departureDate = query.departureDate ;
     }
-    // date condition missing!!!
-
-
-
-    console.log(req.query);
-    console.log(flight);
+    if(query.arrivalDate){
+        flight.arrivalDate = query.arrivalDate ;
+    }
     
-    const flightResults = await Flight.find(flight).exec();
+    if(query.from){
+        flight.from = new RegExp(query.from , 'i') ;
 
-    res.status(200).send(flightResults);
-    // then send it to FE.
+    }
+    if(query.to){
+        flight.to = new RegExp(query.to , 'i') ;
+    }
+
+    
+     await Flight.find(flight)
+            .then( (flights) => {
+                res.status(200)
+                res.json(flights)
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
+}
+
+exports.searchFlightuser = async function(req,res) {
+
+   
+
+    let query = req.body.flight;
+    let seatsres = req.body.selected
+    let numberseats = parseInt(seatsres.numofseats )
+
+    let bflight = {availableBusinessSeats: { $gte : numberseats}};
+    let eflight = {availableBusinessSeats: { $gte : numberseats}};
+
+    console.log(seatsres);
+
+    if(query.flightNumber){
+        bflight.flightNumber = query.flightNumber; 
+        eflight.flightNumber = query.flightNumber; 
+    }
+    if(query.departureTime){
+        bflight.departureTime = query.departureTime;
+        eflight.departureTime = query.departureTime; 
+    }
+    if(query.arrivalTime){
+        bflight.arrivalTime = query.arrivalTime ;
+        eflight.arrivalTime = query.arrivalTime ;
+
+        console.log(query.arrivalTime);
+    }
+    if(query.departureDate){
+        bflight.departureDate = query.departureDate ;
+        eflight.departureDate = query.departureDate ;
+    }
+    if(query.arrivalDate){
+        bflight.arrivalDate = query.arrivalDate ;
+        eflight.arrivalDate = query.arrivalDate ;
+    }
+    
+    if(query.from){
+        bflight.from = new RegExp(query.from , 'i') ;
+        eflight.from = new RegExp(query.from , 'i') ;
+
+    }
+    if(query.to){
+        bflight.to = new RegExp(query.to , 'i') ;
+        eflight.to = new RegExp(query.to , 'i') ;
+    }
+
+    if(seatsres.select === "business"){
+     await Flight.find(bflight)
+            .then( (flights) => {
+                res.status(200)
+                res.json(flights)
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})}
+    else if (seatsres.select === "economy"){
+        await Flight.find(eflight)
+        .then( (flights) => {
+            res.status(200)
+            res.json(flights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+    }
 }
 
 exports.getAllFlights = async function(req,res) {
@@ -39,8 +131,8 @@ exports.getAllFlights = async function(req,res) {
                 res.json(flights)
             })
             .catch( (err) => {
-                res.status(404)
-                console.log(err)})
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
 
     // then send it to FE.
 }
@@ -55,8 +147,8 @@ exports.getFlightById = async function(req,res) {
         res.json(flights)
     })
     .catch( (err) => {
-        res.status(404)
-        console.log(err)})
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
 }
 
 // router.get("/:getID", (req, res) =>
@@ -71,18 +163,22 @@ exports.newFlight = async function(req,res) {
             res.json(flight)
         })
         .catch( (err) => {
-            if(err.name === "ValidationError") {
-                let errors = {};
+            // if(err.name === "ValidationError") {
+            //     let errors = {};
           
-                Object.keys(err.errors).forEach((key) => {
-                  errors[key] = err.errors[key].message;
-                });
+            //     Object.keys(err.errors).forEach((key) => {
+            //       errors[key] = err.errors[key].message;
+            //     });
           
-                return res.status(400).send(errors);
-              }
-
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            //     return res.status(400).send(errors);
+            //   }
+            if (err.name === "MongoServerError"){
+                return res.status(400).send({statusCode : 400, message : "duplicate key error"})
+            }else{
+            res.status(400).send({statusCode : 400, message : err.message})
+            console.log(err.message)
+            }
+        })
 }
 
 
@@ -94,7 +190,7 @@ exports.updateFlightById = async function(req,res) {
 
     let ID = req.params.updateID;
 
-    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true})
+    await Flight.findByIdAndUpdate(ID, req.body.flight, {new: true, runValidators: true})
         .then( (flights) => {
             res.status(200)
             res.json(flights)
@@ -109,9 +205,12 @@ exports.updateFlightById = async function(req,res) {
           
                 return res.status(400).send(errors);
               }
+              if (err.name === "MongoServerError"){
+                return res.send({statusCode : err.status, message : "duplicate key error"})
+            }
 
-            res.status(500).send(err.name)
-            console.log(err.message)})
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }
 
 // router.put("/:updateID", (req, res) => {
@@ -127,9 +226,64 @@ exports.deleteFlightById = async function(req,res) {
             res.json(flights)
         })
         .catch( (err) => {
-            res.status(404)
-            console.log(err)})
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }
+
+exports.getAllreservedFlights = async function(req,res) {
+
+    await Reservation.find()
+            .then( (reservation) => {
+                res.send(reservation)
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
+
+    // then send it to FE.
+}
+
+exports.deletereservedflight = async function(req,res){
+
+    let ID = req.params.deleteID;
+           
+    await Reservation.findByIdAndDelete(ID)
+        .then( (reservation) => {
+            
+            //recevier info
+    const option ={
+    from:"guccsen704@outlook.com",
+    to:reservation.email,
+    subject :"cancelled flight",
+    text:"your flight was cancelled , you will be refunded by"+ reservation.price
+    
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservation)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+
+
+
+
+
+
+    
+
+}
+
 
 
 // router.delete("/:deleteID", (req, res) => {

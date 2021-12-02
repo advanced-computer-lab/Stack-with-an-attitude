@@ -1,0 +1,24 @@
+
+NEED TO BE ABLE TO SEARCH
+14) The system should allow any Guest User/ Existing  User to view a list of all available RETUTN flights based 
+on the search criteria.  The list should include flight number, departure time and arrival time, trip duration 
+and price.
+
+
+DONE
+15) The system should allow any Guest User/ Existing  User to select one of the RETUTN flights from the list of 
+available RETUTN flights.
+
+
+MISSING "cabin class" (?)
+16) The system should allow any Guest User/ Existing  User to see all the details of the selected RETUTN flight. 
+The details should include flight number, departure and arrival times, trip duration, cabin class and baggage 
+allowance.
+
+
+W.I.P.
+24) The system should provide any Existing User with his/her itinerary (a summary of the chosen departure and 
+RETUTN flights, including the dates and times of the departure and RETUTN flights, the chosen cabin 
+(Economy/ Business Class), the chosen seat and the total price paid for the entire ticket along with a 
+confirmation/ booking number).
+
