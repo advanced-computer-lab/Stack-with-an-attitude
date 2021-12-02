@@ -107,9 +107,9 @@ const flightSchema = new Schema ({
     reservedBusinessSeats: {
         type: Array,
         required: true,
-        default: ()=> {
+        default: function() {
                         let seatsArray = [];
-                        for (let i = 0; i < businessSeats; i++) {
+                        for (let i = 0; i < this.businessSeats; i++) {
                             seatsArray[i] = false; 
                         }
                         },
@@ -117,12 +117,7 @@ const flightSchema = new Schema ({
     reservedEconomySeats: {
         type: Array,
         required: true,
-        default: ()=> {
-                        let seatsArray = [];
-                        for (let i = 0; i < economySeats; i++) {
-                            seatsArray[i] = false; 
-                        }
-                        },
+        default: getSeats(),
     },
     availableBusinessSeats: {
         type : Number,
@@ -152,6 +147,14 @@ const flightSchema = new Schema ({
 // function that validate the startDate and endDate
 function dateValidator(value) {
     return Date.parse(this.departureDate) <= Date.parse(value);
+}
+
+function getSeats(){
+    let seatsArray = [];
+    for (let i = 0; i < this.economySeats; i++) {
+        seatsArray[i] = false;
+    }
+    return seatsArray;
 }
 
 const Flight = mongoose.model('Flight',flightSchema);

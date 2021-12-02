@@ -49,6 +49,7 @@ function PlaneView(props){   //function component declaration
     let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
     setFlight(data.reservedEconomySeats);
     console.log(data.reservedEconomySeats);
+    console.log(data);
     }
 
 
@@ -65,9 +66,7 @@ function PlaneView(props){   //function component declaration
       return(
         <div>
 
-          <Link to='/'><h2>Home</h2></Link>
-          <br/>
-        <h1>reserve seats</h1> 
+        <h1>Reserve your departure seats :</h1> 
         
         <form onSubmit={handleSubmit} id="form">
             <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
