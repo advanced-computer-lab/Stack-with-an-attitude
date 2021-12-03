@@ -46,7 +46,7 @@ export default function AlertDialog(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to Cancel this reservation?
+            Are you sure you want to cancel this reservation?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -92,13 +92,14 @@ console.log(id);
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>reservation number</StyledTableCell>
+            <StyledTableCell>Reservation number</StyledTableCell>
             <StyledTableCell>Flight number</StyledTableCell>
-            <StyledTableCell>number of seats</StyledTableCell>
-            <StyledTableCell>assigned seats</StyledTableCell>
-            <StyledTableCell>price</StyledTableCell>
-            <StyledTableCell>number of adults</StyledTableCell>
-            <StyledTableCell>number of children</StyledTableCell>
+            <StyledTableCell>Number of seats</StyledTableCell>
+            <StyledTableCell>Assigned seats</StyledTableCell>
+            <StyledTableCell>Price</StyledTableCell>
+            <StyledTableCell>Number of adults</StyledTableCell>
+            <StyledTableCell>Number of children</StyledTableCell>
+            <StyledTableCell>Options</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -113,6 +114,9 @@ console.log(id);
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
               <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
+              <StyledTableCell>
+                <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
