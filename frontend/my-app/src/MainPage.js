@@ -10,7 +10,7 @@ import ButtonBases from 'ButtonBases';
 
 class MainPage extends Component{
   
-  
+
   render(){
       return(
         <div>
@@ -21,7 +21,7 @@ class MainPage extends Component{
                 <ButtonBases/>
               </CardBody>
             </Card>             
-
+          {localStorage.setItem('isLoggedIn',false)}
         </div>
       );
     }

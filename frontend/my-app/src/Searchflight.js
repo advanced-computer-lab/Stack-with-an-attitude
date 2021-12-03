@@ -155,7 +155,7 @@ class Searchflight extends Component{
                       </StyledTableCell>
                       <StyledTableCell>
                         <AlertDialog id={row._id} state={(d) => this.setState(d)}/>
-                      </StyledTableCell>  
+                      </StyledTableCell>
                       <StyledTableCell>
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                           <DeleteIcon />

@@ -135,7 +135,7 @@ app.post('/user/login',(req,res)=>{
                 if(pass==data.password){
                     req.session.userEmail = Email;
                     req.session.userID=data._id;
-                    res.send({statusCode:200,login:true});
+                    res.send({statusCode:200,login:true,user:req.session.userID});
                 }
             }
             else{
