@@ -29,8 +29,8 @@ class Addflights extends Component{
       "baggageAllowance":e.target.baggageAllowance.value,
       "availableeconomySeats" : e.target.ecseats.value,
       "availableBusinessSeats" : e.target.busseats.value,
-      "reservedBusinessSeats" : [],
-      "reservedEconomySeats" : []
+      //"reservedBusinessSeats" : [],
+      //"reservedEconomySeats" : []
     }
      
     
@@ -52,7 +52,7 @@ class Addflights extends Component{
 
       this.setState({inserted:true});
 
-    }).catch((err, data) => console.log(data));
+    }).catch((err, data) => console.log(err.message));
 
 
   }  

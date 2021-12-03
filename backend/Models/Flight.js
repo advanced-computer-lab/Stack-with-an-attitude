@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 const flightSchema = new Schema ({
     flightNumber: {
         type: String,
@@ -53,7 +54,12 @@ const flightSchema = new Schema ({
     totalSeats: {
         type: Number,
         required: true,
-        default: ()=> {economySeats + businessSeats},
+        default: function() {
+            if (this.economySeats && this.businessSeats) {
+              return this.economySeats + this.businessSeats;
+            }
+            return null;
+          },
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
@@ -108,21 +114,38 @@ const flightSchema = new Schema ({
         type: Array,
         required: true,
         default: function() {
-                        let seatsArray = [];
-                        for (let i = 0; i < this.businessSeats; i++) {
-                            seatsArray[i] = false; 
-                        }
-                        },
+            if (this.businessSeats) {
+                var seats = [];
+                for(let i=0; i<this.businessSeats; i++){
+                    seats[i] = false;
+                }
+              return seats;
+            }
+            return [];
+          }
     },
     reservedEconomySeats: {
         type: Array,
         required: true,
-        default: getSeats(),
+        default: function() {
+            if (this.economySeats) {
+                var seats = [];
+                for(let i=0; i<this.economySeats; i++){
+                    seats[i] = false;
+                }
+              return seats;
+            }
+            return [];
+          }
     },
     availableBusinessSeats: {
         type : Number,
         required: true,
-        default: ()=> {businessSeats - reservedBusinessSeats},
+        default: function() {
+            if (this.businessSeats && this.reservedBusinessSeats) {
+                return this.businessSeats - this.reservedBusinessSeats.filter(x => x).length 
+            }
+          },
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
@@ -133,7 +156,11 @@ const flightSchema = new Schema ({
     availableeconomySeats: {
         type : Number,
         required: true,
-        default: ()=> {economySeats - reservedEconomySeats },
+        default: function() {
+            if (this.economySeats && this.reservedEconomySeats) {
+                return this.economySeats - this.reservedEconomySeats.filter(x => x).length 
+            }
+          },
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
@@ -143,18 +170,9 @@ const flightSchema = new Schema ({
     }
 }, {timestamps:true})
 
-
 // function that validate the startDate and endDate
 function dateValidator(value) {
     return Date.parse(this.departureDate) <= Date.parse(value);
-}
-
-function getSeats(){
-    let seatsArray = [];
-    for (let i = 0; i < this.economySeats; i++) {
-        seatsArray[i] = false;
-    }
-    return seatsArray;
 }
 
 const Flight = mongoose.model('Flight',flightSchema);
