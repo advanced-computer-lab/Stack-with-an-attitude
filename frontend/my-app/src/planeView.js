@@ -36,8 +36,6 @@ function PlaneView(props){   //function component declaration
     seats = seats.filter(seat=>(seat!=id))
     }
     setSelected(seats)
-
-    console.log(seats)
   }
 
   useEffect(()=>{

@@ -1,9 +1,10 @@
-import {useParams} from 'react-router-dom'
+import {useParams,Route,Routes} from 'react-router-dom'
 import ViewFlight from 'ViewFlight';
 import ViewFlight2 from 'ViewFlight2';
 import Button from '@mui/material/Button';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import React, { useEffect, useState } from 'react'
+import SearchReturnFlight from 'SearchReturnFlight';
 import PlaneView from 'PlaneView';
 import PlaneView2 from 'PlaneView2';
 
@@ -51,13 +52,13 @@ function ViewFlightHandler(){
 
     return(
         <div>
-        {secondFlight==null?(
+        {secondSeats.length!=0?(<h1>done</h1>):secondFlight==null?(
             firstSeats.length==0?
             <div>
                 <ViewFlight id={id}/>
                 <PlaneView id={id} setFunc={(value)=>setFirst(value)} />
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
-            {firstSeats.length!=0&&<Testcomp func={(value)=>setFlight(value)}/>}
+            {firstSeats.length!=0&&<SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)} />}
           </div>
         ):
             <div>

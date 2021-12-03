@@ -10,7 +10,7 @@ import Searchflight from './Searchflight';
 import SearchflightUser from './SearchflightUser';
 import ViewFlight from './ViewFlight';
 import Reservedflights from './Reservedflights';
-import PlaneView from './PlaneView';
+import PlaneView from 'PlaneView';
 import ViewProfile from './ViewProfile';
 import ViewFlightHandler from './viewFlightHandler';
 import ViewReturnFlight from './ViewReturnFlight';
@@ -38,7 +38,7 @@ function App() {
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
             <Route path='/viewflight/:id' element={<ViewFlight/>} />
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
-            <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} />
+            {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
             <Route path='/cancelflight' element={<Cancelflight/>} />
       </Routes>

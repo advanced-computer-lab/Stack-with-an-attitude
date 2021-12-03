@@ -5,7 +5,8 @@ const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
-const admin = require('./Models/Admin')
+const admin = require('./Models/Admin');
+const User = require('./Models/User');
 
  
 // Controller Imports
@@ -111,7 +112,7 @@ app.post('/admin/login',(req,res)=>{
               if(pass==data.password){
                   req.session.adminName = user;
                   req.session.adminId=data._id;
-                  res.send("logged in");
+                  res.send();
               }
           }
           else{
@@ -121,6 +122,37 @@ app.post('/admin/login',(req,res)=>{
   });
 
 });
+
+app.post('/user/login',(req,res)=>{
+    const Email = req.body.email;
+    const pass = req.body.password;
+  
+    User.findOne({email:Email},(err,data)=>{
+        if(err)
+            console.log(err);
+        else{
+            if(data){
+                if(pass==data.password){
+                    req.session.userEmail = Email;
+                    req.session.userID=data._id;
+                    res.send({statusCode:200,login:true});
+                }
+            }
+            else{
+                    res.send({statusCode:401,login:false});
+                }
+            }
+    });
+  
+  });
+
+  app.get('/user/logout',(req,res)=>{
+    if(req.session.Email)
+        req.session.destroy();
+    res.clearCookie('connect.sid');
+  res.status(200).send({statusCode:200,message:'logout successful'})
+
+})
 
 //destory the session using this method also dont destory the cookie and 
 //create a new one in the same route because as said before server sends the session from the previous req
