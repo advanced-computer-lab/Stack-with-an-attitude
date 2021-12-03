@@ -13,7 +13,7 @@ import { Checkbox } from '@mui/material';
 function PlaneView(props){   //function component declaration
   const [selected,setSelected] = useState([]);
   const [flight,setFlight] = useState([]);
-  const {id,setFunc} = props;
+  const {id,setFunc,type,seats} = props;
   let i =0;
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
@@ -25,17 +25,18 @@ function PlaneView(props){   //function component declaration
   }
 //checkbtn
   const handleChange=(e)=>{
-    let id=e.target.id;
-    let seats = selected
+
+    let thisseat=e.target.id;
+    let selectedSeats = selected
     if(e.target.checked){
-        if(!seats.includes(id)){
-            seats.push(id);
+        if(!(selectedSeats.includes(thisseat))){
+          selectedSeats= selectedSeats.concat([thisseat])
         }
     }
     else{
-    seats = seats.filter(seat=>(seat!=id))
+      selectedSeats = selectedSeats.filter(seat=>(seat!=thisseat))
     }
-    setSelected(seats)
+    setSelected(selectedSeats)
   }
 
   useEffect(()=>{
@@ -45,8 +46,12 @@ function PlaneView(props){   //function component declaration
   useEffect(()=>{
     async function fetchData(){
     let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
-    setFlight(data.reservedEconomySeats);
-    console.log(data.reservedEconomySeats);
+    if(type=="economy"){
+      setFlight(data.reservedEconomySeats);
+    }else if(type=="business"){
+      setFlight(data.reservedBusinessSeats)
+    }
+    console.log(flight);
     console.log(data);
     }
 
@@ -68,28 +73,28 @@ function PlaneView(props){   //function component declaration
         
         <form onSubmit={handleSubmit} id="form">
             <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-            {flight.map((fly,index)=>
+            {flight.map((seat,index)=>
             <div style={{width:'14%'}}>
-                {(fly?
+                {(seat?
                     <Checkbox
                     id={index.toString()}
                     key={index.toString()}
                     disabled
                     checked
-                    
                     />:
                     <Checkbox
                     id={index.toString()}
                     key={index.toString()}
                     color="success"
                     onChange={handleChange}
+                    disabled={!(selected.includes(index+''))&&selected.length>=seats}
                     />)}
                     </div>
                 )
             }   
             </div>
          
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button value="Submit" type="submit" variant="contained" disabled={selected.length<seats} endIcon={<SendIcon />}>
               Submit
           </Button>
         </form>

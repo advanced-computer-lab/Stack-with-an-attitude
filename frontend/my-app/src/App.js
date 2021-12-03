@@ -34,12 +34,12 @@ function App() {
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
             <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
-            <Route path='/viewflight/:id' element={<ViewFlightHandler />} />
+            {/* <Route path='/viewflight/:id' element={<ViewFlightHandler />} /> */}
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
-            <Route path='/viewflight/:id' element={<ViewFlight/>} />
+            {/* <Route path='/viewflight/:id' element={<ViewFlight/>} /> */}
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
-            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlight/>} />
+            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
             <Route path='/cancelflight' element={<Cancelflight/>} />
       </Routes>
     </Router>
