@@ -33,7 +33,7 @@ function ViewFlightHandler(){
     const [secondFlight,setFlight] = useState(null)
     const [firstSeats,setFirst] = useState([])
     const [secondSeats,setSecond] = useState([])
-    const {id}=useParams()
+    const {id,cabinclass,numofresseats}=useParams()
 
 
 
@@ -56,14 +56,14 @@ function ViewFlightHandler(){
             firstSeats.length==0?
             <div>
                 <ViewFlight id={id}/>
-                <PlaneView id={id} setFunc={(value)=>setFirst(value)} />
+                <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
             {firstSeats.length!=0&&<SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)} />}
           </div>
         ):
             <div>
                 <ViewFlight2 id={secondFlight}/>
-                <PlaneView2 id={secondFlight} setFunc={(value)=>setSecond(value)}/>
+                <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
             </div>
         }
         
