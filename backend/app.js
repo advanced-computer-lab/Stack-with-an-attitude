@@ -5,6 +5,7 @@ const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
+const admin = require('./Models/Admin')
 
  
 // Controller Imports
@@ -88,6 +89,15 @@ app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights)
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
+app.get('/admin/check',(req,res)=>{
+    const admin = req.session.admin;
+    const id = req.session.id;
+    res.send('your logged in as '+ admin +'/n' + 'with user id : '+ id)
+
+})
+
+app.use
+
 app.post('/admin/login',(req,res)=>{
   const user = req.body.username;
   const pass = req.body.password;
@@ -99,6 +109,7 @@ app.post('/admin/login',(req,res)=>{
           if(data){
               if(pass==data.password){
                   req.session.admin = user;
+                  req.session.id=data._id;
                   res.send("logged in");
               }
           }
