@@ -121,6 +121,8 @@ exports.createReservedFlight = async function(req,res) {
           //res.status(500).send(err.name)
           res.send(err.name)
           console.log(err.message)})
+
+    // update FLIGHTS ARRAY!!!!
 }
 
 exports.getAllreservedFlights = async function(req,res) {

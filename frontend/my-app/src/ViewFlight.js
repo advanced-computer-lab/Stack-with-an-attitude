@@ -113,14 +113,6 @@ let depsec = depstr[3]+""+depstr[4];
       <CardActions>
       
       </CardActions>
-      <CardActions>
-      <Link to={"/SearchReturnFlight/" + flight["to"] +"/"+ flight["from"]}>
-        <Button value="Submit" variant="contained">
-              view return flights
-          </Button>
-      </Link>
-      </CardActions>
-
     </Card>
     </div>
       );

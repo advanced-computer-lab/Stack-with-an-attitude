@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react'
 import SearchReturnFlight from 'SearchReturnFlight';
 import PlaneView from 'PlaneView';
 import PlaneView2 from 'PlaneView2';
+import Summary from 'Summary';
+import AlertDialogConfirmRes from 'AlertDialogConfirmRes';
 
 function ViewFlightHandler(){
 
@@ -21,9 +23,10 @@ function ViewFlightHandler(){
                 <form onSubmit={handleTest}>
                     <input type='text' defaultValue='61a7c74e08fb58bbc6f6feff' id='small' name='small'/>
                     <button>
-                        <Button  value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
+                        {false && <Button  value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
                             reserve 2nd flight by id
                         </Button>
+                        }
                     </button>
               </form>
     
@@ -52,7 +55,20 @@ function ViewFlightHandler(){
 
     return(
         <div>
-        {secondSeats.length!=0?(<h1>done</h1>):secondFlight==null?(
+            {secondSeats.length!=0?(
+            <div>
+                <div style={{display: 'flex',
+                                                justifyContent: 'space-evenly',
+                                                margin: 40
+            }}><ViewFlight2 id={id}/>
+                <ViewFlight2 id={secondFlight}/>
+                <Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight}/> //add total price    
+            </div>
+            <AlertDialogConfirmRes/>
+            </div>
+        
+        
+            ):secondFlight==null?(
             firstSeats.length==0?
             <div>
                 <ViewFlight id={id}/>
@@ -60,19 +76,16 @@ function ViewFlightHandler(){
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
             {firstSeats.length!=0&&<SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)} />}
           </div>
-        ):
+            ):
             <div>
                 <ViewFlight2 id={secondFlight}/>
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
             </div>
-        }
+            }
         
         </div>
     );
 }
-
-
-
 
 
 export default ViewFlightHandler ;

@@ -69,7 +69,7 @@ function PlaneView(props){   //function component declaration
       return(
         <div>
 
-        <h1>Reserve your departure seats :</h1> 
+        <h1>Reserve your return seats :</h1> 
         
         <form onSubmit={handleSubmit} id="form">
             <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
