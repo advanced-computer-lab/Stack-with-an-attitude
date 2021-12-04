@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
@@ -95,11 +94,20 @@ export default function SearchflightUser() {
   }  
     return(
       <div>
-<Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+        {localStorage.getItem('isLoggedIn') ? (
+          <Link to="/user" >
+             <Button value="home" variant="contained" endIcon={<HomeIcon />}>
                 Home
             </Button>
-</Link>
+          </Link>
+        ) : (
+          <Link to="/" >
+           <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Home
+            </Button>
+          </Link>
+        )}
+           
           <br/>
         <h1>Search and reserve your Flight seats</h1>  
         <div className='containerS'>
@@ -201,7 +209,6 @@ export default function SearchflightUser() {
             </TableContainer>
         </div>
       </div>
-
       );
     
   

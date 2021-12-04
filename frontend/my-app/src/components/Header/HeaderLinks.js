@@ -4,7 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
 import { Link } from "react-router-dom";
-
+import axios from 'axios' ;
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -26,6 +26,22 @@ const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
+
+  const handleLoginClick = async function (e) {
+
+    e.preventDefault();
+
+    // get user email & password from form here (in sprint 3).
+
+    const email = null;
+    const password = null;
+    await axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+                .then((result) => {const userId = result.userID ; 
+                                  localStorage.setItem('userID',userId);
+                                  localStorage.setItem('isLoggedIn',login);
+                                });
+  }
+
 
   return (
     <List className={classes.list}>
