@@ -202,8 +202,8 @@ exports.updateFlightById = async function(req,res) {
                 Object.keys(err.errors).forEach((key) => {
                   errors[key] = err.errors[key].message;
                 });
-          
-                return res.status(400).send(errors);
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
               }
               if (err.name === "MongoServerError"){
                 return res.send({statusCode : err.status, message : "duplicate key error"})

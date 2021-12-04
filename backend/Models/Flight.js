@@ -21,7 +21,7 @@ const flightSchema = new Schema ({
     arrivalDate: {
         type : String,
         required: true,
-        validate : [dateValidator,'Arrival Date must be less than or equal Departure Date']
+        validate: [dateValidator,'Arrival Date must be greater than or equal Departure Date']
     },
     departureTime: {
         type : String, 
@@ -149,7 +149,7 @@ const flightSchema = new Schema ({
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
-                return 0<input
+                return 0<=input
             }
         }
     },
@@ -164,7 +164,7 @@ const flightSchema = new Schema ({
         validate: {
             message: "Must be a Positive Number",
             validator: (input) => {
-                return 0<input
+                return 0<=input
             }
         }
     }
@@ -172,7 +172,7 @@ const flightSchema = new Schema ({
 
 // function that validate the startDate and endDate
 function dateValidator(value) {
-    return Date.parse(this.departureDate) <= Date.parse(value);
+    return Date.parse(this._update.$set.departureDate) <= Date.parse(value);
 }
 
 const Flight = mongoose.model('Flight',flightSchema);

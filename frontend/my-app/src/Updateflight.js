@@ -14,12 +14,18 @@ function Updateflight(){   //function component declaration
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
-
+  const [notValid,setNotValid]=useState(false);
+  const [notValidObj,setNotValidObj]=useState([]);
+  var notValidObjString;
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
+    let newReservedBusinessSeats = flight.reservedBusinessSeats.slice(0, parseInt(e.target.businessSeats.value));
+    let newReservedEconomySeats = flight.reservedEconomySeats.slice(0, parseInt(e.target.economySeats.value));
+    let newAvailableBusinessSeats = parseInt(e.target.businessSeats.value) - newReservedBusinessSeats.filter(x => x).length;
+    let newAvailableeconomySeats = parseInt(e.target.economySeats.value) - newReservedEconomySeats.filter(x => x).length;
     const update = {
-      "flightNumber":e.target.flightNumber.value,
+      "flightNumber":flight.flightNumber,
       "departureTime":e.target.departureTime.value,
       "arrivalTime":e.target.arrivalTime.value,
       "departureDate":e.target.departureDate.value,
@@ -29,17 +35,23 @@ function Updateflight(){   //function component declaration
       "totalSeats": parseInt(e.target.economySeats.value)+ parseInt(e.target.businessSeats.value),
       "from":e.target.from.value,
       "to":e.target.to.value,
-      "returnDate":e.target.returnDate.value
+      "price":parseInt(e.target.price.value),
+      "baggageAllowance":parseInt(e.target.baggageAllowance.value),
+      "reservedBusinessSeats":newReservedBusinessSeats,
+      "reservedEconomySeats":newReservedEconomySeats,
+      "availableBusinessSeats":newAvailableBusinessSeats,
+      "availableeconomySeats":newAvailableeconomySeats,
+      //"returnDate":e.target.returnDate.value
     }
     console.log(update);
-    axios.put(`http://localhost:8000/updateFlight/${id}`,{flight:update})  //the update request
+    axios.put(`http://localhost:8000/updateFlight/${id}`,{"flight" : update})  //the update request
     .then(data=>{
       console.log(data);
       console.log("updated successfully")
         //in the then part meaning if the request is successful clear the feilds and set a flag "updated" to true 
         //its part of the state of the component so if you have a listener for it (the useEffect) it will sense that the flag is updated
         //therefore reupdating the component 
-      e.target.flightNumber.value='';
+      //e.target.flightNumber.value='';
       e.target.departureTime.value='';
       e.target.arrivalTime.value='';
       e.target.departureDate.value='';
@@ -48,11 +60,24 @@ function Updateflight(){   //function component declaration
       e.target.businessSeats.value='';
       e.target.from.value='';
       e.target.to.value='';
+      e.target.price.value='';
+      e.target.baggageAllowance.value='';
 
       setUpdated(true);
 
     }).catch(error=>{
-      console.log(error)
+      notValidObjString = "";
+      setNotValid(true);
+      setNotValidObj(error.response.data.errors);
+      let keyss = Object.keys(notValidObj);
+      for(let i in keyss){
+        let j = keyss[i];
+        console.log(j);
+        console.log(notValidObj.j);
+        notValidObjString += j + ": " + notValidObj.keyss[i] + "\n"
+      }
+      console.log(notValidObjString);
+      //console.log(Object.keys(error.response.data.errors).map());
     })
   }
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -84,7 +109,7 @@ function Updateflight(){   //function component declaration
   //with the flight data captured from the request
   useEffect(()=>{
   },[flight])
-
+  
       return(
         <div>
 
@@ -96,8 +121,9 @@ function Updateflight(){   //function component declaration
           <br/>
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
+        {notValid && <h2 className="feedback-header">{notValidObjString} </h2>}
         <form onSubmit={handleSubmit} id="form">
-          {(Object.keys(flight).slice(2,12)).map((f)=>(//loop over the flight info and map them to fields with their default value
+          {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField
           required
           key={f}
