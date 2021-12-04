@@ -16,7 +16,7 @@ function Updateflight(){   //function component declaration
   const {id} = useParams();
   const [notValid,setNotValid]=useState(false);
   const [notValidObj,setNotValidObj]=useState([]);
-  var notValidObjString;
+  const [notValidObjString,setNotValidObjString]=useState("");
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
@@ -66,16 +66,15 @@ function Updateflight(){   //function component declaration
       setUpdated(true);
 
     }).catch(error=>{
-      notValidObjString = "";
+      let temp = "";
       setNotValid(true);
       setNotValidObj(error.response.data.errors);
       let keyss = Object.keys(notValidObj);
+      let valuess = Object.values(notValidObj);
       for(let i in keyss){
-        let j = keyss[i];
-        console.log(j);
-        console.log(notValidObj.j);
-        notValidObjString += j + ": " + notValidObj.keyss[i] + "\n"
+        temp += keyss[i] + ": " + valuess[i] + ", "
       }
+      setNotValidObjString(temp);
       console.log(notValidObjString);
       //console.log(Object.keys(error.response.data.errors).map());
     })
@@ -110,6 +109,15 @@ function Updateflight(){   //function component declaration
   useEffect(()=>{
   },[flight])
   
+  useEffect(()=>{
+  },[notValid])
+
+  useEffect(()=>{
+  },[notValidObj])
+
+  useEffect(()=>{
+  },[notValidObjString])
+
       return(
         <div>
 
@@ -121,7 +129,7 @@ function Updateflight(){   //function component declaration
           <br/>
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
-        {notValid && <h2 className="feedback-header">{notValidObjString} </h2>}
+        {notValid && <h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
         <form onSubmit={handleSubmit} id="form">
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField
