@@ -10,7 +10,7 @@ import Searchflight from './Searchflight';
 import SearchflightUser from './SearchflightUser';
 import ViewFlight from './ViewFlight';
 import Reservedflights from './Reservedflights';
-import PlaneView from 'PlaneView';
+import PlaneView from './PlaneView';
 import ViewProfile from './ViewProfile';
 import ViewFlightHandler from './viewFlightHandler';
 import ViewReturnFlight from './ViewReturnFlight';
