@@ -93,7 +93,7 @@ let depsec = depstr[3]+""+depstr[4];
         trip duration: {(arr-dep)/3600000} hours
         </Typography>
         <Typography variant="body2">
-        baggage allowance : 2
+        baggage allowance : {flight["baggageAllowance"]}
         </Typography>
       </CardContent>
       <CardActions>

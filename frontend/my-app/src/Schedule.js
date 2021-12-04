@@ -103,8 +103,8 @@ function Schedule() {
         <TableHead>
           <TableRow>
             <StyledTableCell>Flight number</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Delete</StyledTableCell>
+            <StyledTableCell>Edit</StyledTableCell>
             <StyledTableCell>Arrival Date</StyledTableCell>
             <StyledTableCell>Arrival Time</StyledTableCell>
             <StyledTableCell>Departure Date</StyledTableCell>
