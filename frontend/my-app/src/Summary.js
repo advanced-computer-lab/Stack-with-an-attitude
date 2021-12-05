@@ -48,7 +48,7 @@ useEffect(()=>{
 }
 },[secondFlight]);
 
-
+useEffect(() => {(() => handleClick(finalPrice))();},[finalPrice])
 
       return(
                 <div>

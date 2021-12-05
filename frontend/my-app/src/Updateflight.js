@@ -14,8 +14,8 @@ function Updateflight(){   //function component declaration
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
-  //const [notValid,setNotValid]=useState(false);
-  //const [notValidObj,setNotValidObj]=useState([]);
+  const [notValid,setNotValid]=useState(false);
+  const [notValidObj,setNotValidObj]=useState([]);
   const [notValidObjString,setNotValidObjString]=useState("");
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form

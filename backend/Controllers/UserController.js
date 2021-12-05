@@ -74,19 +74,12 @@ exports.createReservedFlight = async function(req,res) {
 
   let newReservation = new Reservation(req.body.reservation);
 
-  console.log('BODY' , req.body);
-  console.log('OJB' , newReservation);
-
-  newReservation.reservationNumber = '34';
-
-  newReservation.numberOfAdults = 2;
-  newReservation.numberOfChildren = 1;
-  newReservation.price = 1001;
+  newReservation.reservationNumber = Math.floor(Math.random() * 9999) + '';
 
   await newReservation.save()
       .then( (reservedflights) => {
           //res.status(200)
-         console.log('CREEAAAAAAAATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED');
+         console.log('CREATED RESERVATION');
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
