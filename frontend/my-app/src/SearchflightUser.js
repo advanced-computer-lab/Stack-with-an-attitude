@@ -121,7 +121,7 @@ export default function SearchflightUser() {
           onChange = {handleChange}
           label="cabinclass"
         >
-          <MenuItem value="business">business</MenuItem>
+          <MenuItem value="business">Business</MenuItem>
           <MenuItem value = "economy">Economy</MenuItem>
         </Select>
       </FormControl>

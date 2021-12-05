@@ -97,7 +97,7 @@ console.log(id);
             <StyledTableCell>Number of seats</StyledTableCell>
             <StyledTableCell>Assigned departure seats</StyledTableCell>
             <StyledTableCell>Assigned return seats</StyledTableCell>
-            <StyledTableCell>total Price</StyledTableCell>
+            <StyledTableCell>Total price</StyledTableCell>
             <StyledTableCell>Number of adults</StyledTableCell>
             <StyledTableCell>Number of children</StyledTableCell>
             <StyledTableCell>Options</StyledTableCell>
