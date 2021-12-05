@@ -36,7 +36,7 @@ export default function HeaderLinks(props) {
     const email = 'a@gmail.com';
     const password = 5678;
     axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
-                .then((result) => {const userId = result.user ; 
+                .then((result) => {const userId = result.data.user ; 
                                   localStorage.setItem('userID',userId);
                                   localStorage.setItem('isLoggedIn',true);
                                   window.location.href='/user'
