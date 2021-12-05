@@ -90,9 +90,11 @@ function ViewFlightHandler(){
           label="Number of adults"
           name="noofadults"
           type="number"
-          onchange= {(e)=>{
-            setNumofadults(e.target.value);
+          onChange= {(e)=>{
+              e.target.value >= 0 ?
+            setNumofadults(e.target.value) : setNumofadults(0)
           }}
+         pattern='[0-9]*'
           />
           <TextField
           required
@@ -100,9 +102,11 @@ function ViewFlightHandler(){
           label="Number of children"
           name="noofchildren"
           type="number"
-          onchange= {(e)=>{
-            setNumOfchildren(e.target.value);
+          onChange= {(e)=>{
+            e.target.value >= 0 ?
+            setNumOfchildren(e.target.value) : setNumOfchildren(0)
           }}
+          
           />
             </div>
             <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
@@ -114,7 +118,11 @@ function ViewFlightHandler(){
                                                 cabinClass: cabinclass,
                                                 numberOfAdults: numOfadults,
                                                 numberOfChildren: numOfchildren,
-                                                }}/>
+                                                }}
+                                                numOfadults={numOfadults}
+                                                numOfchildren={numOfchildren}
+                                                numofresseats={numofresseats}
+                                                />
             </div>
         
         
