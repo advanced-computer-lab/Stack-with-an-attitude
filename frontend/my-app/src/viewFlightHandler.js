@@ -64,6 +64,7 @@ function ViewFlightHandler(){
         <div>
             {secondSeats.length!=0?(
             <div>
+                <button onClick={()=>{setSecond([])}}>back</button>
                 <div style={{display: 'flex',
                                                 justifyContent: 'space-evenly',
                                                 margin: 40
@@ -85,15 +86,26 @@ function ViewFlightHandler(){
             ):secondFlight==null?(
             firstSeats.length==0?
             <div>
+                <button onClick={()=>{window.location.href='/'}}>back</button>
+            <div>
                 <ViewFlight id={id}/>
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
+            </div>
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
-            {firstSeats.length!=0&&<SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)} />}
+            {firstSeats.length!=0&&(
+            <div>
+                <button onClick={()=>{setFirst([])}}>back</button>
+            <SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)}/>
+            </div>
+            )}
           </div>
             ):
             <div>
+                <button onClick={()=>{setFlight(null)}}>back</button>
+            <div>
                 <ViewFlight2 id={secondFlight}/>
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
+            </div>
             </div>
             }
         
