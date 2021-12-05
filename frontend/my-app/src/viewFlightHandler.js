@@ -67,9 +67,9 @@ function ViewFlightHandler(){
                 <div style={{display: 'flex',
                                                 justifyContent: 'space-evenly',
                                                 margin: 40
-            }}><ViewFlight2 id={id}/>
-                <ViewFlight2 id={secondFlight}/>
-                <Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight} handleClick={getPrice}/>    
+            }}><div><h2>Depature Details</h2><ViewFlight2 id={id}/></div>
+                <div><h2>Return Details</h2><ViewFlight2 id={secondFlight}/></div>
+                <div><h2>Additional Info</h2><Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight} handleClick={getPrice}/></div>    
             </div>
             <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
                                                 reservedFlightIDs:[id,secondFlight],
