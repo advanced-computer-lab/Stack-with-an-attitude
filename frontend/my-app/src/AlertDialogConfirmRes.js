@@ -31,7 +31,7 @@ export default function AlertDialogConfirmRes(props) {
   }
   return (
     <div>
-        <Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} endIcon={< EventSeatIcon />} id={props.id}>
+        <Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} disabled={numOfchildren+numOfadults != numofresseats} endIcon={< EventSeatIcon />} id={props.id}>
             Reserve
         </Button>
       <Dialog

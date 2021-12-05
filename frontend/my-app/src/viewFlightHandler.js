@@ -9,6 +9,7 @@ import PlaneView from 'PlaneView';
 import PlaneView2 from 'PlaneView2';
 import Summary from 'Summary';
 import AlertDialogConfirmRes from 'AlertDialogConfirmRes';
+import TextField from '@mui/material/TextField';
 
 function ViewFlightHandler(){
 
@@ -39,6 +40,8 @@ function ViewFlightHandler(){
     const [firstSeats,setFirst] = useState([])
     const [secondSeats,setSecond] = useState([])
     const [finalPrice,setFinalPrice] = useState(null)
+    const [numOfadults,setNumofadults] = useState(0)
+    const [numOfchildren,setNumOfchildren] = useState(0)
 
     const getPrice = (price) => {setFinalPrice(price)}
 
@@ -58,6 +61,14 @@ function ViewFlightHandler(){
         console.log(finalPrice);
     },[finalPrice])
 
+    useEffect(()=>{
+        console.log(numOfadults);
+    },[numOfadults])
+
+    useEffect(()=>{
+        console.log(numOfchildren);
+    },[numOfchildren])
+
     
 
     return(
@@ -72,6 +83,28 @@ function ViewFlightHandler(){
                 <div><h2>Return Details</h2><ViewFlight2 id={secondFlight}/></div>
                 <div><h2>Additional Info</h2><Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight} handleClick={getPrice}/></div>    
             </div>
+          <div>
+          <TextField
+          required
+          id="noofadults"
+          label="Number of adults"
+          name="noofadults"
+          type="number"
+          onchange= {(e)=>{
+            setNumofadults(e.target.value);
+          }}
+          />
+          <TextField
+          required
+          id="noofchildren"
+          label="Number of children"
+          name="noofchildren"
+          type="number"
+          onchange= {(e)=>{
+            setNumOfchildren(e.target.value);
+          }}
+          />
+            </div>
             <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
                                                 reservedFlightIDs:[id,secondFlight],
                                                 numberOfSeats:firstSeats.length,
@@ -79,6 +112,8 @@ function ViewFlightHandler(){
                                                 assignedReturnSeats:secondSeats,
                                                 price: finalPrice,
                                                 cabinClass: cabinclass,
+                                                numberOfAdults: numOfadults,
+                                                numberOfChildren: numOfchildren,
                                                 }}/>
             </div>
         

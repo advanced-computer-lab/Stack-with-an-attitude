@@ -111,8 +111,8 @@ console.log(id);
               </StyledTableCell>
               <StyledTableCell>{row.reservedFlightIDs}</StyledTableCell>
               <StyledTableCell>{row.numberOfSeats}</StyledTableCell>
-              <StyledTableCell>{row.assignedDepartureSeats + ' '}</StyledTableCell>
-              <StyledTableCell>{row.assignedReturnSeats + ' '}</StyledTableCell>
+              <StyledTableCell>{row.assignedDepartureSeats + " "}</StyledTableCell>
+              <StyledTableCell>{row.assignedReturnSeats + " "}</StyledTableCell>
               <StyledTableCell>{row.price * row.numberOfSeats}</StyledTableCell>
               <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
               <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
