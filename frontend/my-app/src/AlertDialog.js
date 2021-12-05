@@ -29,17 +29,6 @@ export default function AlertDialog(props) {
     props.state([]);
     
   }
-
-  const handleDeletereserveClick = async (e) => {
-
-    await axios.delete(`http://localhost:8000/deletereservedFlight/${props.id}`)
-    .then(data => console.log('Cancelled!'));
-
-    handleClose();
-    props.state([]);
-    
-  }
-
   return (
     <div>
       <IconButton aria-label="delete" onClick={handleClickOpen} id={props.id}>
@@ -62,30 +51,6 @@ export default function AlertDialog(props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleDeleteClick} autoFocus>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <IconButton aria-label="cancelflight" onClick={handleClickOpen} id={props.id}>
-        <DeleteIcon />
-      </IconButton>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Cancel Reserved Flight?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to Cancel this reservation?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeletereserveClick} autoFocus>
             Confirm
           </Button>
         </DialogActions>

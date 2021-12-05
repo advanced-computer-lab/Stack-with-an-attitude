@@ -5,6 +5,8 @@ const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
+const admin = require('./Models/Admin');
+const User = require('./Models/User');
 
  
 // Controller Imports
@@ -47,30 +49,31 @@ app.use(session({
 
 }));
 
+
+///middlewares
+
 //Routes
 //------------Admin
-app.post('/searchFlights', adminController.searchFlight);
+app.post('/searchFlights',AdminAuth, adminController.searchFlight);
 
-app.post('/searchFlightsuser', adminController.searchFlightuser);
+app.post('/searchFlightsuser',AdminAuth, adminController.searchFlightuser);
 
-app.get('/allFlights', adminController.getAllFlights);
+app.get('/allFlights',AdminAuth , adminController.getAllFlights);
 
-app.get('/getFlight/:getID', adminController.getFlightById);
+app.get('/getFlight/:getID',AdminAuth, adminController.getFlightById);
 
-app.put('/updateFlight/:updateID', adminController.updateFlightById);
+app.put('/updateFlight/:updateID', AdminAuth , adminController.updateFlightById);
 
-app.post('/createFlight',adminController.newFlight);
+app.post('/createFlight', AdminAuth ,adminController.newFlight);
 
-app.delete('/deleteFlight/:deleteID',adminController.deleteFlightById);
+app.delete('/deleteFlight/:deleteID', AdminAuth ,adminController.deleteFlightById);
 
-app.get('/allreservedflights', adminController.getAllreservedFlights);
+app.get('/allreservedflights', AdminAuth , adminController.getAllreservedFlights);
 
-app.delete('/deletereservedFlight/:deleteID',adminController.deletereservedflight);
+app.delete('/deletereservedFlight/:deleteID', AdminAuth ,adminController.deletereservedflight);
 //-------------
 
 //------------User
-app.put('/user/reserveSeats/:id',userController.reserveSelectedSeats);
-
 app.put('/user/update/:id', userController.updateUserById);
 
 app.get('/user/getInfo/:id', userController.getUserById);
@@ -88,6 +91,13 @@ app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights)
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
+app.get('/admin/check',(req,res)=>{
+    const admin = req.session.adminName;
+    const id = req.session.adminId;
+    res.send('your logged in as '+ admin +  ' with user id : '+ id)
+
+})
+
 app.post('/admin/login',(req,res)=>{
   const user = req.body.username;
   const pass = req.body.password;
@@ -98,8 +108,9 @@ app.post('/admin/login',(req,res)=>{
       else{
           if(data){
               if(pass==data.password){
-                  req.session.admin = user;
-                  res.send("logged in");
+                  req.session.adminName = user;
+                  req.session.adminId=data._id;
+                  res.send();
               }
           }
           else{
@@ -110,16 +121,58 @@ app.post('/admin/login',(req,res)=>{
 
 });
 
+app.post('/user/login',(req,res)=>{
+    const Email = req.body.email;
+    const pass = req.body.password;
+  
+    User.findOne({email:Email},(err,data)=>{
+        if(err)
+            console.log(err);
+        else{
+            if(data){
+                if(pass==data.password){
+                    req.session.userEmail = Email;
+                    req.session.userID=data._id;
+                    res.send({statusCode:200,login:true,user:req.session.userID});
+                }
+            }
+            else{
+                    res.send({statusCode:401,login:false});
+                }
+            }
+    });
+  
+  });
+
+  app.get('/user/logout',(req,res)=>{
+    if(req.session.Email)
+        req.session.destroy();
+    res.clearCookie('connect.sid');
+  res.status(200).send({statusCode:200,message:'logout successful'})
+
+})
+
 //destory the session using this method also dont destory the cookie and 
 //create a new one in the same route because as said before server sends the session from the previous req
 //if you destroy it its now null and u cant instanciate a session anyway
 app.get('/admin/logout',(req,res)=>{
-
-  if(req.session.admin)
-      req.session.destroy();
-  res.status(200).send(`<h1>you logged out </h1>`)
+    if(req.session.admin)
+        req.session.destroy();
+    res.clearCookie('connect.sid');
+  res.status(200).send({statusCode:200,message:'logout successful'})
 
 })
+
+function AdminAuth(req,res,next){
+    // if(req.session.adminId){
+    //     next();
+    // }else{
+    //     res.send({statusCode:403,succsess:false});
+    // }
+    next();
+}
+
+
 
 // Server is Listening
 app.listen(port, () => {console.log(`Listening to requests on http://localhost:${port}`)})

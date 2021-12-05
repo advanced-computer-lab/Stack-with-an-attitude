@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const images = [
   {
-    url: '/static/images/buttons/breakfast.jpg',
+    url: 'https://s1.travix.com/eu/europe-italy-rome-colosseum-woman-small.jpg',
     title: 'Search for available flights',
     width: '100%',
     link: '/searchflightuser'
@@ -30,7 +30,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
       opacity: 0,
     },
     '& .MuiTypography-root': {
-      border: '4px solid currentColor',
+      border: '0px solid currentColor',
     },
   },
 }));
@@ -89,24 +89,27 @@ export default function ButtonBases() {
             width: image.width,
           }}
         >
-          <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
-          <ImageBackdrop className="MuiImageBackdrop-root" />
-          <Image>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              sx={{
-                position: 'relative',
-                p: 4,
-                pt: 2,
-                pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-              }}
-            >
-              <Link to={image.link}>{image.title}</Link>
-              <ImageMarked className="MuiImageMarked-root" />
-            </Typography>
-          </Image>
+           <Link to={image.link}>
+            <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+            <ImageBackdrop className="MuiImageBackdrop-root" />
+            <Image>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                fontSize = "50px"
+                sx={{
+                  position: 'relative',
+                  p: 4,
+                  pt: 2,
+                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                }}
+              >
+              {image.title}
+                <ImageMarked className="MuiImageMarked-root" />
+              </Typography>
+            </Image>
+          </Link>
         </ImageButton>
       ))}
     </Box>

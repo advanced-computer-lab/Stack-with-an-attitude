@@ -6,10 +6,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
 import axios from 'axios' ;
 
-export default function AlertDialog(props) {
+export default function AlertDialogConfirmRes(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,21 +20,20 @@ export default function AlertDialog(props) {
     setOpen(false);
   };
 
-  const handleDeletereserveClick = async (e) => {
+  const handleDeleteClick = async (e) => {
 
-    await axios.delete(`http://localhost:8000/deletereservedFlight/${props.id}`)
-    .then(data => console.log('Cancelled!'));
+    await axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
+    .then(data => console.log('CREATED!'));
 
     handleClose();
     props.state([]);
     
   }
-
   return (
     <div>
-      <IconButton aria-label="cancelflight" onClick={handleClickOpen} id={props.id}>
-        <DeleteIcon />
-      </IconButton>
+        <Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} endIcon={< EventSeatIcon />} id={props.id}>
+            Reserve
+        </Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -42,16 +41,16 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Cancel Reserved Flight?"}
+          {"Confirm Reservation?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to cancel this reservation?
+            Are you sure you want to confirm this reservation?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeletereserveClick} autoFocus>
+          <Button onClick={handleDeleteClick} autoFocus>
             Confirm
           </Button>
         </DialogActions>

@@ -59,7 +59,7 @@ export default function HeaderLinksLoggedIn(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-          <Link style={{padding:0}} to="/user/profile" className={classes.dropdownLink}>
+          <Link style={{padding:0}} to={'/user/profile/' + localStorage.getItem('userID')} id={localStorage.getItem('userID')} className={classes.dropdownLink}>
               <AccountCircleIcon/>
           </Link>
         </Button>
@@ -71,7 +71,7 @@ export default function HeaderLinksLoggedIn(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
+        <Link style={{padding:0}} to="/user" className={classes.dropdownLink}>
               Register
         </Link>
         </Button>

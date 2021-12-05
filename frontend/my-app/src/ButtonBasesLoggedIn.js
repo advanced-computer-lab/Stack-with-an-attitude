@@ -7,16 +7,16 @@ import { Link } from 'react-router-dom';
 
 const images = [
   {
-    url: '/static/images/buttons/breakfast.jpg',
+    url: 'https://content.r9cdn.net/rimg/dimg/42/5b/ff9a1ab9-city-6080-167cd496c89.jpg?crop=true&width=1366&height=768&xhint=1819&yhint=1083',
     title: 'Search for available flights',
     width: '60%',
     link: '/searchflightuser'
   },
   {
-    url: '/static/images/buttons/burgers.jpg',
+    url: 'https://tds.indianeagle.com/wp-content/uploads/2018/08/Booking-Flights-through-Travel-Agents.jpg',
     title: 'View your reserved flights',
     width: '40%',
-    link: '/yourreservedflights/:id'
+    link: '/yourreservedflights/'+localStorage.getItem('userID') 
   },
 
 ];
@@ -37,7 +37,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
       opacity: 0,
     },
     '& .MuiTypography-root': {
-      border: '4px solid currentColor',
+      border: '0px solid currentColor',
     },
   },
 }));
@@ -89,32 +89,35 @@ export default function ButtonBases() {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
       {images.map((image) => (
-        <ImageButton
-          focusRipple
-          key={image.title}
-          style={{
-            width: image.width,
-          }}
-        >
-          <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
-          <ImageBackdrop className="MuiImageBackdrop-root" />
-          <Image>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              sx={{
-                position: 'relative',
-                p: 4,
-                pt: 2,
-                pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-              }}
-            >
-              <Link to={image.link}>{image.title}</Link>
-              <ImageMarked className="MuiImageMarked-root" />
-            </Typography>
-          </Image>
-        </ImageButton>
+          <ImageButton
+            focusRipple
+            key={image.title}
+            style={{
+              width: image.width,
+            }}
+          >
+             <Link to={image.link}>
+              <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+              <ImageBackdrop className="MuiImageBackdrop-root" />
+              <Image>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="inherit"
+                  fontSize = "25px"
+                  sx={{
+                    position: 'relative',
+                    p: 4,
+                    pt: 2,
+                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  }}
+                >
+                  {image.title}
+                  <ImageMarked className="MuiImageMarked-root" />
+                </Typography>
+              </Image>
+            </Link>
+          </ImageButton>
       ))}
     </Box>
   );

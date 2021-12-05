@@ -39,14 +39,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function SearchReturnFlight() {
+function SearchReturnFlight(props) {
 
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
-  const [state,setState] = useState([]);
+  const [state,setState] = useState(null);
+  const {flightId,setFunc} = props;
+  let from,to;
 
-  const {from, to} = useParams();
-  console.log(from);
-  console.log(to);
+
+  // const {from, to} = props;
+
 
   const getAllFlights =async () => {
 
@@ -63,24 +65,26 @@ function SearchReturnFlight() {
                 console.log(err);
                 });
         setRows(flights);
-        console.log(flights);    
+ 
   }    
-  
 
-  useEffect(() => {  //use useEffect as a method that runs when the component is created
-     // by default useEffect runs both on creation and update we do change the state when we update row causing an infinite loop 
-     // therefore add this second param [] to useEffect after the method to make it run on creation only
-     // equivelent to componentDidMount and componentDidUpdate
-    
-    const interval = setInterval(() => {getAllFlights()},10000);
-    return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
+  useEffect(async() => {  
+
+    await axios.get(`http://localhost:8000/getFlight/${flightId}`).then((flight)=>{
+    console.log(flight);
+    to = flight.data.from;
+    from = flight.data.to;
+  
+  })
+  const interval = setInterval(() => {getAllFlights()},10000);
+    return () => clearInterval(interval); 
     
   },[]);
 
   useEffect(() => {
+    console.log(from,to)
     getAllFlights();
   },[state]);
-
 
 
 
@@ -137,11 +141,13 @@ function SearchReturnFlight() {
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                           <DeleteIcon />
                         </IconButton> */}
-                        <Link to={"/viewreturnflight/" + row._id}>
+                        <Button onClick={()=>{setFunc(row._id)}}>
+                        {/* <Link to={"/viewreturnflight/" + row._id}> */}
                           <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
                             <PreviewIcon />
                           </IconButton>
-                        </Link>
+                        {/* </Link> */}
+                        </Button>
                       </StyledTableCell>
             </StyledTableRow>
           )})}

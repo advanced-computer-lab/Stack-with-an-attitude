@@ -32,7 +32,11 @@ const reservationSchema = new Schema ({
             }
         }
     },
-    assignedSeats: {
+    assignedDepartureSeats: {
+        type: Array,
+        required: true
+    },
+    assignedReturnSeats: {
         type: Array,
         required: true
     },
@@ -45,6 +49,10 @@ const reservationSchema = new Schema ({
     },
     numberOfChildren: {
         type : Number,
+    },
+    cabinClass: {
+        type : String,
+        required : true,
     },
     
 }, {timestamps:true})

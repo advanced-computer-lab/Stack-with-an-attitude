@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -43,11 +43,12 @@ function Reservedflights() {
 
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
   const [state,setState] = useState([]);
+  const {id} =  useParams();
 
-  const getAllFlights =async () => {
-
+  const getAllresFlights =async () => {
+console.log(id);
         let flights = [];
-        await axios.get('http://localhost:8000/allFlights')                   
+        await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
 
           result.data.forEach(flight => {
@@ -68,13 +69,13 @@ function Reservedflights() {
      // therefore add this second param [] to useEffect after the method to make it run on creation only
      // equivelent to componentDidMount and componentDidUpdate
     
-    const interval = setInterval(() => {getAllFlights()},10000);
+    const interval = setInterval(() => {getAllresFlights()},10000);
     return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
     
   },[]);
 
   useEffect(() => {
-    getAllFlights();
+    getAllresFlights();
   },[state]);
 
 
@@ -91,31 +92,30 @@ function Reservedflights() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>reservation number</StyledTableCell>
+            <StyledTableCell>Reservation number</StyledTableCell>
             <StyledTableCell>Flight number</StyledTableCell>
-            <StyledTableCell>user ID</StyledTableCell>
-            <StyledTableCell>number of seats</StyledTableCell>
-            <StyledTableCell>assigned seats</StyledTableCell>
-            <StyledTableCell>price</StyledTableCell>
-            <StyledTableCell>number of adults</StyledTableCell>
-            <StyledTableCell>number of children</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Number of seats</StyledTableCell>
+            <StyledTableCell>Assigned seats</StyledTableCell>
+            <StyledTableCell>Price</StyledTableCell>
+            <StyledTableCell>Number of adults</StyledTableCell>
+            <StyledTableCell>Number of children</StyledTableCell>
+            <StyledTableCell>Options</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
             <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
-                {row.flightNumber}
+                {row.reservationNumber}
               </StyledTableCell>
-              <StyledTableCell>{row.arrivalDate}</StyledTableCell>
-              <StyledTableCell>{row.arrivalTime}</StyledTableCell>
-              <StyledTableCell>{row.departureDate}</StyledTableCell>
-              <StyledTableCell>{row.departureTime}</StyledTableCell>
-              <StyledTableCell>{row.from}</StyledTableCell>
-              <StyledTableCell>{row.to}</StyledTableCell>
+              <StyledTableCell>{row.reservedFlightIDs}</StyledTableCell>
+              <StyledTableCell>{row.numberOfSeats}</StyledTableCell>
+              <StyledTableCell>{row.assignedSeats}</StyledTableCell>
+              <StyledTableCell>{row.price}</StyledTableCell>
+              <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
+              <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
               <StyledTableCell>
-                <AlertDialogReservation id={row._id} state={(d) => this.setState(d)}/>
+                <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
               </StyledTableCell>
             </StyledTableRow>
           ))}
