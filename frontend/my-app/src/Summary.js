@@ -54,10 +54,10 @@ useEffect(()=>{
                 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
             <CardContent>
                 <Typography variant="body2">
-                Chosen departure seats : {fSeats}
+                Chosen departure seats : {fSeats.map(seat=>'A'+seat)}
                 </Typography>
                 <Typography variant="body2">
-                Chosen return seats : {sSeats}
+                Chosen return seats : {sSeats.map(seat=>'B'+seat)}
                 </Typography>
                 <Typography variant="body2">
                 Total price : {finalPrice}
