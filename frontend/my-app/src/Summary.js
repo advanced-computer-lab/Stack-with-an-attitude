@@ -17,41 +17,55 @@ export default function Summary(props){   //function component declaration
 
     const {fSeats,sSeats,firstId,secondId} = props;
 
-    const [secondFlight,setFlight] = useState({});
+    const [firstFlight,set1Flight] = useState({});
+    const [secondFlight,set2Flight] = useState({});
+    const [firstPrice,set1Price] = useState(0);
+    const [secondPrice,set2Price] = useState(0);
+    const [finalPrice,setFinalPrice] = useState(0);
 
     let firstSeats = [];
     let secondSeats = [];
 
-    const firstPrice = 0;
-    const secondPrice = 0;
-    
-
-  useEffect(()=>{
 
     async function fetchData(){
-    let firstFlightData = (await axios.get(`http://localhost:8000/getFlight/${firstId}`)).data
-    firstPrice = firstFlightData.price;
 
-    let secondFlightData = (await axios.get(`http://localhost:8000/getFlight/${secondId}`)).data
-    setFlight(secondFlightData);
-    secondPrice = secondFlightData.price;
+        let result = await axios.get(`http://localhost:8000/getFlight/${firstId}`);
+        
+            
+            set1Flight(result);
+
+            for (let seat in fSeats) {
+                seat++;
+                firstSeats = firstSeats.concat(["A" + seat ]); 
+                }
+    
+            for (let seat in sSeats) {
+                seat++
+                secondSeats = secondSeats.concat(["B" + seat]); 
+                }
+        
+    
+        let secondResult = await axios.get(`http://localhost:8000/getFlight/${secondId}`);
+
+        set2Flight(secondResult);
+
+        console.log(firstFlight);
+        console.log(secondFlight);
+        
+        set1Price(result.data.price);
+        set2Price(secondResult.data.price);   
+
+        console.log(firstFlight.data.price);
+        console.log(firstSeats.length , secondSeats.length);
+
+        setFinalPrice(firstPrice * firstSeats.length + secondPrice * secondSeats.length);
+        console.log(finalPrice);
     }
 
-    for (let seat in fSeats) {
-        seat++;
-        firstSeats = firstSeats.concat(["A" + seat ]); 
-        }
+useEffect(()=>{ fetchData();},[]);
 
-    for (let seat in sSeats) {
-        seat++
-        secondSeats = secondSeats.concat(["B" + seat]); 
-        }
+useEffect(()=>{console.log(firstSeats)},[secondPrice , finalPrice]);
 
-     console.log(secondSeats);   
-  },[])
-
-    useEffect(()=>{},[secondFlight]);  
-    console.log('AHHHHHHHDICKHASSHHHHHHHHHHHHHHH',secondFlight);
       return(
                 <div>
                 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
@@ -63,7 +77,7 @@ export default function Summary(props){   //function component declaration
                 Chosen return seats : {secondSeats}
                 </Typography>
                 <Typography variant="body2">
-                Total price : {firstPrice * firstSeats.length + secondPrice * secondSeats.length}
+                Total price : {finalPrice}
                 </Typography>
             </CardContent>
             </Card>
