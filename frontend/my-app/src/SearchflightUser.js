@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SearchflightUser() {
-  const [cabinclass, setCabinclass] = React.useState('economy');
+  const [cabinclass, setCabinclass] = React.useState('Economy');
   const [numofresseats, setNumofresseats] = React.useState(0);
 
   const handleChange = (e) => {

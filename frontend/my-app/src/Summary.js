@@ -15,7 +15,7 @@ import { CountertopsOutlined } from '@mui/icons-material';
 
 export default function Summary(props){   //function component declaration
 
-    const {fSeats,sSeats,firstId,secondId} = props;
+    const {fSeats,sSeats,firstId,secondId,handleClick} = props;
 
     const [firstFlight,set1Flight] = useState({});
     const [secondFlight,set2Flight] = useState({});
@@ -44,6 +44,7 @@ useEffect(()=>{ fetchData()},[sSeats]);
 useEffect(()=>{
     if(firstFlight.data&&secondFlight.data){
     setFinalPrice(firstFlight.data.price * fSeats.length + secondFlight.data.price * sSeats.length);
+    (() => handleClick(finalPrice))();
 }
 },[secondFlight]);
 
@@ -54,13 +55,16 @@ useEffect(()=>{
                 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
             <CardContent>
                 <Typography variant="body2">
-                Chosen departure seats : {fSeats.length}
+                Number of chosen seats : {fSeats.length}
                 </Typography>
                 <Typography variant="body2">
-                Chosen return seats : {sSeats.length}
+                Chosen departure seats : {fSeats.map(seat=>'A'+seat + ' ')}
                 </Typography>
                 <Typography variant="body2">
-                Total price : {finalPrice}
+                Chosen return seats : {sSeats.map(seat=>'B'+seat + ' ')}
+                </Typography>
+                <Typography variant="body2">
+                Total price : {finalPrice + ' LE'}
                 </Typography>
             </CardContent>
             </Card>

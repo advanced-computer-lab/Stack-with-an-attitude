@@ -74,8 +74,6 @@ app.delete('/deletereservedFlight/:deleteID', AdminAuth ,adminController.deleter
 //-------------
 
 //------------User
-app.put('/user/reserveSeats/:id',userController.reserveSelectedSeats);
-
 app.put('/user/update/:id', userController.updateUserById);
 
 app.get('/user/getInfo/:id', userController.getUserById);

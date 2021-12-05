@@ -2,33 +2,11 @@ const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
 
-exports.reserveSelectedSeats = async function(req,res) {
+const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
-    let ID = req.params.id;
+    updateReservationSeats(depID,cabinclass,assignedDepartureSeats);
 
-    let reservedSeats = req.body;
-
-    await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
-        .then( (flights) => {
-            res.status(200)
-            res.json(flights)
-        })
-        .catch( (err) => {
-            if (err.name === "ValidationError") {
-                let errors = {};
-          
-                Object.keys(err.errors).forEach((key) => {
-                  errors[key] = err.errors[key].message;
-                });
-          
-                return res.status(400).send(errors);
-              }
-              if (err.name === "MongoServerError"){
-                return res.send({statusCode : err.status, message : "duplicate key error"})
-            }
-
-            res.send({statusCode : err.status, message : err.message})
-            console.log(err.status)})
+    updateReservationSeats(returnID,cabinclass,assignedReturnSeats);
 
 }
 
@@ -94,9 +72,9 @@ exports.getReservedFlightById = async function(req,res) {
 exports.createReservedFlight = async function(req,res) {
 
 
-  let newFlight = new Reservation(req.body.flight)
+  let newReservation = new Reservation(req.body.reservation)
 
-  newFlight.save()
+  newReservation.save()
       .then( (reservedflights) => {
           //res.status(200)
           res.json(reservedflights)
@@ -123,6 +101,9 @@ exports.createReservedFlight = async function(req,res) {
           console.log(err.message)})
 
     // update FLIGHTS ARRAY!!!!
+    reserveSelectedSeats(newReservation.reservedFlightIDs[0],newReservation.reservedFlightIDs[1],
+                        newReservation.assignedDepartureSeats,newReservation.assignedReturnSeats,
+                        newReservation.cabinClass);
 }
 
 exports.getAllreservedFlights = async function(req,res) {
@@ -152,4 +133,74 @@ exports.deleteReservedFlightById = async function(req,res) {
       .catch( (err) => {
           //res.status(404)
           console.log(err)})
+}
+
+
+const updateFlight = async function(ID,reservedSeats){
+
+    await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
+    .then( (flights) => {
+        res.status(200)
+        res.json(flights)
+    })
+    .catch( (err) => {
+        if (err.name === "ValidationError") {
+            let errors = {};
+      
+            Object.keys(err.errors).forEach((key) => {
+              errors[key] = err.errors[key].message;
+            });
+      
+            return res.status(400).send(errors);
+          }
+          if (err.name === "MongoServerError"){
+            return res.send({statusCode : err.status, message : "duplicate key error"})
+        }
+
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+}
+
+
+const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
+
+    let oldFlight = null; 
+    
+    await Flight.findById(ID).then(result => oldFlight = result);
+
+    console.log('oldDepFlight ',oldFlight);
+
+    // new vars to be set in the object above for updating departure flight.
+    let newDepSeats = [];
+    let newAvailableSeats = 0;
+
+    if(cabinclass === 'Economy'){
+
+        for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
+            if(reservedEconomySeats[i] !== assignedSeats[i])
+                newDepSeats[i] = assignedSeats[i];
+            newDepSeats[i] = reservedEconomySeats[i];
+        }
+        
+        newAvailableSeats = availableeconomySeats - assignedSeats.length;
+
+        oldFlight.reservedEconomySeats = newDepSeats;
+        oldFlight.availableeconomySeats = newAvailableSeats;
+
+    }else {
+
+        for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
+            if(reservedBusinessSeats[i] !== assignedSeats[i])
+                newDepSeats[i] = assignedSeats[i];
+            newDepSeats[i] = reservedBusinessSeats[i];
+        }
+
+        newAvailableSeats = availableBusinessSeats - assignedSeats.length;
+
+        oldFlight.reservedBusinessSeats = newDepSeats;
+        oldFlight.availableBusinessSeats = newAvailableSeats;
+    }
+
+
+    updateFlight(ID,oldFlight);
 }

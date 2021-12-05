@@ -50,6 +50,10 @@ const reservationSchema = new Schema ({
     numberOfChildren: {
         type : Number,
     },
+    cabinClass: {
+        type : String,
+        required : true,
+    },
     
 }, {timestamps:true})
 

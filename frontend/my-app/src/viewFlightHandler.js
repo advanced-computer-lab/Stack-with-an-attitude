@@ -33,12 +33,14 @@ function ViewFlightHandler(){
         );
     }
 
+    const {id,cabinclass,numofresseats}=useParams()
+
     const [secondFlight,setFlight] = useState(null)
     const [firstSeats,setFirst] = useState([])
     const [secondSeats,setSecond] = useState([])
-    const {id,cabinclass,numofresseats}=useParams()
+    const [finalPrice,setFinalPrice] = useState(null)
 
-
+    const getPrice = (price) => {setFinalPrice(price)}
 
     useEffect(()=>{
         console.log(secondFlight)
@@ -52,6 +54,11 @@ function ViewFlightHandler(){
         console.log(secondSeats)
     },[secondSeats])
 
+    useEffect(()=>{
+        console.log(finalPrice);
+    },[finalPrice])
+
+    
 
     return(
         <div>
@@ -62,9 +69,16 @@ function ViewFlightHandler(){
                                                 margin: 40
             }}><ViewFlight2 id={id}/>
                 <ViewFlight2 id={secondFlight}/>
-                <Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight}/> //add total price    
+                <Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight} handleClick={getPrice}/>    
             </div>
-            <AlertDialogConfirmRes/>
+            <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
+                                                reservedFlightIDs:[id,secondFlight],
+                                                numberOfSeats:firstSeats.length,
+                                                assignedDepartureSeats:firstSeats,
+                                                assignedReturnSeats:secondSeats,
+                                                price: finalPrice,
+                                                cabinClass: cabinclass,
+                                                }}/>
             </div>
         
         
