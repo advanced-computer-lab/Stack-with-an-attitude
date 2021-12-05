@@ -14,8 +14,8 @@ function Updateflight(){   //function component declaration
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
   const {id} = useParams();
-  const [notValid,setNotValid]=useState(false);
-  const [notValidObj,setNotValidObj]=useState([]);
+  //const [notValid,setNotValid]=useState(false);
+  //const [notValidObj,setNotValidObj]=useState([]);
   const [notValidObjString,setNotValidObjString]=useState("");
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
@@ -64,18 +64,20 @@ function Updateflight(){   //function component declaration
       e.target.baggageAllowance.value='';
 
       setUpdated(true);
-
+      setNotValidObjString("");
     }).catch(error=>{
       let temp = "";
-      setNotValid(true);
-      setNotValidObj(error.response.data.errors);
-      let keyss = Object.keys(notValidObj);
-      let valuess = Object.values(notValidObj);
+      console.log("error response");
+      const errors = error.response.data.errors
+      let keyss = Object.keys(errors);
+      let valuess = Object.values(errors);
       for(let i in keyss){
         temp += keyss[i] + ": " + valuess[i] + ", "
       }
-      setNotValidObjString(temp);
-      console.log(notValidObjString);
+      setNotValidObjString(temp.substring(0, temp.length-2));
+      console.log("error string");
+      console.log(temp.substring(0, temp.length-2));
+      setUpdated(false);
       //console.log(Object.keys(error.response.data.errors).map());
     })
   }
@@ -109,11 +111,11 @@ function Updateflight(){   //function component declaration
   useEffect(()=>{
   },[flight])
   
-  useEffect(()=>{
+  /*useEffect(()=>{
   },[notValid])
 
   useEffect(()=>{
-  },[notValidObj])
+  },[notValidObj])*/
 
   useEffect(()=>{
   },[notValidObjString])
@@ -129,7 +131,7 @@ function Updateflight(){   //function component declaration
           <br/>
         <h1>Update flight with flight number {flight.flightNumber}</h1> 
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
-        {notValid && <h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
+        {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
         <form onSubmit={handleSubmit} id="form">
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField

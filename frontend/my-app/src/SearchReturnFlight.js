@@ -44,7 +44,7 @@ function SearchReturnFlight(props) {
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
   const [state,setState] = useState(null);
   const {flightId,setFunc} = props;
-  let from,to;
+  let from,to, arrive;
 
 
   // const {from, to} = props;
@@ -57,7 +57,7 @@ function SearchReturnFlight(props) {
         .then(result => {
 
           result.data.forEach(flight => {
-            if(flight.from == from && flight.to == to)
+            if(flight.from == from && flight.to == to && Date.parse(flight.departureDate) > Date.parse(arrive))
               flights.push(flight);
           });
 
@@ -74,7 +74,7 @@ function SearchReturnFlight(props) {
     console.log(flight);
     to = flight.data.from;
     from = flight.data.to;
-  
+    arrive = flight.data.arrivalDate;
   })
   const interval = setInterval(() => {getAllFlights()},10000);
     return () => clearInterval(interval); 
