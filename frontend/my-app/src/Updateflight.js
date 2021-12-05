@@ -87,7 +87,7 @@ function Updateflight(){   //function component declaration
   //the update method itself is  an emtpy method body meaning it just rerenders the component whithout doing any computations or fetchs
 
   useEffect(()=>{
-  },[updated])  //<===== this is the dependency list
+  },[updated,notValidObj])  //<===== this is the dependency list
 
 
   //in this one the dependency list is empty it runs only on creation 
