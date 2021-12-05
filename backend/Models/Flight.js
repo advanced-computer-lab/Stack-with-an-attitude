@@ -21,7 +21,7 @@ const flightSchema = new Schema ({
     arrivalDate: {
         type : String,
         required: true,
-        validate: [dateValidator,'Arrival Date must be greater than or equal Departure Date']
+    //    validate: [dateValidator,'Arrival Date must be greater than or equal Departure Date']
     },
     departureTime: {
         type : String, 

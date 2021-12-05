@@ -26,7 +26,7 @@ export default function AlertDialogConfirmRes(props) {
     .then(data => console.log('CREATED!'));
 
     handleClose();
-    props.state([]);
+   // props.state([]);
     
   }
   return (

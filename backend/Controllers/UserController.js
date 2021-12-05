@@ -72,12 +72,21 @@ exports.getReservedFlightById = async function(req,res) {
 exports.createReservedFlight = async function(req,res) {
 
 
-  let newReservation = new Reservation(req.body.reservation)
+  let newReservation = new Reservation(req.body.reservation);
 
-  newReservation.save()
+  console.log('BODY' , req.body);
+  console.log('OJB' , newReservation);
+
+  newReservation.reservationNumber = '34';
+
+  newReservation.numberOfAdults = 2;
+  newReservation.numberOfChildren = 1;
+  newReservation.price = 1001;
+
+  await newReservation.save()
       .then( (reservedflights) => {
           //res.status(200)
-          res.json(reservedflights)
+         console.log('CREEAAAAAAAATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED');
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
@@ -140,25 +149,8 @@ const updateFlight = async function(ID,reservedSeats){
 
     await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
     .then( (flights) => {
-        res.status(200)
-        res.json(flights)
-    })
-    .catch( (err) => {
-        if (err.name === "ValidationError") {
-            let errors = {};
-      
-            Object.keys(err.errors).forEach((key) => {
-              errors[key] = err.errors[key].message;
-            });
-      
-            return res.status(400).send(errors);
-          }
-          if (err.name === "MongoServerError"){
-            return res.send({statusCode : err.status, message : "duplicate key error"})
-        }
+        console.log(flights)})
 
-        res.send({statusCode : err.status, message : err.message})
-        console.log(err.status)})
 }
 
 
@@ -168,39 +160,38 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     
     await Flight.findById(ID).then(result => oldFlight = result);
 
-    console.log('oldDepFlight ',oldFlight);
-
     // new vars to be set in the object above for updating departure flight.
     let newDepSeats = [];
     let newAvailableSeats = 0;
 
-    if(cabinclass === 'Economy'){
+    if(cabinclass.toLowerCase() === 'economy'){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
-            if(reservedEconomySeats[i] !== assignedSeats[i])
-                newDepSeats[i] = assignedSeats[i];
-            newDepSeats[i] = reservedEconomySeats[i];
+            if(assignedSeats.contains(i))
+                newDepSeats[i] = true;
+            else
+                newDepSeats[i] = oldFlight.reservedEconomySeats[i];
         }
-        
-        newAvailableSeats = availableeconomySeats - assignedSeats.length;
+
+        let newAvailSeats = newDepSeats.filter(x => !x).length;
 
         oldFlight.reservedEconomySeats = newDepSeats;
-        oldFlight.availableeconomySeats = newAvailableSeats;
+        oldFlight.availableeconomySeats = newAvailSeats;
 
     }else {
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
-            if(reservedBusinessSeats[i] !== assignedSeats[i])
-                newDepSeats[i] = assignedSeats[i];
-            newDepSeats[i] = reservedBusinessSeats[i];
+            if(assignedSeats.includes(i))
+                newDepSeats[i] = true;
+            else
+                newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
         }
 
-        newAvailableSeats = availableBusinessSeats - assignedSeats.length;
+        let newAvailSeats = newDepSeats.filter(x => !x).length;
 
         oldFlight.reservedBusinessSeats = newDepSeats;
-        oldFlight.availableBusinessSeats = newAvailableSeats;
+        oldFlight.availableBusinessSeats = newAvailSeats;
     }
-
 
     updateFlight(ID,oldFlight);
 }
