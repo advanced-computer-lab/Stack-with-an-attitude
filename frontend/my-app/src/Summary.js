@@ -19,62 +19,45 @@ export default function Summary(props){   //function component declaration
 
     const [firstFlight,set1Flight] = useState({});
     const [secondFlight,set2Flight] = useState({});
-    const [firstPrice,set1Price] = useState(0);
-    const [secondPrice,set2Price] = useState(0);
-    const [finalPrice,setFinalPrice] = useState(0);
 
-    let firstSeats = [];
-    let secondSeats = [];
+    const [finalPrice,setFinalPrice] = useState(null);
+
 
 
     async function fetchData(){
-
         let result = await axios.get(`http://localhost:8000/getFlight/${firstId}`);
-        
-            
-            set1Flight(result);
-
-            for (let seat in fSeats) {
-                seat++;
-                firstSeats = firstSeats.concat(["A" + seat ]); 
-                }
-    
-            for (let seat in sSeats) {
-                seat++
-                secondSeats = secondSeats.concat(["B" + seat]); 
-                }
-        
-    
+        console.log("result");
+        console.log(result);
+        set1Flight(result);    
         let secondResult = await axios.get(`http://localhost:8000/getFlight/${secondId}`);
-
+        console.log("secondResult");
+        console.log(secondResult);
         set2Flight(secondResult);
-
-        console.log(firstFlight);
-        console.log(secondFlight);
         
-        set1Price(result.data.price);
-        set2Price(secondResult.data.price);   
 
-        console.log(firstFlight.data.price);
-        console.log(firstSeats.length , secondSeats.length);
-
-        setFinalPrice(firstPrice * firstSeats.length + secondPrice * secondSeats.length);
-        console.log(finalPrice);
     }
 
-useEffect(()=>{ fetchData();},[]);
 
-useEffect(()=>{console.log(firstSeats)},[secondPrice , finalPrice]);
+
+useEffect(()=>{ fetchData()},[sSeats]);
+
+useEffect(()=>{
+    if(firstFlight.data&&secondFlight.data){
+    setFinalPrice(firstFlight.data.price * fSeats.length + secondFlight.data.price * sSeats.length);
+}
+},[secondFlight]);
+
+
 
       return(
                 <div>
                 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
             <CardContent>
                 <Typography variant="body2">
-                Chosen departure seats : {firstSeats}
+                Chosen departure seats : {fSeats.length}
                 </Typography>
                 <Typography variant="body2">
-                Chosen return seats : {secondSeats}
+                Chosen return seats : {sSeats.length}
                 </Typography>
                 <Typography variant="body2">
                 Total price : {finalPrice}
