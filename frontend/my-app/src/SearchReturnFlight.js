@@ -76,7 +76,7 @@ function SearchReturnFlight(props) {
     from = flight.data.to;
     arrive = flight.data.arrivalDate;
   })
-  const interval = setInterval(() => {getAllFlights()},10000);
+  const interval = setInterval(() => {getAllFlights()},2000);
     return () => clearInterval(interval); 
     
   },[]);
