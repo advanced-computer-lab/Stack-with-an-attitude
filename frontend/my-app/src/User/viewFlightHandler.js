@@ -1,15 +1,15 @@
 import {useParams,Route,Routes} from 'react-router-dom'
-import ViewFlight from 'ViewFlight';
-import ViewFlight2 from 'ViewFlight2';
-import Button from '@mui/material/Button';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
 import React, { useEffect, useState } from 'react'
-import SearchReturnFlight from 'SearchReturnFlight';
-import PlaneView from 'PlaneView';
-import PlaneView2 from 'PlaneView2';
-import Summary from 'Summary';
-import AlertDialogConfirmRes from 'AlertDialogConfirmRes';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ViewFlight from './ViewFlight';
+import ViewFlight2 from './ViewFlight2';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import SearchReturnFlight from './SearchReturnFlight';
+import PlaneView from './PlaneView';
+import PlaneView2 from './PlaneView2';
+import Summary from './Summary';
+import AlertDialogConfirmRes from './AlertDialogConfirmRes';
 
 function ViewFlightHandler(){
 

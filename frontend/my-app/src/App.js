@@ -1,22 +1,19 @@
-import './App.css';
-import Addflights from "./Addflight" ;
-import Schedule from "./Schedule";
-import AdminPage from "./AdminPage";
-import MainPage from "./MainPage";
-import MainPageLoggedIn from "./MainPageLoggedIn";
-import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
-import Searchflight from './Searchflight';
-import SearchflightUser from './SearchflightUser';
-import ViewFlight from './ViewFlight';
-import Reservedflights from './Reservedflights';
-import PlaneView from './PlaneView';
-import ViewProfile from './ViewProfile';
-import ViewFlightHandler from './viewFlightHandler';
-import ViewReturnFlight from './ViewReturnFlight';
-import SearchReturnFlight from './SearchReturnFlight';
-import Cancelflight from './Cancelflight';
-
+import './App.css';
+import Addflights from "./Admin/Addflight" ;
+import Schedule from "./Admin/Schedule";
+import AdminPage from "./Admin/AdminPage";
+import MainPage from "./User/MainPage";
+import MainPageLoggedIn from "./User/MainPageLoggedIn";
+import Updateflight from "./Admin/Updateflight";
+import Searchflight from './Admin/Searchflight';
+import SearchflightUser from './User/SearchflightUser';
+import Reservedflights from './User/Reservedflights';
+import PlaneView from './User/PlaneView';
+import ViewProfile from './User/ViewProfile';
+import ViewFlightHandler from './User/viewFlightHandler';
+import ViewReturnFlight from './User/ViewReturnFlight';
+import Cancelflight from './Admin/Cancelflight';
 
 function App() {
 

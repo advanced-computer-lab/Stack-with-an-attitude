@@ -46,6 +46,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SearchflightUser() {
+
+
   const [cabinclass, setCabinclass] = React.useState('Economy');
   const [numofresseats, setNumofresseats] = React.useState(0);
 
@@ -87,7 +89,6 @@ export default function SearchflightUser() {
       e.target.to.value='';
       e.target.fromf.value='';
       
-
     }).catch(err => console.log(err));
 
 
@@ -128,7 +129,7 @@ export default function SearchflightUser() {
             <TextField
             required
             id="numofseats"
-            label="number of seats"
+            label="Number of seats"
             name="numofseats"
             type="number"
             />

@@ -2,27 +2,29 @@ import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios' ;
 import Header from 'components/Header/Header.js';
-import HeaderLinks from 'components/Header/HeaderLinks.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import Parallax from "components/Parallax/Parallax.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import ButtonBases from 'ButtonBases';
+import ButtonBasesLoggedIn from './ButtonBasesLoggedIn';
 
-class MainPage extends Component{
+class MainPageLoggedIn extends Component{
   
-
+  
   render(){
       return(
         <div>
-            <Header color='info' brand='Discover the World !' transparent rightLinks={<HeaderLinks/>} fixed/>
+            <Header color='info' brand='Airport' transparent rightLinks={<HeaderLinksLoggedIn/>} fixed/>
             <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} children={<div className={'mainPageHeader'}><h1>Welcome to our airport!</h1><h3>where quality meets excellence</h3></div>}/>
             <Card style={{margin: 'auto', maxWidth: 750}}>
               <CardBody> 
-                <ButtonBases/>
+                <ButtonBasesLoggedIn/>
               </CardBody>
-            </Card>             
-          {localStorage.setItem('isLoggedIn',false)}
+            </Card>      
+                        
+
         </div>
+
       );
     }
   
@@ -30,4 +32,4 @@ class MainPage extends Component{
 
 }
 
-export default MainPage ;
+export default MainPageLoggedIn ;
