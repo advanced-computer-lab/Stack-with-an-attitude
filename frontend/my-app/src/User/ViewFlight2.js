@@ -65,7 +65,7 @@ function ViewFlight(props){   //function component declaration
 
       return(
         <div>
-          <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
+          <Card sx={{ margin: "auto"  }}>
             <CardContent>
               <Typography variant="body2">
               flight number : {flight["flightNumber"]}
