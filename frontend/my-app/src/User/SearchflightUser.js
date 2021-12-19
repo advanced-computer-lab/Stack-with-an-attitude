@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
@@ -93,21 +93,28 @@ export default function SearchflightUser() {
     return(
       <div style={{ backgroundImage:`url(https://wallpapercave.com/wp/wp3306978.jpg)`,backgroundRepeat:"no-repeat" ,backgroundSize:"contain"}}>
         {localStorage.getItem('isLoggedIn') ? (
-          <Link to="/user" >
-             <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-          </Link>
+          <div style={{margin : '10px'}}>
+            <Link to="/user" >
+              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+              </Button>
+            </Link>
+          </div>
         ) : (
-          <Link to="/" >
-           <Button value="home" variant="contained" endIcon={<HomeIcon />} style={{position: "absolute",left: "auto",right: "2rem",top: "10px"}}>
-                Home
-            </Button>
-          </Link>
+          <div style={{margin : '10px'}}>
+            <Link to="/" >
+            <Button value="home" variant="contained" endIcon={<HomeIcon />} style={{position: "absolute",left: "auto",right: "2rem",top: "10px"}}>
+                  Home
+              </Button>
+            </Link>
+          </div>
         )}
            
-          <br/>
-        <h1 style={{textAlign:'center'}}>Search and reserve your Flight seats</h1>  
+        <div style={{margin : 'auto' , textAlign : 'center'}}>
+          <Typography  variant="h3" gutterBottom component="div">
+            Search and Reserve your flights seats
+          </Typography>
+        </div>
         <div className='containerS'>
           <form onSubmit={submit} id="form" className='form'>
           <FormControl sx={{ minWidth: 120 }}>
@@ -135,6 +142,7 @@ export default function SearchflightUser() {
             label="Departure Date"
             name="depdate"
             type="date"
+            
             />
             <TextField
             id="deptime"

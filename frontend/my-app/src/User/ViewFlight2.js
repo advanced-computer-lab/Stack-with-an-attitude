@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import {Link,useParams} from 'react-router-dom';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
+import HomeIcon from '@mui/icons-material/Home';
   
 
 
@@ -10,6 +14,7 @@ function ViewFlight(props){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
+  const {cabinclass,numofresseats} = useParams();
   const {id} = props;
   console.log("id:"+props.id)
 
@@ -59,36 +64,50 @@ function ViewFlight(props){   //function component declaration
 
       return(
         <div>
-          <Card sx={{ margin: "auto"  }}>
+            <Card sx={{ margin: "auto" }}>
+              <div style={{textAlign:'center'}}>
             <CardContent>
-              <Typography variant="body2">
-              flight number : {flight["flightNumber"]}
+              <Typography variant="h3">
+                Flight Details
               </Typography>
-              <Typography variant="body2">
-              from : {flight["from"]}
+              <Typography variant="h5">
+              Flight number : {flight["flightNumber"]}
               </Typography>
-              <Typography variant="body2">
-              to : {flight["to"]}
+              <Typography variant="h5">
+              From : {flight["from"]}
               </Typography>
-              <Typography variant="body2">
-              departure date : {flight["departureDate"]}
+              <Typography variant="h5">
+              To : {flight["to"]}
               </Typography>
-              <Typography variant="body2">
-              departure time : {flight["departureTime"]}
+              <Typography variant="h5">
+              Departure date : {flight["departureDate"]}
               </Typography>
-              <Typography variant="body2">
-              arrival date : {flight["arrivalDate"]}
+              <Typography variant="h5">
+              Departure time : {flight["departureTime"]}
               </Typography>
-              <Typography variant="body2">
-              arrival time : {flight["arrivalTime"]}
+              <Typography variant="h5">
+              Arrival date : {flight["arrivalDate"]}
               </Typography>
-              <Typography variant="body2">
-              trip duration: {(arr-dep)/3600000} hours
+              <Typography variant="h5">
+              Arrival time : {flight["arrivalTime"]}
               </Typography>
-              <Typography variant="body2">
-              baggage allowance : {flight["baggageAllowance"]}
+              <Typography variant="h5">
+              Trip duration: {(arr-dep)/3600000} hours
+              </Typography>
+              <Typography variant="h5">
+              Baggage allowance : {flight["baggageAllowance"]}
+              </Typography>
+              <Typography variant="h5">
+              Cabin class : {cabinclass}
+              </Typography>
+              <Typography variant="overline" component="div" color="red">
+                you will reserve {numofresseats} seats in {cabinclass} class
               </Typography>
             </CardContent>
+            </div>
+            <CardActions>
+      
+            </CardActions>
           </Card>
         </div>
       );

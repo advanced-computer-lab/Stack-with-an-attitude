@@ -99,7 +99,8 @@ function ViewFlightHandler(){
                             />
                     </div>
                 </div>
-            <div>
+            <div style={{display:'flex' , justifyContent: 'center'}}>
+            <div style={{marginRight:'10px'}}>
           <TextField
           required
           id="noofadults"
@@ -112,6 +113,7 @@ function ViewFlightHandler(){
           }}
          pattern='[0-9]*'
           />
+          </div>
           <TextField
           required
           id="noofchildren"
@@ -125,6 +127,7 @@ function ViewFlightHandler(){
           
           />
             </div>
+            <div style={{margin: '10px auto' ,width: '10%'}}>
             <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
                                                 reservedFlightIDs:[id,secondFlight],
                                                 numberOfSeats:firstSeats.length,
@@ -140,17 +143,20 @@ function ViewFlightHandler(){
                                                 numofresseats={numofresseats}
                                                 />
             </div>
+            </div>
         
         
             ):secondFlight==null?(
             firstSeats.length===0?
             <div>
                 <button onClick={()=>{window.location.href='/'}}>back</button>
-            <div>
-                <ViewFlight id={id}/>
+            <div style={{display:'flex' , flexDirection : 'row'}}>
+                <div style={{width:'50%'}}>
+                <ViewFlight  id={id}/>
+                </div>
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>
-            </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
+            </div>:<div>
             {firstSeats.length!==0&&(
             <div>
                 <button onClick={()=>{setFirst([])}}>back</button>
@@ -161,9 +167,12 @@ function ViewFlightHandler(){
             ):
             <div>
                 <button onClick={()=>{setFlight(null)}}>back</button>
-            <div>
+                <div style={{display:'flex' , flexDirection : 'row'}}>
+                <div style={{width:'50%'}}>
                 <ViewFlight2 id={secondFlight}/>
+                </div>
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
+                
             </div>
             </div>
             }

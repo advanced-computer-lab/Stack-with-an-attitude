@@ -47,16 +47,16 @@ useEffect(() => {(() => handleClick(finalPrice))();},[finalPrice])
                 <div>
                 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
             <CardContent>
-                <Typography variant="body2">
+                <Typography variant="h5">
                 Number of chosen seats : {fSeats.length}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="h5">
                 Chosen departure seats : {fSeats.map(seat=>'A'+seat + ' ')}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="h5">
                 Chosen return seats : {sSeats.map(seat=>'B'+seat + ' ')}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="h5">
                 Total price : {finalPrice + ' LE'}
                 </Typography>
             </CardContent>
