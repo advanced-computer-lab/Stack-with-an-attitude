@@ -12,11 +12,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
+import HomeIcon from '@mui/icons-material/Home';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -91,9 +90,15 @@ function SearchReturnFlight(props) {
       //Link to direct back to home
   return (
     <div >
-      <Link to='/user'><h2>Home</h2></Link>  
-          <br/>
-    <TableContainer component={Paper}>
+      <div style={{margin : '10px'}}>
+            <Link to="/user">
+              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+              </Button>
+            </Link>
+      </div>
+    <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}} component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

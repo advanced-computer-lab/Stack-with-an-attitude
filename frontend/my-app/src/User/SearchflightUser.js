@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
@@ -93,21 +93,28 @@ export default function SearchflightUser() {
     return(
       <div>
         {localStorage.getItem('isLoggedIn') ? (
-          <Link to="/user" >
-             <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-          </Link>
+          <div style={{margin : '10px'}}>
+            <Link to="/user" >
+              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+              </Button>
+            </Link>
+          </div>
         ) : (
-          <Link to="/" >
-           <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-          </Link>
+          <div style={{margin : '10px'}}>
+            <Link to="/" >
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+              </Button>
+            </Link>
+          </div>
         )}
            
-          <br/>
-        <h1>Search and reserve your Flight seats</h1>  
+        <div style={{margin : 'auto' , textAlign : 'center'}}>
+          <Typography  variant="h3" gutterBottom component="div">
+            Search and Reserve your flights seats
+          </Typography>
+        </div>
         <div className='containerS'>
           <form onSubmit={submit} id="form" className='form'>
           <FormControl sx={{ minWidth: 120 }}>
@@ -168,7 +175,7 @@ export default function SearchflightUser() {
                 Submit
             </Button>
           </form>
-          <TableContainer sx={{ width:'70%' , margin : 'auto' , marginBottom : '20px' , 
+          <TableContainer sx={{ width:'70%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>

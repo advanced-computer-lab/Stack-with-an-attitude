@@ -150,7 +150,7 @@ function ViewFlightHandler(){
                 <ViewFlight id={id}/>
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>
-            </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
+            </div>:<div>
             {firstSeats.length!==0&&(
             <div>
                 <button onClick={()=>{setFirst([])}}>back</button>

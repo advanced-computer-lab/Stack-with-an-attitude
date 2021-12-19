@@ -64,44 +64,46 @@ function ViewFlight(props){   //function component declaration
 
       return(
         <div>
- <Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-</Link>
-<Card sx={{ margin: "auto" }}>
+          <div style={{margin : '10px'}}>
+            <Link to="/user">
+              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+              </Button>
+            </Link>
+          </div>
+      <Card sx={{ margin: "auto" }}>
       <CardContent>
-        <Typography variant="body2">
-        flight number : {flight["flightNumber"]}
+        <Typography variant="h5">
+        Flight number : {flight["flightNumber"]}
         </Typography>
-        <Typography variant="body2">
-        from : {flight["from"]}
+        <Typography variant="h5">
+        From : {flight["from"]}
         </Typography>
-        <Typography variant="body2">
-        to : {flight["to"]}
+        <Typography variant="h5">
+        To : {flight["to"]}
         </Typography>
-        <Typography variant="body2">
-        departure date : {flight["departureDate"]}
+        <Typography variant="h5">
+        Departure date : {flight["departureDate"]}
         </Typography>
-        <Typography variant="body2">
-        departure time : {flight["departureTime"]}
+        <Typography variant="h5">
+        Departure time : {flight["departureTime"]}
         </Typography>
-        <Typography variant="body2">
-        arrival date : {flight["arrivalDate"]}
+        <Typography variant="h5">
+        Arrival date : {flight["arrivalDate"]}
         </Typography>
-        <Typography variant="body2">
-        arrival time : {flight["arrivalTime"]}
+        <Typography variant="h5">
+        Arrival time : {flight["arrivalTime"]}
         </Typography>
-        <Typography variant="body2">
-        trip duration: {(arr-dep)/3600000} hours
+        <Typography variant="h5">
+        Trip duration: {(arr-dep)/3600000} hours
         </Typography>
-        <Typography variant="body2">
-        baggage allowance : {flight["baggageAllowance"]}
+        <Typography variant="h5">
+        Baggage allowance : {flight["baggageAllowance"]}
         </Typography>
-        <Typography variant="body2">
-        cabin class : {cabinclass}
+        <Typography variant="h5">
+        Cabin class : {cabinclass}
         </Typography>
-        <Typography variant="h7" component="div" color="red">
+        <Typography variant="overline" component="div" color="red">
           you will reserve {numofresseats} seats in {cabinclass} class
         </Typography>
       </CardContent>

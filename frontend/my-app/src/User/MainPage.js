@@ -16,7 +16,7 @@ class MainPage extends Component{
         <div>
             <Header color='info'  transparent leftLinks={<div style={{height:'70px',width: '100px' }}>
                       <Logo />
-                                                        </div>}  rightLinks={<HeaderLinks/>} absolute/>
+                                                        </div>}  rightLinks={<HeaderLinks/>} fixed/>
             <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} children={<div className={'mainPageHeader'}><h1>Welcome to our airport!</h1><h3>where quality meets excellence</h3></div>}/>
             <Card style={{margin: 'auto', maxWidth: 750}}>
               <CardBody> 
