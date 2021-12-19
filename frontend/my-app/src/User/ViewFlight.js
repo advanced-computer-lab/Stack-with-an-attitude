@@ -72,7 +72,11 @@ function ViewFlight(props){   //function component declaration
             </Link>
           </div>
       <Card sx={{ margin: "auto" }}>
+        <div style={{textAlign:'center'}}>
       <CardContent>
+        <Typography variant="h3">
+          Flight Details
+        </Typography>
         <Typography variant="h5">
         Flight number : {flight["flightNumber"]}
         </Typography>
@@ -107,6 +111,7 @@ function ViewFlight(props){   //function component declaration
           you will reserve {numofresseats} seats in {cabinclass} class
         </Typography>
       </CardContent>
+      </div>
       <CardActions>
       
       </CardActions>

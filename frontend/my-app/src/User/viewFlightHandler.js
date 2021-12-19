@@ -146,8 +146,10 @@ function ViewFlightHandler(){
             firstSeats.length===0?
             <div>
                 <button onClick={()=>{window.location.href='/'}}>back</button>
-            <div>
-                <ViewFlight id={id}/>
+            <div style={{display:'flex' , flexDirection : 'row'}}>
+                <div style={{width:'50%'}}>
+                <ViewFlight  id={id}/>
+                </div>
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>
             </div>:<div>
@@ -161,9 +163,12 @@ function ViewFlightHandler(){
             ):
             <div>
                 <button onClick={()=>{setFlight(null)}}>back</button>
-            <div>
+                <div style={{display:'flex' , flexDirection : 'row'}}>
+                <div style={{width:'50%'}}>
                 <ViewFlight2 id={secondFlight}/>
+                </div>
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
+                
             </div>
             </div>
             }
