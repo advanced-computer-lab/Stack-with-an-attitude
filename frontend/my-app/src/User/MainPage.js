@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom';
-import axios from 'axios' ;
 import Header from 'components/Header/Header.js';
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import Parallax from "components/Parallax/Parallax.js";

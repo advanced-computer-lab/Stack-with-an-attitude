@@ -9,7 +9,6 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import SearchReturnFlight from './SearchReturnFlight';
 import PlaneView from './PlaneView';
 import PlaneView2 from './PlaneView2';
-import Summary from './Summary';
 import AlertDialogConfirmRes from './AlertDialogConfirmRes';
 import SimpleAccordion from './SimpleAccordion';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -81,7 +80,7 @@ function ViewFlightHandler(){
 
     return(
         <div>
-            {secondSeats.length!=0?(
+            {secondSeats.length!==0?(
             <div>
                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
                         onClick={()=>{setSecond([])}}>Back</Button>
@@ -144,7 +143,7 @@ function ViewFlightHandler(){
         
         
             ):secondFlight==null?(
-            firstSeats.length==0?
+            firstSeats.length===0?
             <div>
                 <button onClick={()=>{window.location.href='/'}}>back</button>
             <div>
@@ -152,7 +151,7 @@ function ViewFlightHandler(){
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
-            {firstSeats.length!=0&&(
+            {firstSeats.length!==0&&(
             <div>
                 <button onClick={()=>{setFirst([])}}>back</button>
             <SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)}/>

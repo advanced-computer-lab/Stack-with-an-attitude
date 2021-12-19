@@ -10,12 +10,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios' ;
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import AlertDialogReservation from './AlertDialogReservation';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -82,13 +80,20 @@ console.log(id);
       //Link to direct back to home
   return (
     <div >
-     <Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-</Link> 
-          <br/>
-    <TableContainer component={Paper}>
+      <div style={{ margin : '10px'}}>
+        <Link to="/user">
+          <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+          </Button>
+        </Link>
+      </div>
+      <div style={{margin : 'auto' , textAlign : 'center'}}>
+        <Typography  variant="h3" gutterBottom component="div">
+          Reserved Flights
+        </Typography>
+      </div>
+    <TableContainer sx={{ width:'90%' , margin : 'auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}}  component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
