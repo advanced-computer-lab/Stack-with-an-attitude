@@ -14,12 +14,22 @@ import ViewProfile from './User/ViewProfile';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import Cancelflight from './Admin/Cancelflight';
+import HomeIcon from '@mui/icons-material/Home';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './User/Logo.svg';
+import {Link} from 'react-router-dom'
 
 function App() {
 
 
   return (
     <Router>
+                 <div>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />

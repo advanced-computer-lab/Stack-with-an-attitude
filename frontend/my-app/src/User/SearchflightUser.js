@@ -20,6 +20,14 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import Parallax from "components/Parallax/Parallax.js";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import ButtonBasesLoggedIn from './ButtonBasesLoggedIn';
+import { ReactComponent as Logo } from './Logo.svg';
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -91,25 +99,7 @@ export default function SearchflightUser() {
 
   }  
     return(
-      <div style={{ backgroundImage:`url(https://wallpapercave.com/wp/wp3306978.jpg)`,backgroundRepeat:"no-repeat" ,backgroundSize:"contain"}}>
-        {localStorage.getItem('isLoggedIn') ? (
-          <div style={{margin : '10px'}}>
-            <Link to="/user" >
-              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                  Home
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div style={{margin : '10px'}}>
-            <Link to="/" >
-            <Button value="home" variant="contained" endIcon={<HomeIcon />} style={{position: "absolute",left: "auto",right: "2rem",top: "10px"}}>
-                  Home
-              </Button>
-            </Link>
-          </div>
-        )}
-           
+      <div style={{ backgroundImage:`url(https://wallpapercave.com/wp/wp3306978.jpg)`,backgroundRepeat:"no-repeat" ,backgroundSize:"contain"}}>   
         <div style={{margin : 'auto' , textAlign : 'center'}}>
           <Typography  variant="h3" gutterBottom component="div">
             Search and Reserve your flights seats

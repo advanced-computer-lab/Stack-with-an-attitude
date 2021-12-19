@@ -58,7 +58,7 @@ export default function Header(props) {
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
-    [classes.fixed]: fixed,
+    [classes.fixed]: false,
   });
   const brandComponent = <Button className={classes.title}>{brand}</Button>;
   return (

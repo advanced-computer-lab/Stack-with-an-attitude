@@ -90,13 +90,6 @@ function SearchReturnFlight(props) {
       //Link to direct back to home
   return (
     <div >
-      <div style={{margin : '10px'}}>
-            <Link to="/user">
-              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                  Home
-              </Button>
-            </Link>
-      </div>
     <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
