@@ -91,7 +91,7 @@ export default function SearchflightUser() {
 
   }  
     return(
-      <div>
+      <div style={{ backgroundImage:`url(https://wallpapercave.com/wp/wp3306978.jpg)`,backgroundRepeat:"no-repeat" ,backgroundSize:"contain"}}>
         {localStorage.getItem('isLoggedIn') ? (
           <Link to="/user" >
              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
@@ -100,14 +100,14 @@ export default function SearchflightUser() {
           </Link>
         ) : (
           <Link to="/" >
-           <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+           <Button value="home" variant="contained" endIcon={<HomeIcon />} style={{position: "absolute",left: "auto",right: "2rem",top: "10px"}}>
                 Home
             </Button>
           </Link>
         )}
            
           <br/>
-        <h1>Search and reserve your Flight seats</h1>  
+        <h1 style={{textAlign:'center'}}>Search and reserve your Flight seats</h1>  
         <div className='containerS'>
           <form onSubmit={submit} id="form" className='form'>
           <FormControl sx={{ minWidth: 120 }}>
@@ -168,7 +168,7 @@ export default function SearchflightUser() {
                 Submit
             </Button>
           </form>
-          <TableContainer sx={{ width:'70%' , margin : 'auto' , marginBottom : '20px' , 
+          <TableContainer sx={{ width:'70%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>

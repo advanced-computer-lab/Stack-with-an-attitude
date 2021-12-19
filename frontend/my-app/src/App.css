@@ -59,7 +59,8 @@ form button {
 
 .containerS{
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  padding-right: 2rem;
 }
 .form{
   width: 20%;
