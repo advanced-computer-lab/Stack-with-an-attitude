@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import {Link,useParams} from 'react-router-dom'
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
-import HomeIcon from '@mui/icons-material/Home';
-
-  
 
 
-function ViewFlight(props){   //function component declaration
+
+function ViewReturnFlight(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id,cabinclass,numofresseats} = useParams();
+  const {id} = useParams();
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -53,27 +47,22 @@ function ViewFlight(props){   //function component declaration
   useEffect(()=>{
   },[flight])
 
-  let depstr = flight["departureTime"]+"";
-let dephour = depstr[0]+""+depstr[1];
-let depsec = depstr[3]+""+depstr[4];
-  let arrstr = flight["arrivalTime"]+"";
-  let arrhour = arrstr[0]+""+arrstr[1];
-  let arrsec = arrstr[3]+""+arrstr[4];
-   let dep = new Date(flight["departureDate"]);
-   let arr = new Date(flight["arrivalDate"]);
-   dep.setHours(dephour);
-   arr.setHours(arrhour);
-   dep.setMinutes(depsec);
-   arr.setMinutes(arrsec);
-   console.log(numofresseats);
+    let depstr = flight["departureTime"]+"";
+    let dephour = depstr[0]+""+depstr[1];
+    let depsec = depstr[3]+""+depstr[4];
+    let arrstr = flight["arrivalTime"]+"";
+    let arrhour = arrstr[0]+""+arrstr[1];
+    let arrsec = arrstr[3]+""+arrstr[4];
+    let dep = new Date(flight["departureDate"]);
+    let arr = new Date(flight["arrivalDate"]);
+    dep.setHours(dephour);
+    arr.setHours(arrhour);
+    dep.setMinutes(depsec);
+    arr.setMinutes(arrsec);
 
       return(
         <div>
- <Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-</Link>
+<Link to='/user'><h2>Home</h2></Link>
 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
       <CardContent>
         <Typography variant="body2">
@@ -103,15 +92,11 @@ let depsec = depstr[3]+""+depstr[4];
         <Typography variant="body2">
         baggage allowance : {flight["baggageAllowance"]}
         </Typography>
-        <Typography variant="body2">
-        cabin class : {cabinclass}
-        </Typography>
-        <Typography variant="h7" component="div" color="red">
-          you will reserve {numofresseats} seats in {cabinclass} class
-        </Typography>
       </CardContent>
       <CardActions>
-      
+      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
+              reserve seats
+          </Button>
       </CardActions>
     </Card>
     </div>
@@ -119,4 +104,4 @@ let depsec = depstr[3]+""+depstr[4];
     
     }
 
-export default ViewFlight ;
+export default ViewReturnFlight ;

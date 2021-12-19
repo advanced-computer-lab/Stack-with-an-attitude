@@ -1,15 +1,22 @@
-import {useParams,Route,Routes} from 'react-router-dom'
-import ViewFlight from 'ViewFlight';
-import ViewFlight2 from 'ViewFlight2';
-import Button from '@mui/material/Button';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
+import {useParams,Route,Routes,Link} from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import SearchReturnFlight from 'SearchReturnFlight';
-import PlaneView from 'PlaneView';
-import PlaneView2 from 'PlaneView2';
-import Summary from 'Summary';
-import AlertDialogConfirmRes from 'AlertDialogConfirmRes';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import ViewFlight from './ViewFlight';
+import ViewFlight2 from './ViewFlight2';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import SearchReturnFlight from './SearchReturnFlight';
+import PlaneView from './PlaneView';
+import PlaneView2 from './PlaneView2';
+import AlertDialogConfirmRes from './AlertDialogConfirmRes';
+import SimpleAccordion from './SimpleAccordion';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import HomeIcon from '@mui/icons-material/Home';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 function ViewFlightHandler(){
 
@@ -73,17 +80,26 @@ function ViewFlightHandler(){
 
     return(
         <div>
-            {secondSeats.length!=0?(
+            {secondSeats.length!==0?(
             <div>
-                <button onClick={()=>{setSecond([])}}>back</button>
-                <div style={{display: 'flex',
-                                                justifyContent: 'space-evenly',
-                                                margin: 40
-            }}><div><h2>Depature Details</h2><ViewFlight2 id={id}/></div>
-                <div><h2>Return Details</h2><ViewFlight2 id={secondFlight}/></div>
-                <div><h2>Additional Info</h2><Summary fSeats={firstSeats} sSeats={secondSeats} firstId={id} secondId={secondFlight} handleClick={getPrice}/></div>    
-            </div>
-          <div>
+                <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
+                        onClick={()=>{setSecond([])}}>Back</Button>
+                <Link underline='none' to="/user">
+                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                    Home
+                    </Button>
+                </Link>
+                <Typography variant="h2" gutterBottom component="div">
+                    Summary
+                </Typography>
+                <div style={{width : '80%' , margin :'auto' , marginTop : '20px' , marginBottom : '20px'}}>
+                    <div>
+                        <SimpleAccordion id={id} secondFlight={secondFlight} 
+                            firstSeats={firstSeats} secondSeats={secondSeats} getPrice={getPrice}
+                            />
+                    </div>
+                </div>
+            <div>
           <TextField
           required
           id="noofadults"
@@ -127,7 +143,7 @@ function ViewFlightHandler(){
         
         
             ):secondFlight==null?(
-            firstSeats.length==0?
+            firstSeats.length===0?
             <div>
                 <button onClick={()=>{window.location.href='/'}}>back</button>
             <div>
@@ -135,7 +151,7 @@ function ViewFlightHandler(){
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
             </div>
             </div>:<div style={{display:'flex',justifyContent:'space-around',margin:'1rem'}}>
-            {firstSeats.length!=0&&(
+            {firstSeats.length!==0&&(
             <div>
                 <button onClick={()=>{setFirst([])}}>back</button>
             <SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)}/>

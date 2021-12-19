@@ -65,7 +65,7 @@ form button {
   width: 20%;
 }
 .shed{
-  width: 100%;
+  width: 100% ;
 }
 
 .mainPageHeader{
@@ -85,4 +85,11 @@ form button {
 
   font-size: 24px;
   color: #a9bac8;
+}
+
+.tableContainer {
+  width: 90% ; 
+  margin : auto ;
+  margin-bottom : 20px ; 
+  border-radius: 20px ;
 }

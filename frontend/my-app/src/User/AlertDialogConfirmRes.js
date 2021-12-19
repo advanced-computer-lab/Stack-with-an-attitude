@@ -26,12 +26,14 @@ export default function AlertDialogConfirmRes(props) {
   const handleDeleteClick = async (e) => {
 
     await axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
-    .then(data => console.log('CREATED!'));
+    .then(data => handleClose());
 
     handleClose();
    // props.state([]);
     
   }
+
+  React.useEffect(()=> {});
   return (
     <div>
          {localStorage.getItem('isLoggedIn') &&<Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} 

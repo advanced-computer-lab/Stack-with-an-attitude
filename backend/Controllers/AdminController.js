@@ -6,8 +6,8 @@ const Reservation = require('../Models/Reservation');
 const transporter = nodemailer.createTransport({
     service:"hotmail",
     auth: {
-        user:"guccsen704@outlook.com",
-        pass:"Hossam2021"
+        user:"hossamgus704@outlook.com",
+        pass:"Hossam21"
     }
 });
 

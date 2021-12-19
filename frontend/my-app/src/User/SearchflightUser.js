@@ -12,14 +12,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
+
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
@@ -46,6 +43,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SearchflightUser() {
+
+
   const [cabinclass, setCabinclass] = React.useState('Economy');
   const [numofresseats, setNumofresseats] = React.useState(0);
 
@@ -87,7 +86,6 @@ export default function SearchflightUser() {
       e.target.to.value='';
       e.target.fromf.value='';
       
-
     }).catch(err => console.log(err));
 
 
@@ -128,7 +126,7 @@ export default function SearchflightUser() {
             <TextField
             required
             id="numofseats"
-            label="number of seats"
+            label="Number of seats"
             name="numofseats"
             type="number"
             />
@@ -170,7 +168,8 @@ export default function SearchflightUser() {
                 Submit
             </Button>
           </form>
-          <TableContainer component={Paper} className='sched'>
+          <TableContainer sx={{ width:'70%' , margin : 'auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}} component={Paper} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>

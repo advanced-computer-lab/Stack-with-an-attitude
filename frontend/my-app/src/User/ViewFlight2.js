@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {Link,useParams} from 'react-router-dom'
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
+  
 
 
-
-function ViewReturnFlight(){   //function component declaration
+function ViewFlight(props){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id} = useParams();
+  const {id} = props;
+  console.log("id:"+props.id)
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -66,46 +59,40 @@ function ViewReturnFlight(){   //function component declaration
 
       return(
         <div>
-<Link to='/user'><h2>Home</h2></Link>
-<Card sx={{ maxWidth: 350 , margin: "auto"  }}>
-      <CardContent>
-        <Typography variant="body2">
-        flight number : {flight["flightNumber"]}
-        </Typography>
-        <Typography variant="body2">
-        from : {flight["from"]}
-        </Typography>
-        <Typography variant="body2">
-        to : {flight["to"]}
-        </Typography>
-        <Typography variant="body2">
-        departure date : {flight["departureDate"]}
-        </Typography>
-        <Typography variant="body2">
-        departure time : {flight["departureTime"]}
-        </Typography>
-        <Typography variant="body2">
-        arrival date : {flight["arrivalDate"]}
-        </Typography>
-        <Typography variant="body2">
-        arrival time : {flight["arrivalTime"]}
-        </Typography>
-        <Typography variant="body2">
-        trip duration: {(arr-dep)/3600000} hours
-        </Typography>
-        <Typography variant="body2">
-        baggage allowance : {flight["baggageAllowance"]}
-        </Typography>
-      </CardContent>
-      <CardActions>
-      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
-              reserve seats
-          </Button>
-      </CardActions>
-    </Card>
-    </div>
+          <Card sx={{ margin: "auto"  }}>
+            <CardContent>
+              <Typography variant="body2">
+              flight number : {flight["flightNumber"]}
+              </Typography>
+              <Typography variant="body2">
+              from : {flight["from"]}
+              </Typography>
+              <Typography variant="body2">
+              to : {flight["to"]}
+              </Typography>
+              <Typography variant="body2">
+              departure date : {flight["departureDate"]}
+              </Typography>
+              <Typography variant="body2">
+              departure time : {flight["departureTime"]}
+              </Typography>
+              <Typography variant="body2">
+              arrival date : {flight["arrivalDate"]}
+              </Typography>
+              <Typography variant="body2">
+              arrival time : {flight["arrivalTime"]}
+              </Typography>
+              <Typography variant="body2">
+              trip duration: {(arr-dep)/3600000} hours
+              </Typography>
+              <Typography variant="body2">
+              baggage allowance : {flight["baggageAllowance"]}
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
       );
     
     }
 
-export default ViewReturnFlight ;
+export default ViewFlight ;
