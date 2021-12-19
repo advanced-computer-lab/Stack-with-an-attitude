@@ -64,13 +64,6 @@ function ViewFlight(props){   //function component declaration
 
       return(
         <div>
-           <div style={{margin : '10px'}}>
-            <Link to="/user">
-              <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                  Home
-              </Button>
-            </Link>
-          </div>
             <Card sx={{ margin: "auto" }}>
               <div style={{textAlign:'center'}}>
             <CardContent>

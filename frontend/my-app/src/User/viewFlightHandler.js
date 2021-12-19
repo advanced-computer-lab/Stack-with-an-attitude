@@ -99,7 +99,8 @@ function ViewFlightHandler(){
                             />
                     </div>
                 </div>
-            <div>
+            <div style={{display:'flex' , justifyContent: 'center'}}>
+            <div style={{marginRight:'10px'}}>
           <TextField
           required
           id="noofadults"
@@ -112,6 +113,7 @@ function ViewFlightHandler(){
           }}
          pattern='[0-9]*'
           />
+          </div>
           <TextField
           required
           id="noofchildren"
@@ -125,6 +127,7 @@ function ViewFlightHandler(){
           
           />
             </div>
+            <div style={{margin: '10px auto' ,width: '10%'}}>
             <AlertDialogConfirmRes reservation={{reservedUserID:localStorage.getItem('userID'),
                                                 reservedFlightIDs:[id,secondFlight],
                                                 numberOfSeats:firstSeats.length,
@@ -139,6 +142,7 @@ function ViewFlightHandler(){
                                                 numOfchildren={numOfchildren}
                                                 numofresseats={numofresseats}
                                                 />
+            </div>
             </div>
         
         
