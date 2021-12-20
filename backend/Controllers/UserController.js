@@ -74,19 +74,13 @@ exports.createReservedFlight = async function(req,res) {
 
   let newReservation = new Reservation(req.body.reservation);
 
-  console.log('BODY' , req.body);
-  console.log('OJB' , newReservation);
-
-  newReservation.reservationNumber = '34';
-
-  newReservation.numberOfAdults = 2;
-  newReservation.numberOfChildren = 1;
-  newReservation.price = 1001;
+  newReservation.reservationNumber = Math.floor(Math.random() * 9999) + '';
 
   await newReservation.save()
       .then( (reservedflights) => {
           //res.status(200)
-         console.log('CREEAAAAAAAATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED');
+         console.log('CREATED RESERVATION');
+         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber});
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
@@ -164,10 +158,12 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     let newDepSeats = [];
     let newAvailableSeats = 0;
 
+    console.log(assignedSeats, "     ----------------------------");
+
     if(cabinclass.toLowerCase() === 'economy'){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
-            if(assignedSeats.contains(i))
+            if(assignedSeats.includes(i + ''))
                 newDepSeats[i] = true;
             else
                 newDepSeats[i] = oldFlight.reservedEconomySeats[i];
@@ -181,7 +177,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     }else {
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
-            if(assignedSeats.includes(i))
+            if(assignedSeats.includes(i + ''))
                 newDepSeats[i] = true;
             else
                 newDepSeats[i] = oldFlight.reservedBusinessSeats[i];

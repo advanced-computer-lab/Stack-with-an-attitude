@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Link, useParams} from 'react-router-dom'
 import { useEffect, useState} from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { styled } from '@mui/material/styles';
@@ -13,11 +12,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
+import HomeIcon from '@mui/icons-material/Home';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,7 +42,7 @@ function SearchReturnFlight(props) {
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
   const [state,setState] = useState(null);
   const {flightId,setFunc} = props;
-  let from,to;
+  let from,to, arrive;
 
 
   // const {from, to} = props;
@@ -57,7 +55,7 @@ function SearchReturnFlight(props) {
         .then(result => {
 
           result.data.forEach(flight => {
-            if(flight.from == from && flight.to == to)
+            if(flight.from == from && flight.to == to && Date.parse(flight.departureDate) > Date.parse(arrive))
               flights.push(flight);
           });
 
@@ -74,9 +72,9 @@ function SearchReturnFlight(props) {
     console.log(flight);
     to = flight.data.from;
     from = flight.data.to;
-  
+    arrive = flight.data.arrivalDate;
   })
-  const interval = setInterval(() => {getAllFlights()},10000);
+  const interval = setInterval(() => {getAllFlights()},2000);
     return () => clearInterval(interval); 
     
   },[]);
@@ -92,9 +90,8 @@ function SearchReturnFlight(props) {
       //Link to direct back to home
   return (
     <div >
-      <Link to='/user'><h2>Home</h2></Link>  
-          <br/>
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}} component={Paper} elevation={4}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
+import reactDom from 'react-dom';
+import Typography from '@mui/material/Typography';
 
 
 function ViewProfile(){   //function component declaration
@@ -12,6 +14,7 @@ function ViewProfile(){   //function component declaration
   //first param is the default value for said variable
   const [userState,setuserState] = useState([]);
   const {id} = useParams();
+  const [authpass,setAuthpass] = useState("");
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
@@ -19,9 +22,13 @@ function ViewProfile(){   //function component declaration
       "firstName":e.target.firstName.value,
       "lastName":e.target.lastName.value,
       "passportNumber":e.target.passportNumber.value,
-      "password":e.target.password.value,
+      "password":e.target.npassword.value,
       "email":e.target.email.value,
     }
+    const opassword = e.target.password.value
+    console.log("opp" , opassword)
+    console.log("opp" ,authpass)
+    if( opassword === authpass){
     console.log(update);
     axios.put(`http://localhost:8000/user/update/${id}`,{user:update})  //the update request
     .then(data=>{
@@ -41,7 +48,9 @@ function ViewProfile(){   //function component declaration
     }).catch(error=>{
       console.log(error)
     })
-  }
+  }else{
+    console.log("wrong pass")
+  }}
   //the useEffects aka the listeners who does a update method initially when the component is created
   // and when the prameter which it is listining to is updated
   // the list of dependencies(sensed/listened to) variables are passed as a second paramater to the useEffect
@@ -59,6 +68,8 @@ function ViewProfile(){   //function component declaration
     async function fetchData(){
     let data = (await axios.get(`http://localhost:8000/user/getInfo/${id}`)).data
     setuserState(data);
+    setAuthpass(data.password) 
+    console.log("right" ,authpass)
     console.log(data);
     }
 
@@ -75,31 +86,61 @@ function ViewProfile(){   //function component declaration
       return(
         <div>
 
-<Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+          <Link to="/user">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
                 Home
             </Button>
-</Link>
-          <br/>
-        <h1>Update Profile</h1> 
+          </Link>
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+                    Update Profile
+                </Typography>
         {updated && <h2 className="feedback-header">Updated Profile successfully </h2>}
         {console.log(userState)};
-        <form onSubmit={handleSubmit} id="form">
+        
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+          <div style={{display:'flex', flexDirection:'column' , flexWrap:'wrap'}}>
           {(Object.keys(userState).slice(1,6)).map((f)=>(//loop over the userState info and map them to fields with their default value
-          <TextField
+         <React.Fragment>
+         {f=="password" ?(
+           <React.Fragment>
+             <div>
+                <Typography variant="h6" gutterBottom component="div">
+                    Update password
+                </Typography>
+                  <TextField 
+                  required
+                  key={f}
+                  id={f}
+                  label="old password"
+                  name={f}
+                  defaultValue={(f=="password") ? "" : userState[f]}
+                  margin='normal'
+                  />
+         <TextField
+         required
+         id="npassword"
+         label="new password"
+         name="npassword"
+         margin='normal'
+         />
+         </div>
+         </React.Fragment>):(
+         <TextField 
           required
           key={f}
           id={f}
           label={f}
           name={f}
-          defaultValue={userState[f]}
+          defaultValue={(f=="password") ? "" : userState[f]}
           margin='normal'
-          />
+          />)}
+          </React.Fragment>
           ))}
          
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
-              Submit
+              Update Profile
           </Button>
+          </div>
         </form>
         </div>
 

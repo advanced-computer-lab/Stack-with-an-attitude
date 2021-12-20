@@ -64,18 +64,6 @@ export default function HeaderLinksLoggedIn(props) {
           </Link>
         </Button>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          color="rose"
-          target="_blank"
-          round
-        >
-          {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/user" className={classes.dropdownLink}>
-              Register
-        </Link>
-        </Button>
-      </ListItem>
     </List>
   );
 }

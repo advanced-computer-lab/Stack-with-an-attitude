@@ -8,12 +8,8 @@ const cors = require('cors');
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
 const bcrypt = require('bcrypt');
-
-
-
-const saltRounds = 2;
-
-
+const saltRounds = 10;
+ 
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
 const userController = require('./Controllers/UserController');
@@ -30,6 +26,7 @@ app.use(cors());
 
 const MongoURI =  config.get('mongoURI');
 const secret = config.get('sessionSecret');
+const stripeSecretKey = config.get('stripe_secret');
 
 // Mongo DB
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -37,6 +34,25 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .catch(err => console.log(err));
 
 // Session Initialization
+const stripe = require('stripe')(stripeSecretKey);
+
+async function StripeCallAPI (req, res) {
+    const customer = await stripe.customers.create({
+    description: 'My First Test Customer',
+    })
+
+    const paymentIntent = await stripe.paymentIntents.create({
+    customer: customer.id,
+    currency: 'usd',
+    amount: 2000,
+    payment_method_types: ['card'],
+    setup_future_usage: 'on_session',
+  })
+
+  res.send(customer);
+}
+
+
 
 // secret is used to validate the session think password store is the place we store the session,
 //in this case as mentioned before its the mongoStore aka in mongo db 
@@ -79,6 +95,8 @@ app.get('/allreservedflights', AdminAuth , adminController.getAllreservedFlights
 app.delete('/deletereservedFlight/:deleteID', AdminAuth ,adminController.deletereservedflight);
 //-------------
 
+app.post('/test' , StripeCallAPI);
+
 //------------User
 app.put('/user/update/:id', userController.updateUserById);
 
@@ -108,7 +126,7 @@ app.post('/admin/login',(req,res)=>{
   const user = req.body.username;
   const pass = req.body.password;
 
-  admin.findOne({username:user},(err,data)=>{
+  admin.findOne({username:user},async (err,data)=>{
       if(err)
           console.log(err);
       else{
@@ -130,9 +148,8 @@ app.post('/admin/login',(req,res)=>{
 app.post('/user/login',(req,res)=>{
     const Email = req.body.email;
     const pass = req.body.password;
-  
-
     
+    console.log(Email , pass);
 
     User.findOne({email:Email},(err,data)=>{
         if(err)

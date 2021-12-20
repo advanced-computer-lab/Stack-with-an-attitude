@@ -172,7 +172,10 @@ const flightSchema = new Schema ({
 
 // function that validate the startDate and endDate
 function dateValidator(value) {
-    return Date.parse(this.departureDate) <= Date.parse(value);
+    if(this.departureDate)
+        return Date.parse(this.departureDate) <= Date.parse(value);
+    else
+        return Date.parse(this._update.$set.departureDate) <= Date.parse(value);
 }
 
 const Flight = mongoose.model('Flight',flightSchema);

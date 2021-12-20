@@ -8,9 +8,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import axios from 'axios' ;
+import { parse } from '@babel/core';
 
 export default function AlertDialogConfirmRes(props) {
   const [open, setOpen] = React.useState(false);
+
+  const {numOfchildren,numOfadults,numofresseats} = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,20 +26,21 @@ export default function AlertDialogConfirmRes(props) {
   const handleDeleteClick = async (e) => {
 
     await axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
-    .then(data => {console.log('CREATED!')
-    window.location.href('/')
-    }
-    );
+    .then(data => handleClose());
 
     handleClose();
    // props.state([]);
     
   }
+
+  React.useEffect(()=> {});
   return (
     <div>
-        <Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} endIcon={< EventSeatIcon />} id={props.id}>
+         {localStorage.getItem('isLoggedIn') &&<Button  value="Submit" aria-label="delete" variant="contained" onClick={handleClickOpen} 
+                disabled={(parseInt(numOfchildren) + parseInt(numOfadults) != parseInt(numofresseats))} endIcon={< EventSeatIcon />} 
+                id={props.id}>
             Reserve
-        </Button>
+        </Button>}
       <Dialog
         open={open}
         onClose={handleClose}

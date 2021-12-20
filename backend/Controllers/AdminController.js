@@ -6,8 +6,8 @@ const Reservation = require('../Models/Reservation');
 const transporter = nodemailer.createTransport({
     service:"hotmail",
     auth: {
-        user:"guccsen704@outlook.com",
-        pass:"Hossam2021"
+        user:"hossamgus704@outlook.com",
+        pass:"Hossam21"
     }
 });
 
@@ -163,22 +163,25 @@ exports.newFlight = async function(req,res) {
             res.json(flight)
         })
         .catch( (err) => {
-            // if(err.name === "ValidationError") {
-            //     let errors = {};
+            if (err.name === "ValidationError") {
+                let errors = {};
           
-            //     Object.keys(err.errors).forEach((key) => {
-            //       errors[key] = err.errors[key].message;
-            //     });
-          
-            //     return res.status(400).send(errors);
-            //   }
-            if (err.name === "MongoServerError"){
-                return res.status(400).send({statusCode : 400, message : "duplicate key error"})
-            }else{
-            res.status(400).send({statusCode : 400, message : err.message})
-            console.log(err.message)
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
+              }
+              if (err.name === "MongoServerError"){
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
             }
-        })
+
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }
 
 
@@ -206,7 +209,11 @@ exports.updateFlightById = async function(req,res) {
                 return res.status(400).send({statusCode : err.status, errors});
               }
               if (err.name === "MongoServerError"){
-                return res.send({statusCode : err.status, message : "duplicate key error"})
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
             }
 
             res.send({statusCode : err.status, message : err.message})

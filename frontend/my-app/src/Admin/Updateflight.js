@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
-
+import Typography from '@mui/material/Typography';
 
 
 
@@ -16,7 +16,7 @@ function Updateflight(){   //function component declaration
   const {id} = useParams();
   const [notValid,setNotValid]=useState(false);
   const [notValidObj,setNotValidObj]=useState([]);
-  var notValidObjString;
+  const [notValidObjString,setNotValidObjString]=useState("");
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
@@ -64,19 +64,20 @@ function Updateflight(){   //function component declaration
       e.target.baggageAllowance.value='';
 
       setUpdated(true);
-
+      setNotValidObjString("");
     }).catch(error=>{
-      notValidObjString = "";
-      setNotValid(true);
-      setNotValidObj(error.response.data.errors);
-      let keyss = Object.keys(notValidObj);
+      let temp = "";
+      console.log("error response");
+      const errors = error.response.data.errors
+      let keyss = Object.keys(errors);
+      let valuess = Object.values(errors);
       for(let i in keyss){
-        let j = keyss[i];
-        console.log(j);
-        console.log(notValidObj.j);
-        notValidObjString += j + ": " + notValidObj.keyss[i] + "\n"
+        temp += keyss[i] + ": " + valuess[i] + ", "
       }
-      console.log(notValidObjString);
+      setNotValidObjString(temp.substring(0, temp.length-2));
+      console.log("error string");
+      console.log(temp.substring(0, temp.length-2));
+      setUpdated(false);
       //console.log(Object.keys(error.response.data.errors).map());
     })
   }
@@ -110,19 +111,31 @@ function Updateflight(){   //function component declaration
   useEffect(()=>{
   },[flight])
   
+  /*useEffect(()=>{
+  },[notValid])
+
+  useEffect(()=>{
+  },[notValidObj])*/
+
+  useEffect(()=>{
+  },[notValidObjString])
+
       return(
         <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+          <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link>
-          <br/>
-        <h1>Update flight with flight number {flight.flightNumber}</h1> 
+          </Link>
+
+          
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+              Update flight number {flight.flightNumber}
+          </Typography>
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
-        {notValid && <h2 className="feedback-header">{notValidObjString} </h2>}
-        <form onSubmit={handleSubmit} id="form">
+        {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField
           required
@@ -140,7 +153,7 @@ function Updateflight(){   //function component declaration
           />)
           ))}
          
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button style={{marginLeft: '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
         </form>

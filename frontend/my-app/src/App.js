@@ -1,31 +1,41 @@
-import './App.css';
-import Addflights from "./Addflight" ;
-import Schedule from "./Schedule";
-import AdminPage from "./AdminPage";
-import MainPage from "./MainPage";
-import MainPageLoggedIn from "./MainPageLoggedIn";
-import Updateflight from "./Updateflight";
 import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
-import Searchflight from './Searchflight';
-import SearchflightUser from './SearchflightUser';
-import ViewFlight from './ViewFlight';
-import Reservedflights from './Reservedflights';
-import PlaneView from './PlaneView';
-import ViewProfile from './ViewProfile';
-import ViewFlightHandler from './viewFlightHandler';
-import ViewReturnFlight from './ViewReturnFlight';
-import SearchReturnFlight from './SearchReturnFlight';
-import Cancelflight from './Cancelflight';
-
+import './App.css';
+import Addflights from "./Admin/Addflight" ;
+import Schedule from "./Admin/Schedule";
+import AdminPage from "./Admin/AdminPage";
+import MainPage from "./User/MainPage";
+import MainPageLoggedIn from "./User/MainPageLoggedIn";
+import Updateflight from "./Admin/Updateflight";
+import Searchflight from './Admin/Searchflight';
+import SearchflightUser from './User/SearchflightUser';
+import Reservedflights from './User/Reservedflights';
+import PlaneView from './User/PlaneView';
+import ViewProfile from './User/ViewProfile';
+import LogIn from './User/LogIn';
+import ViewFlightHandler from './User/viewFlightHandler';
+import ViewReturnFlight from './User/ViewReturnFlight';
+import Cancelflight from './Admin/Cancelflight';
+import HomeIcon from '@mui/icons-material/Home';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './User/Logo.svg';
+import {Link} from 'react-router-dom'
 
 function App() {
 
 
+
   return (
     <Router>
+          <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
+            <Route path='/login' element={<LogIn/>} />
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />

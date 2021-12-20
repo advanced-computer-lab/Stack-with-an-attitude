@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import {Link,useParams} from 'react-router-dom'
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import HomeIcon from '@mui/icons-material/Home';
+
   
 
 
@@ -16,8 +15,7 @@ function ViewFlight(props){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id} = props;
-  console.log("id:"+props.id)
+  const {id,cabinclass,numofresseats} = useParams();
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -62,41 +60,56 @@ function ViewFlight(props){   //function component declaration
     arr.setHours(arrhour);
     dep.setMinutes(depsec);
     arr.setMinutes(arrsec);
+    console.log(numofresseats);
 
       return(
         <div>
-          <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
-            <CardContent>
-              <Typography variant="body2">
-              flight number : {flight["flightNumber"]}
-              </Typography>
-              <Typography variant="body2">
-              from : {flight["from"]}
-              </Typography>
-              <Typography variant="body2">
-              to : {flight["to"]}
-              </Typography>
-              <Typography variant="body2">
-              departure date : {flight["departureDate"]}
-              </Typography>
-              <Typography variant="body2">
-              departure time : {flight["departureTime"]}
-              </Typography>
-              <Typography variant="body2">
-              arrival date : {flight["arrivalDate"]}
-              </Typography>
-              <Typography variant="body2">
-              arrival time : {flight["arrivalTime"]}
-              </Typography>
-              <Typography variant="body2">
-              trip duration: {(arr-dep)/3600000} hours
-              </Typography>
-              <Typography variant="body2">
-              baggage allowance : {flight["baggageAllowance"]}
-              </Typography>
-            </CardContent>
-          </Card>
-        </div>
+      <Card sx={{ margin: "auto" }} elevation={6}>
+        <div style={{textAlign:'center'}}>
+      <CardContent>
+        <Typography variant="h3">
+          Flight Details
+        </Typography>
+        <Typography variant="h5">
+        Flight number : {flight["flightNumber"]}
+        </Typography>
+        <Typography variant="h5">
+        From : {flight["from"]}
+        </Typography>
+        <Typography variant="h5">
+        To : {flight["to"]}
+        </Typography>
+        <Typography variant="h5">
+        Departure date : {flight["departureDate"]}
+        </Typography>
+        <Typography variant="h5">
+        Departure time : {flight["departureTime"]}
+        </Typography>
+        <Typography variant="h5">
+        Arrival date : {flight["arrivalDate"]}
+        </Typography>
+        <Typography variant="h5">
+        Arrival time : {flight["arrivalTime"]}
+        </Typography>
+        <Typography variant="h5">
+        Trip duration: {(arr-dep)/3600000} hours
+        </Typography>
+        <Typography variant="h5">
+        Baggage allowance : {flight["baggageAllowance"]}
+        </Typography>
+        <Typography variant="h5">
+        Cabin class : {cabinclass}
+        </Typography>
+        <Typography variant="overline" component="div" color="red">
+          you will reserve {numofresseats} seats in {cabinclass} class
+        </Typography>
+      </CardContent>
+      </div>
+      <CardActions>
+      
+      </CardActions>
+    </Card>
+    </div>
       );
     
     }

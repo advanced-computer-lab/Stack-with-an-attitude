@@ -5,11 +5,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
+import Typography from '@mui/material/Typography';
 
 
 class Addflights extends Component{
   state={
-    inserted:false
+    inserted:false,
+    notValidObjString:""
   }
   
   submit= (e) => {
@@ -51,24 +53,43 @@ class Addflights extends Component{
       e.target.baggageAllowance.value='';
 
       this.setState({inserted:true});
+      this.setState({notValidObjString:""});
 
-    }).catch((err, data) => console.log(err.message));
-
+    })//.catch((err, data) => console.log(err.message));
+      .catch(error=>{
+        let temp = "";
+        console.log("error response");
+        const errors = error.response.data.errors
+        let keyss = Object.keys(errors);
+        let valuess = Object.values(errors);
+        for(let i in keyss){
+          temp += keyss[i] + ": " + valuess[i] + ", "
+        }
+        this.setState({notValidObjString:temp.substring(0, temp.length-2)});
+        console.log("error string");
+        console.log(temp.substring(0, temp.length-2));
+        this.setState({inserted:false});
+        //console.log(Object.keys(error.response.data.errors).map());
+        })
 
   }  
   render(){
       return(
         <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+          <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link> 
-          <br/>
-        <h1>Create a New Flight</h1>  
+          </Link>
+
+          
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+         Create a new flight
+      </Typography>
        {this.state.inserted && <h2 className="feedback-header"> Inserted flight successfully</h2>}
-        <form onSubmit={this.submit} id="form">
+       {<h2 style={{color:"red"}} className="feedback-header">{this.state.notValidObjString}</h2>}
+        <form onSubmit={this.submit} id="form" style={{margin:'auto' , width:'20%'}}>
           <TextField
           required
           id="fnum"
@@ -140,7 +161,7 @@ class Addflights extends Component{
           label="baggage Allowance"
           name="baggageAllowance"
           />
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button style={{marginLeft : '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
         </form>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -10,12 +10,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios' ;
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
+import AlertDialogReservation from './AlertDialogReservation';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,15 +37,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-function Schedule() {
+function Reservedflights() {
 
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
   const [state,setState] = useState([]);
+  const {id} =  useParams();
 
-  const getAllFlights =async () => {
-
+  const getAllresFlights =async () => {
+console.log(id);
         let flights = [];
-        await axios.get('http://localhost:8000/allFlights')                   
+        await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
 
           result.data.forEach(flight => {
@@ -68,76 +67,63 @@ function Schedule() {
      // therefore add this second param [] to useEffect after the method to make it run on creation only
      // equivelent to componentDidMount and componentDidUpdate
     
-    const interval = setInterval(() => {getAllFlights()},10000);
+    const interval = setInterval(() => {getAllresFlights()},10000);
     return () => clearInterval(interval); // equal to componentDidUnmount(clearInterval(interval);)
     
   },[]);
 
   useEffect(() => {
-    getAllFlights();
+    getAllresFlights();
   },[state]);
-
-  const handleDeleteClick = async (e) => {
-
-    await axios.delete(`http://localhost:8000/deleteFlight/${e.currentTarget.id}`)
-    .then(data => console.log('DELETED!'));
-
-    setState();
-    
-  }
-
-
 
 
       //Link to direct back to home
   return (
     <div >
-     <Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-</Link> 
-          <br/>
-    <TableContainer component={Paper}>
+      <div style={{ margin : '10px'}}>
+        <Link to="/user">
+          <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                  Home
+          </Button>
+        </Link>
+      </div>
+      <div style={{margin : 'auto' , textAlign : 'center'}}>
+        <Typography  variant="h3" gutterBottom component="div">
+          Reserved Flights
+        </Typography>
+      </div>
+    <TableContainer sx={{ width:'90%' , margin : 'auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}}  component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Flight number</StyledTableCell>
-            <StyledTableCell>Delete</StyledTableCell>
-            <StyledTableCell>Edit</StyledTableCell>
-            <StyledTableCell>Arrival Date</StyledTableCell>
-            <StyledTableCell>Arrival Time</StyledTableCell>
-            <StyledTableCell>Departure Date</StyledTableCell>
-            <StyledTableCell>Departure Time</StyledTableCell>
-            <StyledTableCell>Departure</StyledTableCell>
-            <StyledTableCell>Destination</StyledTableCell>
+            <StyledTableCell>Reservation number</StyledTableCell>
+            <StyledTableCell>Flight ID</StyledTableCell>
+            <StyledTableCell>Number of seats</StyledTableCell>
+            <StyledTableCell>Assigned departure seats</StyledTableCell>
+            <StyledTableCell>Assigned return seats</StyledTableCell>
+            <StyledTableCell>Total price</StyledTableCell>
+            <StyledTableCell>Number of adults</StyledTableCell>
+            <StyledTableCell>Number of children</StyledTableCell>
+            <StyledTableCell>Options</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
             <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
-                {row.flightNumber}
+                {row.reservationNumber}
               </StyledTableCell>
+              <StyledTableCell>{row.reservedFlightIDs}</StyledTableCell>
+              <StyledTableCell>{row.numberOfSeats}</StyledTableCell>
+              <StyledTableCell>{row.assignedDepartureSeats.map(seat=>'A'+seat + ' ') + ' '}</StyledTableCell>
+              <StyledTableCell>{row.assignedReturnSeats.map(seat=>'B'+seat + ' ') + ' '}</StyledTableCell>
+              <StyledTableCell>{row.price * row.numberOfSeats}</StyledTableCell>
+              <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
+              <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
               <StyledTableCell>
-                <AlertDialog id={row._id} state={(d) => setState(d)}/>
-              </StyledTableCell>  
-              <StyledTableCell>
-                {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
-                  <DeleteIcon />
-                </IconButton> */}
-                <Link to={"/updateflight/" + row._id}>
-                  <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
-                    <EditIcon />
-                  </IconButton>
-                </Link>
+                <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
               </StyledTableCell>
-              <StyledTableCell>{row.arrivalDate}</StyledTableCell>
-              <StyledTableCell>{row.arrivalTime}</StyledTableCell>
-              <StyledTableCell>{row.departureDate}</StyledTableCell>
-              <StyledTableCell>{row.departureTime}</StyledTableCell>
-              <StyledTableCell>{row.from}</StyledTableCell>
-              <StyledTableCell>{row.to}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -151,4 +137,4 @@ function Schedule() {
 
 
 
-export default Schedule;
+export default Reservedflights;

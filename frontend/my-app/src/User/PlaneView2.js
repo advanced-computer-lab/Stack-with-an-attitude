@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { Checkbox } from '@mui/material';
-
+import Typography from '@mui/material/Typography';
 
 
 
@@ -69,7 +69,9 @@ function PlaneView(props){   //function component declaration
       return(
         <div>
 
-        <h1>Reserve your return seats :</h1> 
+          <Typography  variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
+            Reserve your return seats :
+          </Typography>
         
         <form onSubmit={handleSubmit} id="form">
             <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
@@ -81,6 +83,7 @@ function PlaneView(props){   //function component declaration
                     key={index.toString()}
                     disabled
                     checked
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     />:
                     <Checkbox
                     id={index.toString()}
@@ -88,6 +91,7 @@ function PlaneView(props){   //function component declaration
                     color="success"
                     onChange={handleChange}
                     disabled={!(selected.includes(index+''))&&selected.length>=seats}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     />)}
                     </div>
                 )
