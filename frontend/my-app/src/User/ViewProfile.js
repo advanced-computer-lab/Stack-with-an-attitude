@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
+import Typography from '@mui/material/Typography';
 
 
 function ViewProfile(){   //function component declaration
@@ -85,22 +86,27 @@ function ViewProfile(){   //function component declaration
       return(
         <div>
 
-<Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
+          <Link to="/user">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
                 Home
             </Button>
-</Link>
-          <br/>
-        <h1>Update Profile</h1> 
+          </Link>
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+                    Update Profile
+                </Typography>
         {updated && <h2 className="feedback-header">Updated Profile successfully </h2>}
         {console.log(userState)};
-        <form onSubmit={handleSubmit} id="form">
+        
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+          <div style={{display:'flex', flexDirection:'column' , flexWrap:'wrap'}}>
           {(Object.keys(userState).slice(1,6)).map((f)=>(//loop over the userState info and map them to fields with their default value
          <React.Fragment>
          {f=="password" ?(
            <React.Fragment>
              <div>
-             update password
+                <Typography variant="h6" gutterBottom component="div">
+                    Update password
+                </Typography>
                   <TextField 
                   required
                   key={f}
@@ -132,8 +138,9 @@ function ViewProfile(){   //function component declaration
           ))}
          
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
-              Submit
+              Update Profile
           </Button>
+          </div>
         </form>
         </div>
 

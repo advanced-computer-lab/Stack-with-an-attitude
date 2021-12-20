@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
-
+import Typography from '@mui/material/Typography';
 
 
 
@@ -123,16 +123,19 @@ function Updateflight(){   //function component declaration
       return(
         <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+          <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link>
-          <br/>
-        <h1>Update flight with flight number {flight.flightNumber}</h1> 
+          </Link>
+
+          
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+              Update flight number {flight.flightNumber}
+          </Typography>
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
-        <form onSubmit={handleSubmit} id="form">
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField
           required
@@ -150,7 +153,7 @@ function Updateflight(){   //function component declaration
           />)
           ))}
          
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button style={{marginLeft: '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
         </form>

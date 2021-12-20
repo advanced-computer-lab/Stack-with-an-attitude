@@ -167,7 +167,7 @@ export default function SearchflightUser() {
             </Button>
           </form>
           <TableContainer sx={{ width:'70%' , margin : '0 auto' , marginBottom : '20px' , 
-                          borderRadius: '20px'}} component={Paper} className='sched'>
+                          borderRadius: '20px'}} elevation={4} component={Paper} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
