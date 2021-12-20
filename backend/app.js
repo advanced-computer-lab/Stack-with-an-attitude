@@ -7,7 +7,8 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
@@ -24,6 +25,7 @@ app.use(cors());
 
 const MongoURI =  config.get('mongoURI');
 const secret = config.get('sessionSecret');
+const stripeSecretKey = config.get('stripe_secret');
 
 // Mongo DB
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,6 +33,25 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .catch(err => console.log(err));
 
 // Session Initialization
+const stripe = require('stripe')(stripeSecretKey);
+
+async function StripeCallAPI (req, res) {
+    const customer = await stripe.customers.create({
+    description: 'My First Test Customer',
+    })
+
+    const paymentIntent = await stripe.paymentIntents.create({
+    customer: customer.id,
+    currency: 'usd',
+    amount: 2000,
+    payment_method_types: ['card'],
+    setup_future_usage: 'on_session',
+  })
+
+  res.send(customer);
+}
+
+
 
 // secret is used to validate the session think password store is the place we store the session,
 //in this case as mentioned before its the mongoStore aka in mongo db 
@@ -73,6 +94,8 @@ app.get('/allreservedflights', AdminAuth , adminController.getAllreservedFlights
 app.delete('/deletereservedFlight/:deleteID', AdminAuth ,adminController.deletereservedflight);
 //-------------
 
+app.post('/test' , StripeCallAPI);
+
 //------------User
 app.put('/user/update/:id', userController.updateUserById);
 
@@ -102,20 +125,27 @@ app.post('/admin/login',(req,res)=>{
   const user = req.body.username;
   const pass = req.body.password;
 
-  admin.findOne({username:user},(err,data)=>{
+  admin.findOne({username:user},async (err,data)=>{
       if(err)
           console.log(err);
       else{
           if(data){
-              if(pass==data.password){
-                  req.session.adminName = user;
-                  req.session.adminId=data._id;
-                  res.send();
-              }
-          }
-          else{
-                  res.send("invalid");
-              }
+            //   if(pass==data.password){
+            //       req.session.adminName = user;
+            //       req.session.adminId=data._id;
+            //       res.send();
+            //   }
+                const match = await bcrypt.compare(pass, data.password);
+
+                if(match) {
+                    req.session.adminName = user;
+                    req.session.adminId=data._id;
+                    res.send();
+                    }
+                }
+                else{
+                    res.send("invalid");
+                }
           }
   });
 
