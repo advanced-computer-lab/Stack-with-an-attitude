@@ -23,7 +23,10 @@ export default function AlertDialogConfirmRes(props) {
   const handleDeleteClick = async (e) => {
 
     await axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
-    .then(data => console.log('CREATED!'));
+    .then(data => {console.log('CREATED!')
+    window.location.href('/')
+    }
+    );
 
     handleClose();
    // props.state([]);

@@ -7,11 +7,17 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
+const bcrypt = require('bcrypt');
 
- 
+
+
+const saltRounds = 2;
+
+
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
 const userController = require('./Controllers/UserController');
+const Admin = require("./Models/Admin");
 
 
 //App variables
@@ -107,10 +113,10 @@ app.post('/admin/login',(req,res)=>{
           console.log(err);
       else{
           if(data){
-              if(pass==data.password){
+              if(bcrypt.compare(pass,data.password)){
                   req.session.adminName = user;
                   req.session.adminId=data._id;
-                  res.send();
+                  res.send("you logged in ");
               }
           }
           else{
@@ -125,6 +131,9 @@ app.post('/user/login',(req,res)=>{
     const Email = req.body.email;
     const pass = req.body.password;
   
+
+    
+
     User.findOne({email:Email},(err,data)=>{
         if(err)
             console.log(err);
@@ -149,6 +158,21 @@ app.post('/user/login',(req,res)=>{
         req.session.destroy();
     res.clearCookie('connect.sid');
   res.status(200).send({statusCode:200,message:'logout successful'})
+
+})
+
+app.post('/admin/register',(req,res)=>{
+    let username = req.body.username;
+    let password = req.body.password;
+
+        bcrypt.hash(password,saltRounds).then((hash)=>{
+            let newAdmin = new admin({"username":username,"password":hash,"email":"x@gmail.com"})
+            newAdmin.save().then((myAdmin)=>{
+                console.log("succ");
+                res.send(myAdmin)});
+
+        })
+
 
 })
 
