@@ -11,6 +11,7 @@ import SearchflightUser from './User/SearchflightUser';
 import Reservedflights from './User/Reservedflights';
 import PlaneView from './User/PlaneView';
 import ViewProfile from './User/ViewProfile';
+import LogIn from './User/LogIn';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import Cancelflight from './Admin/Cancelflight';
@@ -23,9 +24,10 @@ import {Link} from 'react-router-dom'
 function App() {
 
 
+
   return (
     <Router>
-                 <div>
+          <div style={{marginBottom : '0px'}}>
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
@@ -33,6 +35,7 @@ function App() {
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
+            <Route path='/login' element={<LogIn/>} />
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />

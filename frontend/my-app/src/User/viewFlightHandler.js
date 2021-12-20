@@ -20,26 +20,7 @@ import '@fontsource/roboto/700.css';
 
 function ViewFlightHandler(){
 
-    function Testcomp(props){//replace with george's component props.func is a function that
-        //sets the state of parent component for the secondFlight (return flight)
-        const {func} = props;
-        const handleTest=(e)=>{
-            e.preventDefault();
-            func(e.target.small.value);//replace with return flight id
-        }
-        return(
-                <form onSubmit={handleTest}>
-                    <input type='text' defaultValue='61a7c74e08fb58bbc6f6feff' id='small' name='small'/>
-                    <button>
-                        {false && <Button  value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
-                            reserve 2nd flight by id
-                        </Button>
-                        }
-                    </button>
-              </form>
-    
-        );
-    }
+   
 
     const {id,cabinclass,numofresseats}=useParams()
 
@@ -149,9 +130,16 @@ function ViewFlightHandler(){
             ):secondFlight==null?(
             firstSeats.length===0?
             <div>
-                <button onClick={()=>{window.location.href='/'}}>back</button>
+                <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
+                        onClick={()=>{window.location.href='/searchflightuser'}}>Back</Button>
+                 <Link to="/user">
+                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                        Home
+                    </Button>
+                 </Link>
+                
             <div style={{display:'flex' , flexDirection : 'row'}}>
-                <div style={{width:'50%'}}>
+                <div style={{width:'50%' , marginLeft: '20px'}}>
                 <ViewFlight  id={id}/>
                 </div>
                 <PlaneView id={id} type={cabinclass} seats={numofresseats} setFunc={(value)=>setFirst(value)} />
@@ -159,16 +147,26 @@ function ViewFlightHandler(){
             </div>:<div>
             {firstSeats.length!==0&&(
             <div>
-                <button onClick={()=>{setFirst([])}}>back</button>
+                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
+                        onClick={()=>{setFirst([])}}>Back</Button>
+                 <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
+                    Please choose one of the following return flights
+                </Typography>
             <SearchReturnFlight flightId={id} setFunc={(value)=>setFlight(value)}/>
             </div>
             )}
           </div>
             ):
             <div>
-                <button onClick={()=>{setFlight(null)}}>back</button>
+                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
+                        onClick={()=>{setFlight(null)}}>Back</Button>
+                 <Link to="/user">
+                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                        Home
+                    </Button>
+                 </Link>
                 <div style={{display:'flex' , flexDirection : 'row'}}>
-                <div style={{width:'50%'}}>
+                <div style={{width:'50%' , marginLeft: '20px'}}>
                 <ViewFlight2 id={secondFlight}/>
                 </div>
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>

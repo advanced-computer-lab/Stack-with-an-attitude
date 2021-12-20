@@ -15,7 +15,7 @@ export default function SimpleAccordion(props) {
   return (    
 
     <div>
-      <Accordion>
+      <Accordion elevation={3}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -29,7 +29,7 @@ export default function SimpleAccordion(props) {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion elevation={3}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -43,7 +43,7 @@ export default function SimpleAccordion(props) {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion elevation={3}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3a-content"

@@ -162,7 +162,7 @@ export default function SearchflightUser() {
             label="To Terminal"
             name="to"
             />
-            <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+            <Button value="Submit" type="submit" style={{marginLeft : '15px'}} variant="contained" endIcon={<SendIcon />}>
                 Submit
             </Button>
           </form>

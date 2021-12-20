@@ -64,7 +64,7 @@ function ViewFlight(props){   //function component declaration
 
       return(
         <div>
-            <Card sx={{ margin: "auto" }}>
+            <Card sx={{ margin: "auto" }} elevation={6}>
               <div style={{textAlign:'center'}}>
             <CardContent>
               <Typography variant="h3">

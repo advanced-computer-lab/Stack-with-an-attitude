@@ -124,7 +124,9 @@ app.post('/admin/login',(req,res)=>{
 app.post('/user/login',(req,res)=>{
     const Email = req.body.email;
     const pass = req.body.password;
-  
+    
+    console.log(Email , pass);
+
     User.findOne({email:Email},(err,data)=>{
         if(err)
             console.log(err);

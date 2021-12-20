@@ -69,7 +69,7 @@ function PlaneView(props){   //function component declaration
       return(
         <div>
 
-          <Typography  variant="h3" gutterBottom component="div">
+          <Typography  variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
             Reserve your return seats :
           </Typography>
         
