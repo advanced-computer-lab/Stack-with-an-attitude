@@ -72,7 +72,7 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
+        <Link style={{padding:0}} to="/register" className={classes.dropdownLink}>
               Register
         </Link>
         </Button>

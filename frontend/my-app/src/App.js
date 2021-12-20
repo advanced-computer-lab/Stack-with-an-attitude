@@ -12,6 +12,7 @@ import Reservedflights from './User/Reservedflights';
 import PlaneView from './User/PlaneView';
 import ViewProfile from './User/ViewProfile';
 import LogIn from './User/LogIn';
+import Register from './User/Register';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import Cancelflight from './Admin/Cancelflight';
@@ -36,6 +37,7 @@ function App() {
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
+            <Route path='/register' element={<Register/>} />
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />

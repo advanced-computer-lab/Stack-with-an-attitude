@@ -103,8 +103,8 @@ function ViewProfile(){   //function component declaration
          <React.Fragment>
          {f=="password" ?(
            <React.Fragment>
-             <div>
-                <Typography variant="h6" gutterBottom component="div">
+             <div >
+                <Typography variant="h6" color = "red"  gutterBottom component="div">
                     Update password
                 </Typography>
                   <TextField 
