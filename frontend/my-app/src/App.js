@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
@@ -21,18 +22,38 @@ import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './User/Logo.svg';
 import {Link} from 'react-router-dom'
+import HeaderLinks from 'components/Header/HeaderLinks.js';
 
 function App() {
 
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
 
+  const loggedIn = (bool) => {setIsLoggedIn(bool)}
 
+  useEffect(()=>{
+    console.log(isLoggedIn + " 3333333333")
+  },[isLoggedIn])
+
+  console.log(isLoggedIn);
   return (
     <Router>
+        {isLoggedIn ? (
+          <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
+        ) : (
+          <div style={{marginBottom : '0px'}}>
+             <Header color='info'  transparent leftLinks={<Link to="/"><div style={{height:'70px',width: '100px' }}>
+                  <Logo />
+                  </div></Link>}  rightLinks={<HeaderLinks/>} fixed/>
+          </div>
+        )}
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
-            <Route path='/login' element={<LogIn/>} />
-            <Route path='/register' element={<Register/>} />
+            <Route path='/login' element={<LogIn handleClick={loggedIn}/>} />
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />

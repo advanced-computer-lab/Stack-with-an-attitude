@@ -15,10 +15,7 @@ class MainPage extends Component{
   render(){
       return(
         <div>
-            <Header color='info'  transparent leftLinks={<Link to="/"><div style={{height:'70px',width: '100px' }}>
-                      <Logo />
-                                                        </div></Link>}  rightLinks={<HeaderLinks/>} fixed/>
-            <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} children={<div className={'mainPageHeader'}><h1>Welcome to our airline!</h1><h3>where quality meets excellence</h3></div>}/>
+          <Parallax filter image={require('assets/img/plane-wallpaper.jpg').default} children={<div className={'mainPageHeader'}><h1>Welcome to our airport!</h1><h3>where quality meets excellence</h3></div>}/>
             <Card style={{margin: 'auto', maxWidth: 750}}>
               <CardBody style={{margin : '-10px'}}> 
                 <ButtonBases/>
