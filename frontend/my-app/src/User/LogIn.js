@@ -7,14 +7,20 @@ import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
+import { circularProgressClasses } from '@mui/material';
 
 
-function LogIn(){   //function component declaration
+function LogIn(props){   //function component declaration
+
+  const {handleClick} = props;
+
+  const [isLoggedIn , setIsLoggedIn] = useState(false);
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
+    
     // get user email & password from form here (in sprint 3).
 
     const email = e.target.email.value;
@@ -25,6 +31,9 @@ function LogIn(){   //function component declaration
                     // insert error handling code here
                   }else{
                   const userId = result.data.user ; 
+                  setIsLoggedIn(true);
+                  console.log('MY SAAAAAATE :' , isLoggedIn);
+                  //(() => handleClick(isLoggedIn))();
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
                   window.location.href='/user'
@@ -36,6 +45,9 @@ function LogIn(){   //function component declaration
                 })
                
     }
+
+    //useEffect(() => {(() => handleClick(isLoggedIn))();},[isLoggedIn])
+
       return(
         <div>
 
