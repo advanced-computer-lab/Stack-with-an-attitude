@@ -11,20 +11,13 @@ import background from "./travel.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
-import { circularProgressClasses } from '@mui/material';
 
-
-function LogIn(props){   //function component declaration
-
-  const {handleClick} = props;
-
-  const [isLoggedIn , setIsLoggedIn] = useState(false);
+function LogIn(){   //function component declaration
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
-    
     // get user email & password from form here (in sprint 3).
 
     const email = e.target.email.value;
@@ -35,9 +28,6 @@ function LogIn(props){   //function component declaration
                     // insert error handling code here
                   }else{
                   const userId = result.data.user ; 
-                  setIsLoggedIn(true);
-                  console.log('MY SAAAAAATE :' , isLoggedIn);
-                  //(() => handleClick(isLoggedIn))();
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
                   window.location.href='/user'
@@ -49,9 +39,6 @@ function LogIn(props){   //function component declaration
                 })
                
     }
-
-    //useEffect(() => {(() => handleClick(isLoggedIn))();},[isLoggedIn])
-
       return(
         <div>
                     <div style={{marginBottom : '0px'}}>
