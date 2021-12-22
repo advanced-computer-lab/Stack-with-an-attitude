@@ -99,7 +99,7 @@ export default function SearchflightUser() {
 
   }  
     return(
-      <div style={{ backgroundImage:`url(https://wallpapercave.com/wp/wp3306978.jpg)`,backgroundRepeat:"no-repeat" ,backgroundSize:"contain"}}>   
+      <div>   
         <div style={{margin : 'auto' , textAlign : 'center'}}>
           <Typography  variant="h3" gutterBottom component="div">
             Search and Reserve your flights seats
@@ -204,6 +204,11 @@ export default function SearchflightUser() {
                 </TableBody>
               </Table>
             </TableContainer>
+        </div>
+        <div>
+        <footer style={{bottom:0,height: "151px"}}>
+        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+        </footer>
         </div>
       </div>
       );

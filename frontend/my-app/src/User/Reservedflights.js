@@ -80,13 +80,6 @@ console.log(id);
       //Link to direct back to home
   return (
     <div >
-      <div style={{ margin : '10px'}}>
-        <Link to="/user">
-          <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                  Home
-          </Button>
-        </Link>
-      </div>
       <div style={{margin : 'auto' , textAlign : 'center'}}>
         <Typography  variant="h3" gutterBottom component="div">
           Reserved Flights
@@ -129,6 +122,11 @@ console.log(id);
         </TableBody>
       </Table>
     </TableContainer>
+    <div>
+        <footer style={{bottom:0,height: "151px"}}>
+        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+        </footer>
+        </div>
     </div>
   );
 }

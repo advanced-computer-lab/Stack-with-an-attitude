@@ -1,6 +1,8 @@
 const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
@@ -190,4 +192,38 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     }
 
     updateFlight(ID,oldFlight);
+}
+
+exports.register = async function(req,res) {
+
+    let newuser = new User(req.body.newuser);
+    bcrypt.hash(newuser.password, saltRounds).then(function(hash) {
+        newuser.password = hash ;
+    });
+    await newuser.save()
+        .then( (user) => {
+            res.status(200)
+            res.json(user)
+            console.log(user);
+        })
+        .catch( (err) => {
+            if (err.name === "ValidationError") {
+                let errors = {};
+          
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
+              }
+              if (err.name === "MongoServerError"){
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
+            }
+
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }
