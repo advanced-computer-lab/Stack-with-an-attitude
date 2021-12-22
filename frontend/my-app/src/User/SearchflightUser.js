@@ -99,7 +99,12 @@ export default function SearchflightUser() {
 
   }  
     return(
-      <div>   
+      <div>  
+            <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div> 
         <div style={{margin : 'auto' , textAlign : 'center'}}>
           <Typography  variant="h3" gutterBottom component="div">
             Search and Reserve your flights seats

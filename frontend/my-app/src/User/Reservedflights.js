@@ -14,6 +14,9 @@ import AlertDialogReservation from './AlertDialogReservation';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './Logo.svg';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -80,6 +83,11 @@ console.log(id);
       //Link to direct back to home
   return (
     <div >
+                          <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
       <div style={{margin : 'auto' , textAlign : 'center'}}>
         <Typography  variant="h3" gutterBottom component="div">
           Reserved Flights
