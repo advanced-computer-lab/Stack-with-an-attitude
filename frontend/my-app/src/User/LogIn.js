@@ -8,6 +8,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
 import background from "./travel.jpg";
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './Logo.svg';
 
 function LogIn(){   //function component declaration
 
@@ -37,6 +40,11 @@ function LogIn(){   //function component declaration
                
     }
       return(
+        <div>
+                    <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
         <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <div >
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
@@ -70,6 +78,8 @@ function LogIn(){   //function component declaration
         <footer style={{position:"fixed",bottom:0,height: "151px"}}>
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
         </footer>
+        </div>
+        </div>
         </div>
         </div>
 

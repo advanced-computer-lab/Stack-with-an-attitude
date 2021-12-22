@@ -28,11 +28,6 @@ function App() {
 
   return (
     <Router>
-          <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
-              <Logo />
-             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
-          </div>
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />

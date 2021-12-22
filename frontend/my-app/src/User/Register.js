@@ -8,6 +8,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
 import background from "./wall.jpg";
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './Logo.svg';
 
 
 
@@ -43,6 +46,11 @@ function Register(){   //function component declaration
     }
       return(
         <div>
+                    <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
           <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
                    Be an adventurer !
