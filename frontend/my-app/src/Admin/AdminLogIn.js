@@ -12,7 +12,7 @@ import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
 
-function LogIn(){   //function component declaration
+function AdminLogIn(){   //function component declaration
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
@@ -22,15 +22,16 @@ function LogIn(){   //function component declaration
 
     const email = e.target.email.value;
     const password = e.target.password.value;
-    axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+
+    axios.post('http://localhost:8000/admin/login',{'email':email , 'password':password})
                 .then((result) => {
                   if(result.data.statusCode == 401){
                     // insert error handling code here
                   }else{
-                  const userId = result.data.user ; 
-                  localStorage.setItem('userID',userId);
-                  localStorage.setItem('isLoggedIn',true);
-                  window.location.href='/user'
+                  const adminId = result.data.user ; 
+                  localStorage.setItem('adminID',adminId);
+                  localStorage.setItem('isAdminLoggedIn',true);
+                  window.location.href='/admin'
                   }
                                 })
   
@@ -42,14 +43,11 @@ function LogIn(){   //function component declaration
       return(
         <div>
                     <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
-              <Logo />
-             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
         <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <div >
-          <br/>
+            <br/>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
-                   Please enter your credentials
+                   Login to Admin Portal
           </Typography>
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
         <TextField 
@@ -88,4 +86,4 @@ function LogIn(){   //function component declaration
     }
   
 
-export default LogIn ;
+export default AdminLogIn ;
