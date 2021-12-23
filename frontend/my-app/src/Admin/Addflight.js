@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
+import Typography from '@mui/material/Typography';
 
 
 class Addflights extends Component{
@@ -76,16 +77,20 @@ class Addflights extends Component{
       return(
         <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+          <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link> 
-          <br/>
-        <h1>Create a New Flight</h1>  
+          </Link>
+
+          
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+         Create a new flight
+      </Typography>
        {this.state.inserted && <h2 className="feedback-header"> Inserted flight successfully</h2>}
        {<h2 style={{color:"red"}} className="feedback-header">{this.state.notValidObjString}</h2>}
-        <form onSubmit={this.submit} id="form">
+        <form onSubmit={this.submit} id="form" style={{margin:'auto',width:'20%',}} >
+          <div style={{margin:'auto' ,display: "flex",flexDirection: "column",flexWrap: "wrap",height: "500px",alignContent: "center"}}>
           <TextField
           required
           id="fnum"
@@ -125,6 +130,7 @@ class Addflights extends Component{
           name="ecseats"
           type="number"
           />
+          <div style={{marginLeft:"20px"}}>
           <TextField
           required
           id="busseats"
@@ -157,7 +163,9 @@ class Addflights extends Component{
           label="baggage Allowance"
           name="baggageAllowance"
           />
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+          </div>
+          </div>
+          <Button style={{marginLeft : '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
         </form>

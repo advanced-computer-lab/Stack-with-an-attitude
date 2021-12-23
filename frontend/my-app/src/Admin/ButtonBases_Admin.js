@@ -7,16 +7,22 @@ import { Link } from 'react-router-dom';
 
 const images = [
   {
-    url: 'https://content.r9cdn.net/rimg/dimg/42/5b/ff9a1ab9-city-6080-167cd496c89.jpg?crop=true&width=1366&height=768&xhint=1819&yhint=1083',
-    title: 'Search for available flights',
-    width: '60%',
-    link: '/searchflightuser'
+    url: 'https://images.unsplash.com/photo-1604629142630-11d209431dd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1965&q=80',
+    title: 'Create a new flight',
+    width: '33%',
+    link: '/addFlight'
   },
   {
-    url: 'https://tds.indianeagle.com/wp-content/uploads/2018/08/Booking-Flights-through-Travel-Agents.jpg',
-    title: 'View your reserved flights',
-    width: '40%',
-    link: '/yourreservedflights/'+localStorage.getItem('userID') 
+    url: 'https://images.unsplash.com/photo-1435527173128-983b87201f4d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2067&q=80',
+    title: 'View the schedule',
+    width: '33%',
+    link: '/schedule'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1605590427165-3884d6aa6731?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80',
+    title: 'Search for available flights',
+    width: '33%',
+    link: '/searchflight'
   },
 
 ];
@@ -85,9 +91,10 @@ const ImageMarked = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-export default function ButtonBases() {
+export default function ButtonBases_Admin() {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+    
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%'}}>
       {images.map((image) => (
           <ImageButton
             focusRipple

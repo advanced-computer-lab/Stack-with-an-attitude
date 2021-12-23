@@ -87,6 +87,8 @@ app.post('/user/createReservedFlight', userController.createReservedFlight);
 app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
 
 app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
+
+app.post('/user/register', userController.register);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
@@ -124,7 +126,9 @@ app.post('/admin/login',(req,res)=>{
 app.post('/user/login',(req,res)=>{
     const Email = req.body.email;
     const pass = req.body.password;
-  
+    
+    console.log(Email , pass);
+
     User.findOne({email:Email},(err,data)=>{
         if(err)
             console.log(err);

@@ -27,22 +27,6 @@ const useStyles = makeStyles(styles);
 export default function HeaderLinks(props) {
   const classes = useStyles();
 
-  const handleLoginClick =function (e) {
-
-    e.preventDefault();
-
-    // get user email & password from form here (in sprint 3).
-
-    const email = 'a@gmail.com';
-    const password = 5678;
-    axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
-                .then((result) => {const userId = result.data.user ; 
-                                  localStorage.setItem('userID',userId);
-                                  localStorage.setItem('isLoggedIn',true);
-                                  window.location.href='/user'
-                                });
-  }
-
 
   return (
     <List className={classes.list}>
@@ -76,7 +60,7 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-          <Link style={{padding:0}} to="/user"  onClick={handleLoginClick} className={classes.dropdownLink}>
+          <Link style={{padding:0}} to="/login"  className={classes.dropdownLink}>
               Login
           </Link>
         </Button>
@@ -88,7 +72,7 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
+        <Link style={{padding:0}} to="/register" className={classes.dropdownLink}>
               Register
         </Link>
         </Button>

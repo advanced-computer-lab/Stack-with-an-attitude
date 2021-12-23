@@ -1,6 +1,8 @@
 const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
@@ -80,6 +82,7 @@ exports.createReservedFlight = async function(req,res) {
       .then( (reservedflights) => {
           //res.status(200)
          console.log('CREATED RESERVATION');
+         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber});
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
@@ -157,10 +160,12 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     let newDepSeats = [];
     let newAvailableSeats = 0;
 
+    console.log(assignedSeats, "     ----------------------------");
+
     if(cabinclass.toLowerCase() === 'economy'){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
-            if(assignedSeats.contains(i))
+            if(assignedSeats.includes(i + ''))
                 newDepSeats[i] = true;
             else
                 newDepSeats[i] = oldFlight.reservedEconomySeats[i];
@@ -174,7 +179,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     }else {
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
-            if(assignedSeats.includes(i))
+            if(assignedSeats.includes(i + ''))
                 newDepSeats[i] = true;
             else
                 newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
@@ -187,4 +192,38 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     }
 
     updateFlight(ID,oldFlight);
+}
+
+exports.register = async function(req,res) {
+
+    let newuser = new User(req.body.newuser);
+    bcrypt.hash(newuser.password, saltRounds).then(function(hash) {
+        newuser.password = hash ;
+    });
+    await newuser.save()
+        .then( (user) => {
+            res.status(200)
+            res.json(user)
+            console.log(user);
+        })
+        .catch( (err) => {
+            if (err.name === "ValidationError") {
+                let errors = {};
+          
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
+              }
+              if (err.name === "MongoServerError"){
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
+            }
+
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }
