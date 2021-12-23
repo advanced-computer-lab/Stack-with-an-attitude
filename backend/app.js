@@ -14,6 +14,7 @@ const saltRounds = 10;
 const adminController = require('./Controllers/AdminController');
 const userController = require('./Controllers/UserController');
 const Admin = require("./Models/Admin");
+const Reservation = require("./Models/Reservation");
 
 
 //App variables
@@ -51,31 +52,6 @@ async function StripeCallAPI (req, res) {
 
   res.send(customer);
 }
-
-app.post("/create-checkout-session", async (req, res) => {
-    try {
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        mode: "payment",
-        line_items:
-          [
-           { price_data: {
-              currency: "usd",
-              product_data: {
-                name: "flight proto",
-              },
-              unit_amount: req.body.price,
-            },
-            quantity: 1,
-           }],
-        success_url: `http://localhost:3000/`,
-        cancel_url: `http://localhost:4000/`
-      })
-      res.json({ url: session.url })
-    } catch (e) {
-      res.status(500).json({ error: e.message })
-    }
-  })
 
 
 
@@ -139,6 +115,46 @@ app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights)
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
+
+
+app.post("/create-checkout-session", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "reservation number: "+req.body.reservationNumber,
+                // description: "reservation ID: "+req.body.reservationId
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: `http://localhost:3000/confirmPayment/${req.body.reservationId}`,
+        cancel_url: `http://localhost:3000/`
+      })
+      res.json({ url: session.url })
+    } catch (e) {
+      res.status(500).json({ error: e.message })
+    }
+  })
+
+
+  app.post("/confirm-payment/:id", async (req,res)=>{
+      await Reservation.findByIdAndUpdate(req.params.id,{payed:true})
+      .then(data=>{res.status(200).send(data)})
+      .catch(err=>{
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)
+      })
+  })
+
+
+
 
 app.get('/admin/check',(req,res)=>{
     const admin = req.session.adminName;

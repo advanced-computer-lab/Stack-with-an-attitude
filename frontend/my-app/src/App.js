@@ -5,6 +5,7 @@ import Schedule from "./Admin/Schedule";
 import AdminPage from "./Admin/AdminPage";
 import MainPage from "./User/MainPage";
 import MainPageLoggedIn from "./User/MainPageLoggedIn";
+import PaymentConfirm from "./User/PaymentConfirm"
 import Updateflight from "./Admin/Updateflight";
 import Searchflight from './Admin/Searchflight';
 import SearchflightUser from './User/SearchflightUser';
@@ -48,6 +49,7 @@ function App() {
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
             {/* <Route path='/viewflight/:id' element={<ViewFlight/>} /> */}
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
+            <Route path='/confirmPayment/:id' element={<PaymentConfirm />} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
             <Route path='/cancelflight' element={<Cancelflight/>} />

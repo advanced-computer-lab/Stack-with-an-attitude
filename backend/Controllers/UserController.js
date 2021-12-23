@@ -80,7 +80,7 @@ exports.createReservedFlight = async function(req,res) {
       .then( (reservedflights) => {
           //res.status(200)
          console.log('CREATED RESERVATION');
-         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber});
+         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber,object:reservedflights});
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
