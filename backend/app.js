@@ -52,6 +52,31 @@ async function StripeCallAPI (req, res) {
   res.send(customer);
 }
 
+app.post("/create-checkout-session", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "flight proto",
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: `http://localhost:3000/`,
+        cancel_url: `http://localhost:4000/`
+      })
+      res.json({ url: session.url })
+    } catch (e) {
+      res.status(500).json({ error: e.message })
+    }
+  })
+
 
 
 // secret is used to validate the session think password store is the place we store the session,
