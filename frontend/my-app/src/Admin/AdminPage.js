@@ -15,7 +15,7 @@ class AdminPage extends Component{
            <Typography variant="h1" gutterBottom component="div" style={{textAlign:'center'}}>
                    Admin Control Panel
           </Typography>
-           <Card style={{margin: 'auto', maxWidth: 1000}}>
+           <Card style={{margin: 'auto', maxWidth: 1000}} elevation={10}>
               <CardBody style={{margin : '-10px'}}> 
                 <ButtonBases_Admin/>
               </CardBody>

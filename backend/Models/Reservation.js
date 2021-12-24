@@ -54,6 +54,10 @@ const reservationSchema = new Schema ({
         type : String,
         required : true,
     },
+    payed:{
+        type:Boolean,
+        default:false
+    }
     
 }, {timestamps:true})
 

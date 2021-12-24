@@ -2,13 +2,14 @@ const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const saltRounds = 10;
 
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
-    updateReservationSeats(depID,cabinclass,assignedDepartureSeats);
+    updateReservationSeats(depID,cabinclass,assignedDepartureSeats , false);
 
-    updateReservationSeats(returnID,cabinclass,assignedReturnSeats);
+    updateReservationSeats(returnID,cabinclass,assignedReturnSeats , false);
 
 }
 
@@ -61,7 +62,7 @@ exports.getAllReservedSeats = async function(req,res) {
 exports.getReservedFlightById = async function(req,res) {
 
 
-  let ID = req.params.getID
+  let ID = req.params.id;
 
   Reservation.findById(ID)
       .then( (reservedflights) => {
@@ -88,7 +89,7 @@ exports.createReservedFlight = async function(req,res) {
       .then( (reservedflights) => {
           //res.status(200)
          console.log('CREATED RESERVATION');
-         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber});
+         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber,object:reservedflights});
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
@@ -134,16 +135,60 @@ exports.getAllreservedFlights = async function(req,res) {
 
 exports.deleteReservedFlightById = async function(req,res) {
 
-  let ID = req.params.deleteID
+  let ID = req.params.id;
+
 
   Reservation.findByIdAndDelete(ID)
-      .then( (reservedflights) => {
-          res.json(reservedflights)
-          res.send({statusCode:200})
+      .then(async (reservedflights) => {
+
+        console.log('BEF--------------------------------------------');
+
+        console.log(reservedflights);
+
+        await updateReservationSeats(reservedflights.reservedFlightIDs[0],
+            reservedflights.cabinClass,
+            reservedflights.assignedDepartureSeats , true);
+        await updateReservationSeats(reservedflights.reservedFlightIDs[1],
+            reservedflights.cabinClass,
+            reservedflights.assignedReturnSeats , true);
+            
+            console.log('AFTER------------------------------------------------');
+
+            let IDuser = reservedflights.reservedUserID;
+            let useremail= null;
+
+            await User.findById(IDuser)
+            .then( (user) => {
+        
+                useremail= user.email;
+        
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
+
+            const option ={
+                from:'guccsen704@gmail.com',
+                to:useremail,
+                subject :"Cancelled flight",
+                text:"Your flight was cancelled , you will be refunded by "+ reservedflights.price
+            
+                };
+            
+                transporter.sendMail(options, (err,info)=>{
+            
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: "+ info.response);
+                })
+
+            res.send({statusCode:200});
       })
       .catch( (err) => {
           //res.status(404)
-          res.send({statusCode:404})
+          res.send({statusCode:400});
           console.log(err)})
 }
 
@@ -158,8 +203,17 @@ const updateFlight = async function(ID,reservedSeats){
 
 }
 
+//create transporter for sender data
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+   auth: {
+       user:'guccsen704@gmail.com',
+       pass:'Hossam2021'
+   }
+});
 
-const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
+
+const updateReservationSeats = async function(ID,cabinclass,assignedSeats , isCancelled){
 
     let oldFlight = null; 
     
@@ -175,7 +229,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedEconomySeats[i];
         }
@@ -189,7 +243,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
         }
@@ -234,6 +288,63 @@ exports.register = async function(req,res) {
                 return res.status(400).send({statusCode : err.status, errors})
             }
 
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+}
+
+exports.sendsummary = async function(req,res){
+
+    let ID = req.params.id;
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+        useremail= user.email;
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
+    await Reservation.findById(ID)
+    .then( (reservedflights) => {
+            
+            //recevier info
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"Summary",
+    text: "Dear Customer ," +
+        "\n Here is your summary for the reservation : " +
+        "\n Reservation number : "+ reservedflights.reservationNumber + "\n" +
+        "Number of seats : "+ reservedflights.assignedSeats.length + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats
+        + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " +reservedflights.price
+        + "\n Number of adults : "+reservedflights.numberOfAdults + "\n Number of children : "+ reservedflights.numberOfChildren +
+        "\n Thank you for choosing Weeb Airlines."
+
+    
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
+        })
+        .catch( (err) => {
             res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
 }

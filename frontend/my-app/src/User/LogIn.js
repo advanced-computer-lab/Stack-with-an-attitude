@@ -6,30 +6,36 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import background from "./travel.jpg";
+import background from "../assets/img/travel.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
+import SnackBar from './SnackBar';
 
 function LogIn(){   //function component declaration
 
-  const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
+  const handleSubmit=async (e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
     // get user email & password from form here (in sprint 3).
-
     const email = e.target.email.value;
     const password = e.target.password.value;
-    axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+    await axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
                 .then((result) => {
+                  console.log(result);
                   if(result.data.statusCode == 401){
                     // insert error handling code here
+                    console.log('ERROR');
                   }else{
                   const userId = result.data.user ; 
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
+                  console.log(userId);
                   window.location.href='/user'
                   }
                                 })
@@ -41,7 +47,7 @@ function LogIn(){   //function component declaration
     }
       return(
         <div>
-                    <div style={{marginBottom : '0px'}}>
+            <div style={{marginBottom : '0px'}}>
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>

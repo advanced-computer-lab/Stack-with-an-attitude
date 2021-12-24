@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
-import background from "./wall.jpg";
+import background from "../assets/img/wall.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';

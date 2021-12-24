@@ -131,41 +131,47 @@ export default function SearchflightUser() {
             label="Number of seats"
             name="numofseats"
             type="number"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="depdate"
             label="Departure Date"
             name="depdate"
             type="date"
-            
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="deptime"
             label="Departure Time"
             name="deptime"
             type="time"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="arrdate"
             label="Arrival Date"
             name="arrdate"
             type="date"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="arrtime"
             label="Arrival Time"
             name="arrtime"
             type="time"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="fromf"
             label="From Terminal"
             name="fromf"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="to"
             label="To Terminal"
             name="to"
+            InputLabelProps={{ shrink: true }}
             />
             <Button value="Submit" type="submit" style={{marginLeft : '15px'}} variant="contained" endIcon={<SendIcon />}>
                 Submit

@@ -78,7 +78,7 @@ class Addflights extends Component{
         <div>
 
           <Link to="/admin">
-            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+            <Button style={{margin: '20px'}} value="home" variant="contained" endIcon={<HomeIcon />}>
                 Back to admin portal
             </Button>
           </Link>
@@ -96,6 +96,7 @@ class Addflights extends Component{
           id="fnum"
           label="Flight Number"
           name="fnum"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
@@ -103,6 +104,7 @@ class Addflights extends Component{
           label="Departure Time"
           name="deptime"
           type="time"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
@@ -110,18 +112,21 @@ class Addflights extends Component{
           label="Arrival Time"
           name="arrtime"
           type="time"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           id="depdate"
           label="Departure Date"
           name="depdate"
           type="date"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           id="arrdate"
           label="Arrival Date"
           name="arrdate"
           type="date"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
@@ -129,6 +134,7 @@ class Addflights extends Component{
           label="Number of Economy Seats"
           name="ecseats"
           type="number"
+          InputLabelProps={{ shrink: true }}
           />
           <div style={{marginLeft:"20px"}}>
           <TextField
@@ -137,18 +143,21 @@ class Addflights extends Component{
           label="Number of Business Seats"
           name="busseats"
           type="number"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
           id="fromf"
           label="From Terminal"
           name="fromf"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
           id="to"
           label="To Terminal"
           name="to"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
@@ -156,12 +165,14 @@ class Addflights extends Component{
           label="price"
           name="price"
           type="number"
+          InputLabelProps={{ shrink: true }}
           />
           <TextField
           required
           id="baggageAllowance"
           label="baggage Allowance"
           name="baggageAllowance"
+          InputLabelProps={{ shrink: true }}
           />
           </div>
           </div>

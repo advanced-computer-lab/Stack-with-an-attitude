@@ -5,6 +5,7 @@ import Schedule from "./Admin/Schedule";
 import AdminPage from "./Admin/AdminPage";
 import MainPage from "./User/MainPage";
 import MainPageLoggedIn from "./User/MainPageLoggedIn";
+import PaymentConfirm from "./User/PaymentConfirm"
 import Updateflight from "./Admin/Updateflight";
 import Searchflight from './Admin/Searchflight';
 import SearchflightUser from './User/SearchflightUser';
@@ -24,8 +25,6 @@ import { ReactComponent as Logo } from './User/Logo.svg';
 import {Link} from 'react-router-dom'
 
 function App() {
-
-
 
   return (
     <Router>

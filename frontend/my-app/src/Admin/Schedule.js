@@ -94,7 +94,7 @@ function Schedule() {
   return (
     <div >
      <Link to="/admin">
-            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+            <Button style={{margin: '20px'}} value="home" variant="contained" endIcon={<HomeIcon />}>
                 Back to admin portal
             </Button>
       </Link>

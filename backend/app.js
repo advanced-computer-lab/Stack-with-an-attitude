@@ -5,6 +5,8 @@ const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
+
+//Models
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
 
@@ -89,9 +91,51 @@ app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlight
 app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
 
 app.post('/user/register', userController.register);
+
+app.post('/user/sendsummary/:id',userController.sendsummary);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
+
+
+app.post("/create-checkout-session", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "reservation number: "+req.body.reservationNumber,
+                // description: "reservation ID: "+req.body.reservationId
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: `http://localhost:3000/confirmPayment/${req.body.reservationId}`,
+        cancel_url: `http://localhost:3000/`
+      })
+      res.json({ url: session.url })
+    } catch (e) {
+      res.status(500).json({ error: e.message })
+    }
+  })
+
+
+  app.post("/confirm-payment/:id", async (req,res)=>{
+      await Reservation.findByIdAndUpdate(req.params.id,{payed:true})
+      .then(data=>{res.status(200).send(data)})
+      .catch(err=>{
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)
+      })
+  })
+
+
+
 
 app.get('/admin/check',(req,res)=>{
     const admin = req.session.adminName;
@@ -138,6 +182,8 @@ app.post('/user/login',(req,res)=>{
                     req.session.userEmail = Email;
                     req.session.userID=data._id;
                     res.send({statusCode:200,login:true,user:req.session.userID});
+                }else{
+                  res.send({statusCode:401,login:false});
                 }
             }
             else{
@@ -147,6 +193,33 @@ app.post('/user/login',(req,res)=>{
     });
   
   });
+
+  app.post("/create-checkout-session", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "Reservation",
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: 'http://localhost:3000/', // here will be the /user
+        cancel_url: 'http://localhost:4000/' // here will be the summary page
+      })
+      res.json({ url: session.url })
+    } catch (e) {
+      res.status(500).json({ error: e.message }) // VIEW IN A SNACKBAR IN FE
+    }
+  })
+
+
 
   app.get('/user/logout',(req,res)=>{
     if(req.session.Email)
