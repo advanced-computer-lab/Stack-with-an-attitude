@@ -14,21 +14,27 @@ import { ReactComponent as Logo } from './Logo.svg';
 
 function AdminLogIn(){   //function component declaration
 
+  const [errorMessage,setErrorMessage]=useState("");
+
+  useEffect(()=>{
+  },[errorMessage])
+
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
-    // get user email & password from form here (in sprint 3).
-
-    const email = e.target.email.value;
+    const username = e.target.username.value;
     const password = e.target.password.value;
 
-    axios.post('http://localhost:8000/admin/login',{'email':email , 'password':password})
+    axios.post('http://localhost:8000/admin/login',{'username':username , 'password':password})
                 .then((result) => {
+                  //console.log(result);
                   if(result.data.statusCode == 401){
                     // insert error handling code here
+                    setErrorMessage("check your info");
                   }else{
-                  const adminId = result.data.user ; 
+                    setErrorMessage("");
+                  const adminId = result.data.admin;
                   localStorage.setItem('adminID',adminId);
                   localStorage.setItem('isAdminLoggedIn',true);
                   window.location.href='/admin'
@@ -49,13 +55,14 @@ function AdminLogIn(){   //function component declaration
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
                    Login to Admin Portal
           </Typography>
+          {<h2 style={{color:"red", textAlign:'center'}} className="feedback-header">{errorMessage}</h2>}
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
         <TextField 
           required
-          key='email'
-          id='email'
-          label='Email'
-          name='email'
+          key='username'
+          id='username'
+          label='Username'
+          name='username'
           margin='normal'
           />
           <TextField 

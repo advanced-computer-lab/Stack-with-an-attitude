@@ -1,4 +1,4 @@
-import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
+import {BrowserRouter as Router , Route ,Routes,useParams, Navigate } from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
 import Schedule from "./Admin/Schedule";
@@ -30,17 +30,25 @@ function App() {
   return (
     <Router>
       <Routes>
-            <Route path='/admin' element={<AdminPage/>} />
-            <Route path='/admin/login' element={<AdminLogIn/>} />
+            <Route path='/addFlight' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<Addflights/>}/>
+            <Route path='/admin/login' element={(localStorage.getItem("isAdminLoggedIn") == true)?<Navigate  to="/admin" />:<AdminLogIn/>}/>
+            <Route path='/admin' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<AdminPage/>}/>
+            <Route path='/cancelflight' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<Cancelflight/>}/>
+            <Route path='/schedule' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<Schedule/>}/>
+            <Route path='/searchflight' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<Searchflight/>}/>
+            <Route path='/updateflight/:id' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/admin/login" />:<Updateflight/>}/>
+
+            {/* <Route path='/admin' element={<AdminPage/>} /> */}
+            {/* <Route path='/admin/login' element={<AdminLogIn/>} /> */}
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
-            <Route path='/schedule' element={<Schedule/>} />
-            <Route path='/addFlight' element={<Addflights/>} />
-            <Route path='/updateflight/:id' element={<Updateflight/>}/>
-            <Route path='/searchflight' element={<Searchflight/>} />
+            {/* <Route path='/schedule' element={<Schedule/>} /> */}
+            {/* <Route path='/addFlight' element={<Addflights/>} /> */}
+            {/* <Route path='/updateflight/:id' element={<Updateflight/>}/> */}
+            {/* <Route path='/searchflight' element={<Searchflight/>} /> */}
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
             <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
             {/* <Route path='/viewflight/:id' element={<ViewFlightHandler />} /> */}
@@ -49,7 +57,7 @@ function App() {
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
-            <Route path='/cancelflight' element={<Cancelflight/>} />
+            {/* <Route path='/cancelflight' element={<Cancelflight/>} /> */}
       </Routes>
     </Router>
   );

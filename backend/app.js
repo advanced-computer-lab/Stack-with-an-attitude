@@ -7,6 +7,7 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
+const bcrypt = require('bcrypt');
 
  
 // Controller Imports
@@ -96,7 +97,7 @@ app.post('/user/register', userController.register);
 app.get('/admin/check',(req,res)=>{
     const admin = req.session.adminName;
     const id = req.session.adminId;
-    res.send('your logged in as '+ admin +  ' with user id : '+ id)
+    res.send('your logged in as '+ admin +  ' with admin id : '+ id)
 
 })
 
@@ -109,15 +110,30 @@ app.post('/admin/login',(req,res)=>{
           console.log(err);
       else{
           if(data){
-              if(pass==data.password){
-                  req.session.adminName = user;
-                  req.session.adminId=data._id;
-                  res.send();
-              }
+            bcrypt.compare(pass, data.password)
+            .then((result) => {
+                if(result){
+                    req.session.adminName = user;
+                    req.session.adminId=data._id;
+                    req.session.save(() => {});
+                    res.session = req.session;
+                    res.session.save(() => {});
+                    res.send({statusCode:200,loginAdmin:true,admin:req.session.adminId});
+                    console.log(res.session)
+                }
+                else{
+                    res.send({statusCode:401,loginAdmin:false});
+                }
+            });
+//              if(pass==data.password){
+//                  req.session.adminName = user;
+//                  req.session.adminId=data._id;
+//                  res.send({statusCode:200,loginAdmin:true,admin:req.session.adminId});
+//                }
           }
           else{
-                  res.send("invalid");
-              }
+            res.send({statusCode:401,loginAdmin:false});
+        }
           }
   });
 
@@ -159,7 +175,7 @@ app.post('/user/login',(req,res)=>{
 //destory the session using this method also dont destory the cookie and 
 //create a new one in the same route because as said before server sends the session from the previous req
 //if you destroy it its now null and u cant instanciate a session anyway
-app.get('/admin/logout',(req,res)=>{
+app.post('/admin/logout',(req,res)=>{
     if(req.session.admin)
         req.session.destroy();
     res.clearCookie('connect.sid');
@@ -168,11 +184,12 @@ app.get('/admin/logout',(req,res)=>{
 })
 
 function AdminAuth(req,res,next){
-    // if(req.session.adminId){
-    //     next();
-    // }else{
-    //     res.send({statusCode:403,succsess:false});
-    // }
+//    console.log(req.session);
+//     if(req.session.adminId){
+//         next();
+//     }else{
+//         res.send({statusCode:403,succsess:false});
+//     }
     next();
 }
 
