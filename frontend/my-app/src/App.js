@@ -16,6 +16,7 @@ import LogIn from './User/LogIn';
 import Register from './User/Register';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
+import Cancelflight from './Admin/Cancelflight';
 import ForbiddenAccess from './Admin/ForbiddenAccess';
 import HomeIcon from '@mui/icons-material/Home';
 import Header from 'components/Header/Header.js';
@@ -47,6 +48,7 @@ function App() {
             <Route path='/viewreturnflight/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewReturnFlight/>} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewFlightHandler/>} />
+            <Route path='/cancelflight' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<Cancelflight/>} />
       </Routes>
     </Router>
   );
