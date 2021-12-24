@@ -100,6 +100,7 @@ function Reservedflights() {
           Reserved Flights
         </Typography>
       </div>
+      <div style={{height:"400px"}}>
     <TableContainer sx={{ width:'90%' , margin : 'auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}}  component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -137,8 +138,9 @@ function Reservedflights() {
         </TableBody>
       </Table>
     </TableContainer>
-    <div>
-        <footer style={{bottom:0,height: "151px"}}>
+    </div>
+        <div>
+        <footer >
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
         </footer>
         </div>

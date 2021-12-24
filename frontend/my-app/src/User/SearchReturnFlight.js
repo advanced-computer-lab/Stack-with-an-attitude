@@ -89,7 +89,7 @@ function SearchReturnFlight(props) {
 
       //Link to direct back to home
   return (
-    <div >
+    <div style={{height:"300px"}} >
     <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper} elevation={4}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
