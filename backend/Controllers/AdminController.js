@@ -283,12 +283,6 @@ exports.deletereservedflight = async function(req,res){
             console.log(err.status)})
 
 
-
-
-
-
-    
-
 }
 
 
