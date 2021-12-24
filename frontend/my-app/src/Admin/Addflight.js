@@ -72,6 +72,7 @@ export default function Addflights(){
       e.target.baggageAllowance.value='';
 
       setInserted(true);
+      setOpen(true);
       //this.setState({notValidObjString:""});
 
     })//.catch((err, data) => console.log(err.message));

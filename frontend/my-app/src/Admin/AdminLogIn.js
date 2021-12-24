@@ -4,16 +4,17 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import HomeIcon from '@mui/icons-material/Home';
+import reactDom from 'react-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import background from "../assets/img/travel.jpg";
 import Header from 'components/Header/Header.js';
-import HeaderLinks from 'components/Header/HeaderLinks.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
 
-
-function LogIn(){   //function component declaration
+function AdminLogIn(){   //function component declaration
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,25 +30,24 @@ function LogIn(){   //function component declaration
     setOpen(false);
   };
 
-  const handleSubmit=async (e)=>{//method called when submiting to send a request and clear the fields of the form
+
+  const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
-    // get user email & password from form here (in sprint 3).
-    const email = e.target.email.value;
+    const username = e.target.username.value;
     const password = e.target.password.value;
-    await axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+
+    axios.post('http://localhost:8000/admin/login',{'username':username , 'password':password})
                 .then((result) => {
-                  console.log(result);
+                  
                   if(result.data.statusCode == 401){
                     setOpen(true);
-                    console.log('ERROR');
                   }else{
-                  const userId = result.data.user ; 
-                  localStorage.setItem('userID',userId);
-                  localStorage.setItem('isLoggedIn',true);
-                  console.log(userId);
-                  window.location.href='/user'
+                  const adminId = result.data.admin;
+                  localStorage.setItem('adminID',adminId);
+                  localStorage.setItem('isAdminLoggedIn',true);
+                  window.location.href='/admin'
                   }
                                 })
   
@@ -58,22 +58,19 @@ function LogIn(){   //function component declaration
     }
       return(
         <div>
-            <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/'><div style={{height:'70px',width: '100px' }}>
-              <Logo />
-             </div></Link>} rightLinks={<HeaderLinks/>} fixed/>
+          <div style={{marginBottom : '0px'}}>
         <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <div >
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
-                   Please enter your credentials
+                   Login to Admin Portal
           </Typography>
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
         <TextField 
           required
-          key='email'
-          id='email'
-          label='Email'
-          name='email'
+          key='username'
+          id='username'
+          label='Username'
+          name='username'
           margin='normal'
           />
           <TextField 
@@ -91,11 +88,6 @@ function LogIn(){   //function component declaration
           </Button>
         </form>
         </div>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
-            Login failed! Incorrect email or password
-          </Alert>
-        </Snackbar>
         <div>
         <footer style={{position:"fixed",bottom:0,height: "151px"}}>
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
@@ -103,10 +95,15 @@ function LogIn(){   //function component declaration
         </div>
         </div>
         </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+            Login failed! Incorrect username or password
+          </Alert>
+        </Snackbar>
         </div>
 
       );
     }
   
 
-export default LogIn ;
+export default AdminLogIn ;

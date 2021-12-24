@@ -13,6 +13,7 @@ import SimpleAccordion from './SimpleAccordion';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import HeaderLinks from 'components/Header/HeaderLinks.js';
 import { ReactComponent as Logo } from './Logo.svg';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -60,11 +61,17 @@ function ViewFlightHandler(){
 
     return(
         <div>
-                        <div style={{marginBottom : '0px'}}>
+          {localStorage.getItem('userID') ? (<div style={{marginBottom : '0px'}}>
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
-          </div> 
+          </div> ) : (
+              <div style={{marginBottom : '0px'}}>
+              <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/'><div style={{height:'70px',width: '100px' }}>
+                <Logo />
+               </div></Link>} rightLinks={<HeaderLinks/>} fixed/>
+            </div>
+          )}
             {secondSeats.length!==0?(
             <div>
                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
