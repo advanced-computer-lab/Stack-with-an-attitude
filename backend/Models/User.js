@@ -21,6 +21,18 @@ const userSchema = new Schema({
     email:{
         type:String,
         required:true
+    },
+    telephoneNumber:{
+        type:String,
+        required:true
+    },
+    countryNumber:{
+        type:String,
+        required:true
+    },
+    address:{
+        type:String,
+        required:true
     }
 });
 
