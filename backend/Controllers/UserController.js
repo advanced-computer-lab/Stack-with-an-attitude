@@ -197,7 +197,8 @@ const updateFlight = async function(ID,reservedSeats){
 
     await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
     .then( (flights) => {
-        console.log(flights);
+        console.log(flights)
+        res.send({statusCode:200})
     })
 
 }

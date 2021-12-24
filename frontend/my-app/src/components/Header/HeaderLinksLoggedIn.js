@@ -29,6 +29,29 @@ export default function HeaderLinksLoggedIn(props) {
 
   return (
     <List className={classes.list}>
+       {/* <ListItem className={classes.listItem}> */}
+        {/* <CustomDropdown
+          noLiPadding
+          buttonText="Components"
+          buttonProps={{
+            className: classes.navLink,
+            color: "transparent",
+          }}
+          buttonIcon={Apps}
+          dropdownList={[
+            <Link to="/" className={classes.dropdownLink}>
+              All components
+            </Link>,
+            <a
+              href="https://creativetimofficial.github.io/material-kit-react/#/documentation?ref=mkr-navbar"
+              target="_blank"
+              className={classes.dropdownLink}
+            >
+              Documentation
+            </a>,
+          ]}
+        /> */}
+      {/* </ListItem> */}
       <ListItem className={classes.listItem}>
         <Button
           color="success"
@@ -39,20 +62,6 @@ export default function HeaderLinksLoggedIn(props) {
           <Link style={{padding:0}} to={'/user/profile/' + localStorage.getItem('userID')} id={localStorage.getItem('userID')} className={classes.dropdownLink}>
               <AccountCircleIcon/>
           </Link>
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          color="rose"
-          target="_blank"
-          round
-        >
-          {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
-              Log out
-              {localStorage.removeItem('isLoggedIn')}
-              {localStorage.removeItem('userID')}
-        </Link>
         </Button>
       </ListItem>
     </List>
