@@ -7,14 +7,33 @@ import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 
 
 function ViewProfile(){   //function component declaration
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [userState,setuserState] = useState([]);
   const {id} = useParams();
   const [authpass,setAuthpass] = useState("");
+  const [open , setOpen] = useState(false);
+  const [openError , setOpenError] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+    setOpenError(false);
+  };
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
@@ -44,12 +63,13 @@ function ViewProfile(){   //function component declaration
         e.target.email.value='';
 
       setUpdated(true);
+      setOpen(true);
 
     }).catch(error=>{
       console.log(error)
     })
   }else{
-    console.log("wrong pass")
+    setOpenError(true);
   }}
   //the useEffects aka the listeners who does a update method initially when the component is created
   // and when the prameter which it is listining to is updated
@@ -67,10 +87,9 @@ function ViewProfile(){   //function component declaration
    useEffect(()=>{
     async function fetchData(){
     let data = (await axios.get(`http://localhost:8000/user/getInfo/${id}`)).data
-    setuserState(data);
-    setAuthpass(data.password) 
+    setuserState(data.data);
+    setAuthpass(data.data.password) 
     console.log("right" ,authpass)
-    console.log(data);
     }
 
 
@@ -87,17 +106,14 @@ function ViewProfile(){   //function component declaration
         <div>
 
           <Link to="/user">
-            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+            <Button style={{margin:'20px'}} value="home" variant="contained" endIcon={<HomeIcon />}>
                 Home
             </Button>
           </Link>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
                     Update Profile
                 </Typography>
-        {updated && <h2 className="feedback-header">Updated Profile successfully </h2>}
-        {console.log(userState)};
-        
-        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%',marginLeft:'400px'}}>
           <div style={{display:'flex', flexDirection:'column' , flexWrap:'wrap',height:"400px"}}>
           {(Object.keys(userState).slice(1,6)).map((f)=>(//loop over the userState info and map them to fields with their default value
          <React.Fragment>
@@ -140,12 +156,22 @@ function ViewProfile(){   //function component declaration
          </div>
          
           </div>
-          <div style={{margin:"auto" , marginLeft:'300px'}}>
+          <div style={{margin:"auto" , marginLeft:'275px'}}>
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Update Profile
           </Button>
           </div>
         </form>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+            Updated info successfully!
+          </Alert>
+        </Snackbar>
+        <Snackbar open={openError} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+            Wrong Password! Please try again
+          </Alert>
+        </Snackbar>
         </div>
 
       );
