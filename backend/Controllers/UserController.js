@@ -19,9 +19,9 @@ exports.getUserById = async function(req,res) {
 
   await User.findById(ID)
   .then( (user) => {
-      //res.status(200)
-      res.send({statusCode:200 , data:user})
-      //res.json(user)
+      res.status(200)
+      res.send({statusCode:200})
+      res.json(user)
   })
   .catch( (err) => {
       res.send({statusCode : err.status, message : err.message})

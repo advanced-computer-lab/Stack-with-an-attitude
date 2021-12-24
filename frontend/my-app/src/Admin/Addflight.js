@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react'
+import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
@@ -6,35 +6,16 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import Typography from '@mui/material/Typography';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 
 
-
-export default function Addflights(){
+class Addflights extends Component{
+  state={
+    inserted:false,
+    notValidObjString:""
+  }
   
-  const [inserted , setInserted] = useState(false);
-  const [open , setOpen] = useState(false);
-   
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-
-
-  const submit= (e) => {
-
+  submit= (e) => {
     e.preventDefault();
-
     const flight = {
       "flightNumber": e.target.fnum.value,
       "departureTime": e.target.deptime.value,
@@ -71,8 +52,8 @@ export default function Addflights(){
       e.target.price.value='';
       e.target.baggageAllowance.value='';
 
-      setInserted(true);
-      //this.setState({notValidObjString:""});
+      this.setState({inserted:true});
+      this.setState({notValidObjString:""});
 
     })//.catch((err, data) => console.log(err.message));
       .catch(error=>{
@@ -84,15 +65,15 @@ export default function Addflights(){
         for(let i in keyss){
           temp += keyss[i] + ": " + valuess[i] + ", "
         }
-        //this.setState({notValidObjString:temp.substring(0, temp.length-2)});
+        this.setState({notValidObjString:temp.substring(0, temp.length-2)});
         console.log("error string");
         console.log(temp.substring(0, temp.length-2));
-        setInserted(false);
+        this.setState({inserted:false});
         //console.log(Object.keys(error.response.data.errors).map());
         })
 
   }  
-  
+  render(){
       return(
         <div>
 
@@ -101,10 +82,14 @@ export default function Addflights(){
                 Back to admin portal
             </Button>
           </Link>
+
+          
           <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
          Create a new flight
       </Typography>
-       <form onSubmit={submit} id="form" style={{margin:'auto',width:'20%',}} >
+       {this.state.inserted && <h2 className="feedback-header"> Inserted flight successfully</h2>}
+       {<h2 style={{color:"red"}} className="feedback-header">{this.state.notValidObjString}</h2>}
+        <form onSubmit={this.submit} id="form" style={{margin:'auto',width:'20%',}} >
           <div style={{margin:'auto' ,display: "flex",flexDirection: "column",flexWrap: "wrap",height: "500px",alignContent: "center"}}>
           <TextField
           required
@@ -195,16 +180,13 @@ export default function Addflights(){
               Submit
           </Button>
         </form>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
-            Created flight sucessfully
-          </Alert>
-        </Snackbar>
         </div>
 
       );
-    
+    }
   
 
 
 }
+
+export default Addflights ;

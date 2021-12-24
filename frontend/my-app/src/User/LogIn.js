@@ -18,20 +18,6 @@ import SnackBar from './SnackBar';
 
 function LogIn(){   //function component declaration
 
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  const [open , setOpen] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
   const handleSubmit=async (e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
@@ -43,7 +29,7 @@ function LogIn(){   //function component declaration
                 .then((result) => {
                   console.log(result);
                   if(result.data.statusCode == 401){
-                    setOpen(true);
+                    // insert error handling code here
                     console.log('ERROR');
                   }else{
                   const userId = result.data.user ; 
@@ -94,11 +80,6 @@ function LogIn(){   //function component declaration
           </Button>
         </form>
         </div>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
-            Login failed! Incorrect email or password
-          </Alert>
-        </Snackbar>
         <div>
         <footer style={{position:"fixed",bottom:0,height: "151px"}}>
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>

@@ -6,18 +6,10 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import Typography from '@mui/material/Typography';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-
 
 
 
 function Updateflight(){   //function component declaration
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
@@ -25,15 +17,6 @@ function Updateflight(){   //function component declaration
   const [notValid,setNotValid]=useState(false);
   const [notValidObj,setNotValidObj]=useState([]);
   const [notValidObjString,setNotValidObjString]=useState("");
-  const [open , setOpen] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
     e.preventDefault();//prevent refresh
@@ -82,8 +65,6 @@ function Updateflight(){   //function component declaration
 
       setUpdated(true);
       setNotValidObjString("");
-      setOpen(true);
-
     }).catch(error=>{
       let temp = "";
       console.log("error response");
@@ -143,7 +124,7 @@ function Updateflight(){   //function component declaration
         <div>
 
           <Link to="/admin">
-            <Button style={{margin:'20px'}} value="home" variant="contained" endIcon={<HomeIcon />}>
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
                 Back to admin portal
             </Button>
           </Link>
@@ -152,6 +133,8 @@ function Updateflight(){   //function component declaration
           <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
               Update flight number {flight.flightNumber}
           </Typography>
+        {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
+        {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
         <div style={{margin:'auto' ,display: "flex",flexDirection: "column",flexWrap: "wrap",height: "400px",alignContent: "center"}}>
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
@@ -173,15 +156,10 @@ function Updateflight(){   //function component declaration
          </div>
          <div>
           <Button style={{marginLeft: '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
-              Update
+              Submit
           </Button>
           </div>
         </form>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
-            Updated flight successfully
-          </Alert>
-        </Snackbar>
         </div>
 
       );

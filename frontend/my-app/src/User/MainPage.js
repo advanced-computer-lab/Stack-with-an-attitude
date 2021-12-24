@@ -10,6 +10,7 @@ import { ReactComponent as Logo } from './Logo.svg';
 
 class MainPage extends Component{
   
+/*  */
 
   render(){
       return(

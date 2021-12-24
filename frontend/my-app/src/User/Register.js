@@ -11,28 +11,11 @@ import background from "../assets/img/wall.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import HeaderLinks from 'components/Header/HeaderLinks.js';
 
 
 
 
 function Register(){   //function component declaration
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  const [open , setOpen] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
@@ -56,9 +39,7 @@ function Register(){   //function component declaration
                 .then((result) => {
                   console.log("done")
                   if(result.data.statusCode == 401){
-                    
-                  }else{
-                    setOpen(true);
+                    // insert error handling code here
                   }
                                 })
   
@@ -69,10 +50,10 @@ function Register(){   //function component declaration
     }
       return(
         <div>
-          <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/'><div style={{height:'70px',width: '100px' }}>
+                    <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
-             </div></Link>} rightLinks={<HeaderLinks/>} fixed/>
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
           </div>
           <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
@@ -152,11 +133,6 @@ function Register(){   //function component declaration
           </Button>
         </form>
         </div>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
-            Registeration successful
-          </Alert>
-        </Snackbar>
         <div>
         <footer style={{position:"fixed",bottom:0,height: "151px"}}>
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
