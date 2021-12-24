@@ -1,74 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import {Link,useParams} from 'react-router-dom'
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
-import HomeIcon from '@mui/icons-material/Home';
 
 
 
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-
-  
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-
-function ViewFlight(props){   //function component declaration
+function ViewReturnFlight(){   //function component declaration
   const [updated,setUpdated]=useState(false);   //setting states these are like the local storage of a comp with a method to update them 
   //first param is the default value for said variable
   const [flight,setFlight] = useState([]);
-  const {id,cabinclass,numofresseats} = useParams();
-
-
-
-
-
-  const [rows, setRows] = useState([]);
-  const [state,setState] = useState([]);
-
-
-  const handleDeletereserveClick = async (e) => {
-
-    await axios.delete(`http://localhost:8000/deletereservedFlight/${e.currentTarget.id}`)
-    .then(data => console.log('DELETED!'));
-
-    setState();
-    
-  }
+  const {id} = useParams();
 
 
   //the useEffects aka the listeners who does a update method initially when the component is created
@@ -113,15 +59,10 @@ let depsec = depstr[3]+""+depstr[4];
    arr.setHours(arrhour);
    dep.setMinutes(depsec);
    arr.setMinutes(arrsec);
-   console.log(numofresseats);
 
       return(
         <div>
- <Link to="/user">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
-            </Button>
-</Link>
+<Link to='/user'><h2>Home</h2></Link>
 <Card sx={{ maxWidth: 350 , margin: "auto"  }}>
       <CardContent>
         <Typography variant="body2">
@@ -151,73 +92,16 @@ let depsec = depstr[3]+""+depstr[4];
         <Typography variant="body2">
         baggage allowance : {flight["baggageAllowance"]}
         </Typography>
-        <Typography variant="body2">
-        cabin class : {cabinclass}
-        </Typography>
-        <Typography variant="h7" component="div" color="red">
-          you will reserve {numofresseats} seats in {cabinclass} class
-        </Typography>
       </CardContent>
       <CardActions>
-      
-      </CardActions>
-      <CardActions>
-      <Link to={"/SearchReturnFlight/" + flight["to"] +"/"+ flight["from"]}>
-        <Button value="Submit" variant="contained">
-              view return flights
+      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
+              reserve seats
           </Button>
-      </Link>
       </CardActions>
-
     </Card>
-
-
-
-
-
-
-
-
-
-
-    
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-           
-            <TableBody>
-              {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
-                <StyledTableRow key={row._id}>
-                  <StyledTableCell component="th" scope="row">
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <AlertDialog id={row._id} state={(d) => setState(d)}/>
-                  </StyledTableCell>  
-                  <StyledTableCell>
-                     <IconButton aria-label="cancelflight" onClick={handleDeletereserveClick} id={row._id}>
-                      <DeleteIcon />
-                    </IconButton> 
-                
-                  </StyledTableCell>
-                  
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-
-
-
-        
-
-
-
-
-
-
     </div>
       );
     
     }
 
-export default ViewFlight ;
+export default ViewReturnFlight ;

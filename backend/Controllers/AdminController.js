@@ -3,12 +3,15 @@ const nodemailer = require('nodemailer');
 const Reservation = require('../Models/Reservation');
 
 //create transporter for sender data
-const transporter = nodemailer.createTransport({
-    service:"hotmail",
-    auth: {
-        user:"guccsen704@outlook.com",
-        pass:"Hossam2021"
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+
+        user:'guccsen704@gmail.com',
+        pass:'Hossam2021'
     }
+
+
 });
 
 exports.searchFlight = async function(req,res) {
@@ -246,16 +249,39 @@ exports.getAllreservedFlights = async function(req,res) {
 exports.deletereservedflight = async function(req,res){
 
     let ID = req.params.deleteID;
-           
+
+
+    
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+       
+        useremail= user.email;
+       
+       
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
     await Reservation.findByIdAndDelete(ID)
-        .then( (reservation) => {
+    .then( (reservedflights) => {
             
             //recevier info
     const option ={
     from:"guccsen704@outlook.com",
-    to:reservation.email,
+    to:useremail,
     subject :"cancelled flight",
-    text:"your flight was cancelled , you will be refunded by"+ reservation.price
+    text:"your flight was cancelled , you will be refunded by"+ reservedflights.price
     
     };
     
@@ -269,7 +295,72 @@ exports.deletereservedflight = async function(req,res){
     console.log("Sent: "+ info.response);
     })
             res.status(200)
-            res.json(reservation)
+            res.json(reservedflights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+
+
+
+
+
+
+    
+
+}
+
+
+exports.deletereservedflight = async function(req,res){
+
+    let ID = req.params.deleteID;
+
+
+    
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+       
+        useremail= user.email;
+       
+       
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
+    await Reservation.findByIdAndDelete(ID)
+    .then( (reservedflights) => {
+            
+            //recevier info
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"cancelled flight",
+    text:"your flight was cancelled , you will be refunded by"+ reservedflights.price
+    
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
         })
         .catch( (err) => {
             res.send({statusCode : err.status, message : err.message})

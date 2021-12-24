@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
-
+import Typography from '@mui/material/Typography';
 
 
 
@@ -88,16 +88,26 @@ function Updateflight(){   //function component declaration
       return(
         <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+          <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link>
-          <br/>
-        <h1>Update flight with flight number {flight.flightNumber}</h1> 
+          </Link>
+
+          
+          <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+              Update flight number {flight.flightNumber}
+          </Typography>
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
+<<<<<<< Updated upstream:frontend/my-app/src/Updateflight.js
         <form onSubmit={handleSubmit} id="form">
           {(Object.keys(flight).slice(2,12)).map((f)=>(//loop over the flight info and map them to fields with their default value
+=======
+        {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
+        <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+        <div style={{margin:'auto' ,display: "flex",flexDirection: "column",flexWrap: "wrap",height: "400px",alignContent: "center"}}>
+          {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
+>>>>>>> Stashed changes:frontend/my-app/src/Admin/Updateflight.js
           (f!='totalSeats')&&(<TextField
           required
           key={f}
@@ -113,10 +123,12 @@ function Updateflight(){   //function component declaration
           margin='normal'
           />)
           ))}
-         
-          <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+         </div>
+         <div>
+          <Button style={{marginLeft: '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
+          </div>
         </form>
         </div>
 

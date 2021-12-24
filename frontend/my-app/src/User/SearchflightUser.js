@@ -13,17 +13,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import AlertDialog from './AlertDialog';
 import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import Parallax from "components/Parallax/Parallax.js";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import ButtonBasesLoggedIn from './ButtonBasesLoggedIn';
+import { ReactComponent as Logo } from './Logo.svg';
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,7 +52,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SearchflightUser() {
+<<<<<<< Updated upstream:frontend/my-app/src/SearchflightUser.js
   const [cabinclass, setCabinclass] = React.useState('economy');
+=======
+
+
+  const [cabinclass, setCabinclass] = React.useState('Economy');
+>>>>>>> Stashed changes:frontend/my-app/src/User/SearchflightUser.js
   const [numofresseats, setNumofresseats] = React.useState(0);
 
   const handleChange = (e) => {
@@ -88,12 +99,12 @@ export default function SearchflightUser() {
       e.target.to.value='';
       e.target.fromf.value='';
       
-
     }).catch(err => console.log(err));
 
 
   }  
     return(
+<<<<<<< Updated upstream:frontend/my-app/src/SearchflightUser.js
       <div>
 <Link to="/user">
 <Button value="home" variant="contained" endIcon={<HomeIcon />}>
@@ -102,6 +113,21 @@ export default function SearchflightUser() {
 </Link>
           <br/>
         <h1>Search and reserve your Flight seats</h1>  
+=======
+      <div>  
+            <div style={{marginBottom : '0px'}}>
+              
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div>
+             </Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div> 
+        <div style={{margin : 'auto' , textAlign : 'center'}}>
+          <Typography  variant="h3" gutterBottom component="div">
+            Search and Reserve your flights seats
+          </Typography>
+        </div>
+>>>>>>> Stashed changes:frontend/my-app/src/User/SearchflightUser.js
         <div className='containerS'>
           <form onSubmit={submit} id="form" className='form'>
           <FormControl sx={{ minWidth: 120 }}>
@@ -120,7 +146,7 @@ export default function SearchflightUser() {
             <TextField
             required
             id="numofseats"
-            label="number of seats"
+            label="Number of seats"
             name="numofseats"
             type="number"
             />
@@ -129,6 +155,7 @@ export default function SearchflightUser() {
             label="Departure Date"
             name="depdate"
             type="date"
+            
             />
             <TextField
             id="deptime"
@@ -158,11 +185,12 @@ export default function SearchflightUser() {
             label="To Terminal"
             name="to"
             />
-            <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+            <Button value="Submit" type="submit" style={{marginLeft : '15px'}} variant="contained" endIcon={<SendIcon />}>
                 Submit
             </Button>
           </form>
-          <TableContainer component={Paper} className='sched'>
+          <TableContainer sx={{ width:'70%' , margin : '0 auto' , marginBottom : '20px' , 
+                          borderRadius: '20px'}} elevation={4} component={Paper} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
@@ -199,6 +227,11 @@ export default function SearchflightUser() {
                 </TableBody>
               </Table>
             </TableContainer>
+        </div>
+        <div>
+        <footer style={{bottom:0,height: "151px"}}>
+        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+        </footer>
         </div>
       </div>
 

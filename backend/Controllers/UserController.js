@@ -1,8 +1,27 @@
 const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
-
+const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const saltRounds = 10;
+
+<<<<<<< Updated upstream
+const nodemailer = require('nodemailer');
+=======
+
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+
+        user:'guccsen704@gmail.com',
+        pass:'Hossam2021'
+    }
+
+
+});
+const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
+>>>>>>> Stashed changes
 
 
 //create transporter for sender data
@@ -113,7 +132,12 @@ exports.createReservedFlight = async function(req,res) {
   newFlight.save()
       .then( (reservedflights) => {
           //res.status(200)
+<<<<<<< Updated upstream
           res.json(reservedflights)
+=======
+         console.log('CREATED RESERVATION');
+         res.send({statusCode: 200 , reservationNumber: reservedflights.reservationNumber});
+>>>>>>> Stashed changes
       })
       .catch( (err) => {
           if (err.name === "ValidationError") {
@@ -183,6 +207,137 @@ exports.deletereservedflight = async function(req,res){
     subject :"cancelled flight",
     text:"your flight was cancelled , you will be refunded by"+ reservedflights.price
     
+<<<<<<< Updated upstream
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+=======
+    await Flight.findById(ID).then(result => oldFlight = result);
+
+    // new vars to be set in the object above for updating departure flight.
+    let newDepSeats = [];
+    let newAvailableSeats = 0;
+
+    console.log(assignedSeats, "     ----------------------------");
+
+    if(cabinclass.toLowerCase() === 'economy'){
+
+        for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
+            if(assignedSeats.includes(i + ''))
+                newDepSeats[i] = true;
+            else
+                newDepSeats[i] = oldFlight.reservedEconomySeats[i];
+        }
+>>>>>>> Stashed changes
+
+
+
+
+<<<<<<< Updated upstream
+=======
+        for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
+            if(assignedSeats.includes(i + ''))
+                newDepSeats[i] = true;
+            else
+                newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
+        }
+>>>>>>> Stashed changes
+
+
+    
+
+<<<<<<< Updated upstream
+}
+=======
+    updateFlight(ID,oldFlight);
+}
+
+exports.register = async function(req,res) {
+
+    let newuser = new User(req.body.newuser);
+    bcrypt.hash(newuser.password, saltRounds).then(function(hash) {
+        newuser.password = hash ;
+    });
+    await newuser.save()
+        .then( (user) => {
+            res.status(200)
+            res.json(user)
+            console.log(user);
+        })
+        .catch( (err) => {
+            if (err.name === "ValidationError") {
+                let errors = {};
+          
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
+              }
+              if (err.name === "MongoServerError"){
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
+            }
+
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+}
+
+
+exports.deletereservedflight = async function(req,res){
+
+    let ID = req.params.deleteID;
+
+
+    
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+       
+        useremail= user.email;
+       
+       
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
+    await Reservation.findByIdAndDelete(ID)
+    .then( (reservedflights) => {
+            
+            //recevier info
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"cancelled flight",
+    text:"your flight was cancelled , you will be refunded by"+ reservedflights.price
+    
     };
     
     
@@ -209,3 +364,76 @@ exports.deletereservedflight = async function(req,res){
     
 
 }
+
+
+
+
+
+  exports.sendsummary = async function(req,res){
+
+    let ID = req.params.getID;
+
+
+    
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+       
+        useremail= user.email;
+       
+       
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
+    await Reservation.findById(ID)
+    .then( (reservedflights) => {
+            
+            //recevier info
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"Summary",
+    text:"Reservation number"+ reservedflights.reservationNumber + "Flight ID" + reservedflights.reservedFlightIDs+
+        "Number of seats"+reservedflights.assignedSeats.length + "Assigned departure seats" +  reservedflights.assignedDepartureSeats
+        + "Assigned return seats"+reservedflights.assignedReturnSeats + "Total price dunno if price for 1 seat or all seats" +reservedflights.price
+        + "Number of adults??" + "Number of children?? "
+
+    
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+
+
+
+
+
+
+    
+
+}
+>>>>>>> Stashed changes

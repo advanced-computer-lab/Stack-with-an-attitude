@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { Checkbox } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 
 
@@ -63,9 +64,15 @@ function PlaneView(props){   //function component declaration
       return(
         <div>
 
+<<<<<<< Updated upstream:frontend/my-app/src/planeView.js
           <Link to='/'><h2>Home</h2></Link>
           <br/>
         <h1>reserve seats</h1> 
+=======
+          <Typography  variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
+            Reserve your departure seats :
+          </Typography>
+>>>>>>> Stashed changes:frontend/my-app/src/User/PlaneView.js
         
         <form onSubmit={handleSubmit} id="form">
             <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
@@ -76,10 +83,16 @@ function PlaneView(props){   //function component declaration
                     id={index.toString()}
                     key={index.toString()}
                     disabled
+<<<<<<< Updated upstream:frontend/my-app/src/planeView.js
                     defaultChecked
                     
+=======
+                    checked
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
+>>>>>>> Stashed changes:frontend/my-app/src/User/PlaneView.js
                     />:
                     <Checkbox
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     id={index.toString()}
                     key={index.toString()}
                     color="success"
@@ -90,9 +103,15 @@ function PlaneView(props){   //function component declaration
             }   
             </div>
          
+<<<<<<< Updated upstream:frontend/my-app/src/planeView.js
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+=======
+          <div style={{width : '10%' , margin : '10px auto'}}>
+          <Button value="Submit" type="submit" variant="contained" disabled={selected.length<seats} endIcon={<SendIcon />}>
+>>>>>>> Stashed changes:frontend/my-app/src/User/PlaneView.js
               Submit
           </Button>
+          </div>
         </form>
         </div>
 

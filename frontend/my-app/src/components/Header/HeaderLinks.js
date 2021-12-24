@@ -27,6 +27,10 @@ const useStyles = makeStyles(styles);
 export default function HeaderLinks(props) {
   const classes = useStyles();
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   return (
     <List className={classes.list}>
        {/* <ListItem className={classes.listItem}> */}
@@ -59,7 +63,11 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
+<<<<<<< Updated upstream
           <Link style={{padding:0}} to="/user" className={classes.dropdownLink}>
+=======
+          <Link style={{padding:0}} to="/login"  className={classes.dropdownLink}>
+>>>>>>> Stashed changes
               Login
           </Link>
         </Button>
@@ -71,7 +79,7 @@ export default function HeaderLinks(props) {
           round
         >
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
-        <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
+        <Link style={{padding:0}} to="/register" className={classes.dropdownLink}>
               Register
         </Link>
         </Button>

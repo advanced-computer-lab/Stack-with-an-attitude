@@ -64,6 +64,7 @@ export default function HeaderLinksLoggedIn(props) {
           </Link>
         </Button>
       </ListItem>
+<<<<<<< Updated upstream
       <ListItem className={classes.listItem}>
         <Button
           color="rose"
@@ -76,6 +77,8 @@ export default function HeaderLinksLoggedIn(props) {
         </Link>
         </Button>
       </ListItem>
+=======
+>>>>>>> Stashed changes
     </List>
   );
 }

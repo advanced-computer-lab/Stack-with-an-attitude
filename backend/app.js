@@ -84,6 +84,8 @@ app.post('/user/createReservedFlight', userController.createReservedFlight);
 app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
 
 app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
+
+app.post('/user/register', userController.register);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
@@ -110,6 +112,42 @@ app.post('/admin/login',(req,res)=>{
 
 });
 
+<<<<<<< Updated upstream
+=======
+app.post('/user/login',(req,res)=>{
+    const Email = req.body.email;
+    const pass = req.body.password;
+    
+    console.log(Email , pass);
+
+    User.findOne({email:Email},(err,data)=>{
+        if(err)
+            console.log(err);
+        else{
+            if(data){
+                if(pass==data.password){
+                    req.session.userEmail = Email;
+                    req.session.userID=data._id;
+                    res.send({statusCode:200,login:true,user:req.session.userID});
+                }
+            }
+            else{
+                    res.send({statusCode:401,login:false});
+                }
+            }
+    });
+  
+  });
+
+  app.get('/user/logout',(req,res)=>{
+    if(req.session.Email)
+        req.session.destroy();
+    res.clearCookie('connect.sid');
+  res.status(200).send({statusCode:200,message:'logout successful'})
+
+})
+
+>>>>>>> Stashed changes
 //destory the session using this method also dont destory the cookie and 
 //create a new one in the same route because as said before server sends the session from the previous req
 //if you destroy it its now null and u cant instanciate a session anyway

@@ -11,6 +11,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -80,13 +81,16 @@ class Searchflight extends Component{
     return(
       <div>
 
-<Link to="/admin">
-<Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                Home
+      <Link to="/admin">
+            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+                Back to admin portal
             </Button>
-</Link>
-          <br/>
-        <h1>Search for a Flight</h1>  
+      </Link>
+
+          
+      <Typography variant="h2" gutterBottom component="div" style={{textAlign: 'center'}}>
+         Search for a flight
+      </Typography>
         <div className='containerS'>
           <form onSubmit={this.submit} id="form" className='form'>
             <TextField
@@ -128,11 +132,12 @@ class Searchflight extends Component{
             label="To Terminal"
             name="to"
             />
-            <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
+            <Button value="Submit" type="submit" variant="contained" style={{marginLeft : '15px'}} endIcon={<SendIcon />}>
                 Submit
             </Button>
           </form>
-          <TableContainer component={Paper} className='sched'>
+          <TableContainer sx={{ width:'90%' , margin : '0 auto' ,marginLeft:'15px' , marginBottom : '20px' , 
+                          borderRadius: '20px'}} component={Paper} elevation={4} className='sched'>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
