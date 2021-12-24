@@ -30,7 +30,6 @@ function App() {
             <Route path='/register' element={<Register/>} />
             <Route path='/user' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<MainPageLoggedIn/>}/>
             <Route path='/user/profile/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewProfile/>} />
-            <Route path='/searchflightuser' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<SearchflightUser/>} />
             <Route path='/yourreservedflights/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<Reservedflights/>} />
             <Route path='/addFlight' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/denied" />:<Addflights/>}/>
             <Route path='/admin/login' element={(localStorage.getItem("isAdminLoggedIn") == true)?<Navigate  to="/admin" />:<AdminLogIn/>}/>
@@ -39,7 +38,6 @@ function App() {
             <Route path='/searchflight' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/denied" />:<Searchflight/>}/>
             <Route path='/updateflight/:id' element={(!localStorage.getItem("isAdminLoggedIn") || localStorage.getItem("isAdminLoggedIn") == false)?<Navigate  to="/denied" />:<Updateflight/>}/>
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
-            <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
             <Route path='/PlaneView/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PlaneView/>} />
             <Route path='/viewreturnflight/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewReturnFlight/>} />
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewFlightHandler/>} />

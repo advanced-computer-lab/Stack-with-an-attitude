@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import background from "../assets/img/travel.jpg";
 import Header from 'components/Header/Header.js';
@@ -14,10 +16,20 @@ import { ReactComponent as Logo } from './Logo.svg';
 
 function AdminLogIn(){   //function component declaration
 
-  const [errorMessage,setErrorMessage]=useState("");
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-  useEffect(()=>{
-  },[errorMessage])
+  const [open , setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
@@ -28,12 +40,10 @@ function AdminLogIn(){   //function component declaration
 
     axios.post('http://localhost:8000/admin/login',{'username':username , 'password':password})
                 .then((result) => {
-                  //console.log(result);
+                  
                   if(result.data.statusCode == 401){
-                    // insert error handling code here
-                    setErrorMessage("check your info");
+                    setOpen(true);
                   }else{
-                    setErrorMessage("");
                   const adminId = result.data.admin;
                   localStorage.setItem('adminID',adminId);
                   localStorage.setItem('isAdminLoggedIn',true);
@@ -48,14 +58,12 @@ function AdminLogIn(){   //function component declaration
     }
       return(
         <div>
-                    <div style={{marginBottom : '0px'}}>
+          <div style={{marginBottom : '0px'}}>
         <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <div >
-            <br/>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
                    Login to Admin Portal
           </Typography>
-          {<h2 style={{color:"red", textAlign:'center'}} className="feedback-header">{errorMessage}</h2>}
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
         <TextField 
           required
@@ -87,6 +95,11 @@ function AdminLogIn(){   //function component declaration
         </div>
         </div>
         </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+            Login failed! Incorrect username or password
+          </Alert>
+        </Snackbar>
         </div>
 
       );

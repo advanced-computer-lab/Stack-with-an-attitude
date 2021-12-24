@@ -252,7 +252,7 @@ app.post('/admin/logout',(req,res)=>{
     if(req.session.admin)
         req.session.destroy();
     res.clearCookie('connect.sid');
-  res.status(200).send({statusCode:200,message:'logout successful'})
+  res.send({statusCode:200,message:'logout successful'})
 
 })
 

@@ -21,7 +21,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HomeIcon from '@mui/icons-material/Home';
 import Header from 'components/Header/Header.js';
-import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import HeaderLinks from 'components/Header/HeaderLinks.js';
 import Parallax from "components/Parallax/Parallax.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
@@ -101,9 +101,9 @@ export default function SearchflightUser() {
     return(
       <div>  
             <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/'><div style={{height:'70px',width: '100px' }}>
               <Logo />
-             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+             </div></Link>} rightLinks={<HeaderLinks/>} fixed/>
           </div> 
         <div style={{margin : 'auto' , textAlign : 'center'}}>
           <Typography  variant="h3" gutterBottom component="div">
@@ -188,7 +188,7 @@ export default function SearchflightUser() {
                     <StyledTableCell>Departure Time</StyledTableCell>
                     <StyledTableCell>Departure</StyledTableCell>
                     <StyledTableCell>Destination</StyledTableCell>
-                    <StyledTableCell>view a flight</StyledTableCell>
+                    <StyledTableCell>View</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -224,7 +224,4 @@ export default function SearchflightUser() {
       </div>
       );
     
-  
-
-
 }
