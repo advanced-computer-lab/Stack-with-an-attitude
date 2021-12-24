@@ -291,3 +291,60 @@ exports.register = async function(req,res) {
             res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
 }
+
+exports.sendsummary = async function(req,res){
+
+    let ID = req.params.id;
+
+    let IDuser = req.body.userid;
+    let useremail= null;
+    await User.findById(IDuser)
+    .then( (user) => {
+       
+        useremail= user.email;
+
+    })
+    .catch( (err) => {
+        res.send({statusCode : err.status, message : err.message})
+        console.log(err.status)})
+    
+    
+    
+    
+    
+    
+    await Reservation.findById(ID)
+    .then( (reservedflights) => {
+            
+            //recevier info
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"Summary",
+    text: "Dear Customer ," +
+        "\n Here is your summary for the reservation : " +
+        "\n Reservation number : "+ reservedflights.reservationNumber + "\n" +
+        "Number of seats : "+ reservedflights.assignedSeats.length + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats
+        + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " +reservedflights.price
+        + "\n Number of adults : "+reservedflights.numberOfAdults + "\n Number of children : "+ reservedflights.numberOfChildren +
+        "\n Thank you for choosing Weeb Airlines."
+
+    
+    };
+    
+    
+    transporter.sendMail(options, (err,info)=>{
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
+        })
+        .catch( (err) => {
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
+}

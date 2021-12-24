@@ -38,7 +38,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const handlesendemailClick = async (e) => {
 
+  await axios.post(`http://localhost:8000/sendsummary/${e.currentTarget.id}`)
+  .then(data => console.log('Senttttt!'));
+
+  
+  
+}
 
 function Reservedflights() {
 

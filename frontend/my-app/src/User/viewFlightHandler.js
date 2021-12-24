@@ -21,8 +21,6 @@ import '@fontsource/roboto/700.css';
 
 function ViewFlightHandler(){
 
-   
-
     const {id,cabinclass,numofresseats}=useParams()
 
     const [secondFlight,setFlight] = useState(null)
