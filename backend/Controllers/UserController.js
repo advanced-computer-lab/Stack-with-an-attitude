@@ -20,6 +20,7 @@ exports.getUserById = async function(req,res) {
   await User.findById(ID)
   .then( (user) => {
       res.status(200)
+      res.send({statusCode:200})
       res.json(user)
   })
   .catch( (err) => {
@@ -34,6 +35,7 @@ exports.updateUserById = async function(req,res) {
   await User.findByIdAndUpdate(ID, req.body.user, {new: true, runValidators: true})
       .then( (user) => {
           res.status(200)
+          res.send({statusCode:200})
           res.json(user)
       })
       .catch( (err) => {
@@ -47,10 +49,12 @@ exports.getAllReservedSeats = async function(req,res) {
   Reservation.find()
       .then( (reservedflights) => {
           //res.status(200)
+          res.send({statusCode:200})
           res.json(reservedflights)
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:404})
           console.log(err)})
 
 }
@@ -63,10 +67,12 @@ exports.getReservedFlightById = async function(req,res) {
   Reservation.findById(ID)
       .then( (reservedflights) => {
           //res.status(200)
+          res.send({statusCode:200})
           res.json(reservedflights)
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:404})
           console.log(err)})
 }
 
@@ -118,7 +124,7 @@ exports.getAllreservedFlights = async function(req,res) {
 
   await Reservation.find({reservedUserID : ID + ''})
           .then( (reservation) => {
-              res.send(reservation)
+              res.send({reservation,statusCode:200})
           })
           .catch( (err) => {
               res.send({statusCode : err.status, message : err.message})
@@ -191,7 +197,9 @@ const updateFlight = async function(ID,reservedSeats){
 
     await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
     .then( (flights) => {
-        console.log(flights)})
+        console.log(flights)
+        res.send({statusCode:200})
+    })
 
 }
 
@@ -259,6 +267,7 @@ exports.register = async function(req,res) {
         .then( (user) => {
             res.status(200)
             res.json(user)
+            res.send({statusCode:200})
             console.log(user);
         })
         .catch( (err) => {
