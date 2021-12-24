@@ -5,16 +5,15 @@ const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
+
+//Models
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
 const userController = require('./Controllers/UserController');
-const Admin = require("./Models/Admin");
-const Reservation = require("./Models/Reservation");
 
 
 //App variables
@@ -27,7 +26,6 @@ app.use(cors());
 
 const MongoURI =  config.get('mongoURI');
 const secret = config.get('sessionSecret');
-const stripeSecretKey = config.get('stripe_secret');
 
 // Mongo DB
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -35,25 +33,6 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .catch(err => console.log(err));
 
 // Session Initialization
-const stripe = require('stripe')(stripeSecretKey);
-
-async function StripeCallAPI (req, res) {
-    const customer = await stripe.customers.create({
-    description: 'My First Test Customer',
-    })
-
-    const paymentIntent = await stripe.paymentIntents.create({
-    customer: customer.id,
-    currency: 'usd',
-    amount: 2000,
-    payment_method_types: ['card'],
-    setup_future_usage: 'on_session',
-  })
-
-  res.send(customer);
-}
-
-
 
 // secret is used to validate the session think password store is the place we store the session,
 //in this case as mentioned before its the mongoStore aka in mongo db 
@@ -96,8 +75,6 @@ app.get('/allreservedflights', AdminAuth , adminController.getAllreservedFlights
 app.delete('/deletereservedFlight/:deleteID', AdminAuth ,adminController.deletereservedflight);
 //-------------
 
-app.post('/test' , StripeCallAPI);
-
 //------------User
 app.put('/user/update/:id', userController.updateUserById);
 
@@ -112,6 +89,8 @@ app.post('/user/createReservedFlight', userController.createReservedFlight);
 app.delete('/user/deleteReservedFlight/:id', userController.deleteReservedFlightById);
 
 app.get('/user/getAllReservedFlights/:id', userController.getAllreservedFlights);
+
+app.post('/user/register', userController.register);
 //--------------
 
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
@@ -167,15 +146,15 @@ app.post('/admin/login',(req,res)=>{
   const user = req.body.username;
   const pass = req.body.password;
 
-  admin.findOne({username:user},async (err,data)=>{
+  admin.findOne({username:user},(err,data)=>{
       if(err)
           console.log(err);
       else{
           if(data){
-              if(bcrypt.compare(pass,data.password)){
+              if(pass==data.password){
                   req.session.adminName = user;
                   req.session.adminId=data._id;
-                  res.send("you logged in ");
+                  res.send();
               }
           }
           else{
@@ -201,6 +180,8 @@ app.post('/user/login',(req,res)=>{
                     req.session.userEmail = Email;
                     req.session.userID=data._id;
                     res.send({statusCode:200,login:true,user:req.session.userID});
+                }else{
+                  res.send({statusCode:401,login:false});
                 }
             }
             else{
@@ -211,26 +192,38 @@ app.post('/user/login',(req,res)=>{
   
   });
 
+  app.post("/create-checkout-session", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "Reservation",
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: 'http://localhost:3000/', // here will be the /user
+        cancel_url: 'http://localhost:4000/' // here will be the summary page
+      })
+      res.json({ url: session.url })
+    } catch (e) {
+      res.status(500).json({ error: e.message }) // VIEW IN A SNACKBAR IN FE
+    }
+  })
+
+
+
   app.get('/user/logout',(req,res)=>{
     if(req.session.Email)
         req.session.destroy();
     res.clearCookie('connect.sid');
   res.status(200).send({statusCode:200,message:'logout successful'})
-
-})
-
-app.post('/admin/register',(req,res)=>{
-    let username = req.body.username;
-    let password = req.body.password;
-
-        bcrypt.hash(password,saltRounds).then((hash)=>{
-            let newAdmin = new admin({"username":username,"password":hash,"email":"x@gmail.com"})
-            newAdmin.save().then((myAdmin)=>{
-                console.log("succ");
-                res.send(myAdmin)});
-
-        })
-
 
 })
 

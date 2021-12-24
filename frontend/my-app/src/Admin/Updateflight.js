@@ -136,6 +136,7 @@ function Updateflight(){   //function component declaration
         {updated && <h2 className="feedback-header">Updated flight successfully </h2>}
         {<h2 style={{color:"red"}} className="feedback-header">{notValidObjString}</h2>}
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+        <div style={{margin:'auto' ,display: "flex",flexDirection: "column",flexWrap: "wrap",height: "400px",alignContent: "center"}}>
           {(Object.keys(flight).slice(2,13)).map((f)=>(//loop over the flight info and map them to fields with their default value
           (f!='totalSeats')&&(<TextField
           required
@@ -152,10 +153,12 @@ function Updateflight(){   //function component declaration
           margin='normal'
           />)
           ))}
-         
+         </div>
+         <div>
           <Button style={{marginLeft: '15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
           </Button>
+          </div>
         </form>
         </div>
 

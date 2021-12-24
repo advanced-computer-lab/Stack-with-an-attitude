@@ -1,4 +1,5 @@
-import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
+import {BrowserRouter as Router , Route ,Routes,useParams,Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
 import Schedule from "./Admin/Schedule";
@@ -13,6 +14,7 @@ import Reservedflights from './User/Reservedflights';
 import PlaneView from './User/PlaneView';
 import ViewProfile from './User/ViewProfile';
 import LogIn from './User/LogIn';
+import Register from './User/Register';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import Cancelflight from './Admin/Cancelflight';
@@ -20,23 +22,23 @@ import HomeIcon from '@mui/icons-material/Home';
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './User/Logo.svg';
-import {Link} from 'react-router-dom'
+import { useState } from 'react';
 
 function App() {
 
-
-
   return (
     <Router>
-          <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
-              <Logo />
-             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
-          </div>
       <Routes>
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
+            <Route path='/register' element={<Register/>} />
+            {/* <Route element={localStorage.getItem('isLoggedIn') ? (
+            <Route path='/user' element={<MainPageLoggedIn/>} />
+            ) : (
+              <Redirect  from="/user" to='/login' /> 
+            )
+            } /> */}
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />
@@ -45,9 +47,7 @@ function App() {
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
             <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
-            {/* <Route path='/viewflight/:id' element={<ViewFlightHandler />} /> */}
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
-            {/* <Route path='/viewflight/:id' element={<ViewFlight/>} /> */}
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
             <Route path='/confirmPayment/:id' element={<PaymentConfirm />} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}

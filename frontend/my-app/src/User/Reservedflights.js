@@ -14,6 +14,9 @@ import AlertDialogReservation from './AlertDialogReservation';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './Logo.svg';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,7 +47,7 @@ function Reservedflights() {
   const {id} =  useParams();
 
   const getAllresFlights =async () => {
-console.log(id);
+        console.log(id);
         let flights = [];
         await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
@@ -80,13 +83,11 @@ console.log(id);
       //Link to direct back to home
   return (
     <div >
-      <div style={{ margin : '10px'}}>
-        <Link to="/user">
-          <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                  Home
-          </Button>
-        </Link>
-      </div>
+      <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div>
       <div style={{margin : 'auto' , textAlign : 'center'}}>
         <Typography  variant="h3" gutterBottom component="div">
           Reserved Flights
@@ -129,6 +130,11 @@ console.log(id);
         </TableBody>
       </Table>
     </TableContainer>
+    <div>
+        <footer style={{bottom:0,height: "151px"}}>
+        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+        </footer>
+        </div>
     </div>
   );
 }

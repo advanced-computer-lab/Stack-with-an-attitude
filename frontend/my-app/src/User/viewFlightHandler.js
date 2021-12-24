@@ -13,6 +13,9 @@ import AlertDialogConfirmRes from './AlertDialogConfirmRes';
 import SimpleAccordion from './SimpleAccordion';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import HomeIcon from '@mui/icons-material/Home';
+import Header from 'components/Header/Header.js';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
+import { ReactComponent as Logo } from './Logo.svg';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -61,15 +64,15 @@ function ViewFlightHandler(){
 
     return(
         <div>
+                        <div style={{marginBottom : '0px'}}>
+            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+              <Logo />
+             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+          </div> 
             {secondSeats.length!==0?(
             <div>
                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
                         onClick={()=>{setSecond([])}}>Back</Button>
-                <Link underline='none' to="/user">
-                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                    Home
-                    </Button>
-                </Link>
                 <Typography variant="h2" gutterBottom component="div">
                     Summary
                 </Typography>
@@ -132,11 +135,6 @@ function ViewFlightHandler(){
             <div>
                 <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
                         onClick={()=>{window.location.href='/searchflightuser'}}>Back</Button>
-                 <Link to="/user">
-                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                        Home
-                    </Button>
-                 </Link>
                 
             <div style={{display:'flex' , flexDirection : 'row'}}>
                 <div style={{width:'50%' , marginLeft: '20px'}}>
@@ -160,11 +158,6 @@ function ViewFlightHandler(){
             <div>
                  <Button style={{margin : '10px'}} startIcon={<ArrowBackIosNewIcon />} variant="outlined" 
                         onClick={()=>{setFlight(null)}}>Back</Button>
-                 <Link to="/user">
-                    <Button value="home" variant="contained" endIcon={<HomeIcon />}>
-                        Home
-                    </Button>
-                 </Link>
                 <div style={{display:'flex' , flexDirection : 'row'}}>
                 <div style={{width:'50%' , marginLeft: '20px'}}>
                 <ViewFlight2 id={secondFlight}/>
@@ -172,10 +165,18 @@ function ViewFlightHandler(){
                 <PlaneView2 id={secondFlight} type={cabinclass} seats={numofresseats} setFunc={(value)=>setSecond(value)}/>
                 
             </div>
+            
             </div>
+            
             }
+                <div>
+        <footer style={{bottom:0,height: "151px"}}>
+        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+        </footer>
+        </div>
         
         </div>
+        
     );
 }
 

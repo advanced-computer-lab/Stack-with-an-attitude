@@ -98,32 +98,12 @@ function ViewProfile(){   //function component declaration
         {console.log(userState)};
         
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
-          <div style={{display:'flex', flexDirection:'column' , flexWrap:'wrap'}}>
+          <div style={{display:'flex', flexDirection:'column' , flexWrap:'wrap',height:"400px"}}>
           {(Object.keys(userState).slice(1,6)).map((f)=>(//loop over the userState info and map them to fields with their default value
          <React.Fragment>
          {f=="password" ?(
            <React.Fragment>
-             <div>
-                <Typography variant="h6" gutterBottom component="div">
-                    Update password
-                </Typography>
-                  <TextField 
-                  required
-                  key={f}
-                  id={f}
-                  label="old password"
-                  name={f}
-                  defaultValue={(f=="password") ? "" : userState[f]}
-                  margin='normal'
-                  />
-         <TextField
-         required
-         id="npassword"
-         label="new password"
-         name="npassword"
-         margin='normal'
-         />
-         </div>
+
          </React.Fragment>):(
          <TextField 
           required
@@ -136,7 +116,31 @@ function ViewProfile(){   //function component declaration
           />)}
           </React.Fragment>
           ))}
+
+                       <div style={{marginLeft:"60px",border:"solid #1976d2 3px",padding:"20px",borderRadius:"10px"}}>
+                <Typography variant="caption" style={{fontSize:'16px'}} color = "#1976d2"  gutterBottom component="div">
+                    Update password
+                </Typography>
+                  <TextField sx={{marginRight:"20px"}}
+                  required
+                  key="password"
+                  id="password"
+                  label="old password"
+                  name="password"
+                  defaultValue=""
+                  margin='normal'
+                  />
+         <TextField sx={{marginRight:"10px"}}
+         required
+         id="npassword"
+         label="new password"
+         name="npassword"
+         margin='normal'
+         />
+         </div>
          
+          </div>
+          <div style={{margin:"auto" , marginLeft:'300px'}}>
           <Button value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
               Update Profile
           </Button>

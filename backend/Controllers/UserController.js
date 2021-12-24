@@ -1,12 +1,15 @@
 const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
+const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const saltRounds = 10;
 
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
-    updateReservationSeats(depID,cabinclass,assignedDepartureSeats);
+    updateReservationSeats(depID,cabinclass,assignedDepartureSeats , false);
 
-    updateReservationSeats(returnID,cabinclass,assignedReturnSeats);
+    updateReservationSeats(returnID,cabinclass,assignedReturnSeats , false);
 
 }
 
@@ -17,6 +20,7 @@ exports.getUserById = async function(req,res) {
   await User.findById(ID)
   .then( (user) => {
       res.status(200)
+      res.send({statusCode:200})
       res.json(user)
   })
   .catch( (err) => {
@@ -31,6 +35,7 @@ exports.updateUserById = async function(req,res) {
   await User.findByIdAndUpdate(ID, req.body.user, {new: true, runValidators: true})
       .then( (user) => {
           res.status(200)
+          res.send({statusCode:200})
           res.json(user)
       })
       .catch( (err) => {
@@ -44,10 +49,12 @@ exports.getAllReservedSeats = async function(req,res) {
   Reservation.find()
       .then( (reservedflights) => {
           //res.status(200)
+          res.send({statusCode:200})
           res.json(reservedflights)
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:404})
           console.log(err)})
 
 }
@@ -55,15 +62,17 @@ exports.getAllReservedSeats = async function(req,res) {
 exports.getReservedFlightById = async function(req,res) {
 
 
-  let ID = req.params.getID
+  let ID = req.params.id;
 
   Reservation.findById(ID)
       .then( (reservedflights) => {
           //res.status(200)
+          res.send({statusCode:200})
           res.json(reservedflights)
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:404})
           console.log(err)})
 }
 
@@ -115,7 +124,7 @@ exports.getAllreservedFlights = async function(req,res) {
 
   await Reservation.find({reservedUserID : ID + ''})
           .then( (reservation) => {
-              res.send(reservation)
+              res.send({reservation,statusCode:200})
           })
           .catch( (err) => {
               res.send({statusCode : err.status, message : err.message})
@@ -126,15 +135,60 @@ exports.getAllreservedFlights = async function(req,res) {
 
 exports.deleteReservedFlightById = async function(req,res) {
 
-  let ID = req.params.deleteID
+  let ID = req.params.id;
+
 
   Reservation.findByIdAndDelete(ID)
-      .then( (reservedflights) => {
-          //res.status(200)
-          res.json(reservedflights)
+      .then(async (reservedflights) => {
+
+        console.log('BEF--------------------------------------------');
+
+        console.log(reservedflights);
+
+        await updateReservationSeats(reservedflights.reservedFlightIDs[0],
+            reservedflights.cabinClass,
+            reservedflights.assignedDepartureSeats , true);
+        await updateReservationSeats(reservedflights.reservedFlightIDs[1],
+            reservedflights.cabinClass,
+            reservedflights.assignedReturnSeats , true);
+            
+            console.log('AFTER------------------------------------------------');
+
+            let IDuser = reservedflights.reservedUserID;
+            let useremail= null;
+
+            await User.findById(IDuser)
+            .then( (user) => {
+        
+                useremail= user.email;
+        
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
+
+            const option ={
+                from:'guccsen704@gmail.com',
+                to:useremail,
+                subject :"Cancelled flight",
+                text:"Your flight was cancelled , you will be refunded by "+ reservedflights.price
+            
+                };
+            
+                transporter.sendMail(options, (err,info)=>{
+            
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: "+ info.response);
+                })
+
+            res.send({statusCode:200});
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:400});
           console.log(err)})
 }
 
@@ -143,12 +197,23 @@ const updateFlight = async function(ID,reservedSeats){
 
     await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
     .then( (flights) => {
-        console.log(flights)})
+        console.log(flights)
+        res.send({statusCode:200})
+    })
 
 }
 
+//create transporter for sender data
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+   auth: {
+       user:'guccsen704@gmail.com',
+       pass:'Hossam2021'
+   }
+});
 
-const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
+
+const updateReservationSeats = async function(ID,cabinclass,assignedSeats , isCancelled){
 
     let oldFlight = null; 
     
@@ -164,7 +229,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedEconomySeats[i];
         }
@@ -178,7 +243,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
         }
@@ -190,4 +255,39 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
     }
 
     updateFlight(ID,oldFlight);
+}
+
+exports.register = async function(req,res) {
+
+    let newuser = new User(req.body.newuser);
+    bcrypt.hash(newuser.password, saltRounds).then(function(hash) {
+        newuser.password = hash ;
+    });
+    await newuser.save()
+        .then( (user) => {
+            res.status(200)
+            res.json(user)
+            res.send({statusCode:200})
+            console.log(user);
+        })
+        .catch( (err) => {
+            if (err.name === "ValidationError") {
+                let errors = {};
+          
+                Object.keys(err.errors).forEach((key) => {
+                  errors[key] = err.errors[key].message;
+                });
+                console.log(errors);
+                return res.status(400).send({statusCode : err.status, errors});
+              }
+              if (err.name === "MongoServerError"){
+                let errors = {};
+                errors[Object.keys(err.keyValue)[0]] = "duplicate key error";
+                console.log(errors);
+  
+                return res.status(400).send({statusCode : err.status, errors})
+            }
+
+            res.send({statusCode : err.status, message : err.message})
+            console.log(err.status)})
 }

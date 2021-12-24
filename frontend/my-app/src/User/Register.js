@@ -7,32 +7,39 @@ import SendIcon from '@mui/icons-material/Send';
 import HomeIcon from '@mui/icons-material/Home';
 import reactDom from 'react-dom';
 import Typography from '@mui/material/Typography';
-import background from "./travel.jpg";
+import background from "./wall.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
 
-function LogIn(){   //function component declaration
 
-  const handleSubmit=async (e)=>{//method called when submiting to send a request and clear the fields of the form
+
+
+function Register(){   //function component declaration
+
+  const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
+    
 
     // get user email & password from form here (in sprint 3).
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    await axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+ const newuser = {
+  "firstName" : e.target.firstname.value,
+  "lastName" : e.target.lastname.value,
+  "passportNumber" : e.target.passport.value,
+  "password" : e.target.password.value,
+  "email" : e.target.email.value,
+  "telephoneNumber" : e.target.telephone.value,
+  "countryNumber" : e.target.cc.value,
+  "address" : e.target.address.value,
+
+
+ }
+    axios.post('http://localhost:8000/user/register',{'newuser':newuser})
                 .then((result) => {
-                  console.log(result);
+                  console.log("done")
                   if(result.data.statusCode == 401){
                     // insert error handling code here
-                    console.log('ERROR');
-                  }else{
-                  const userId = result.data.user ; 
-                  localStorage.setItem('userID',userId);
-                  localStorage.setItem('isLoggedIn',true);
-                  console.log(userId);
-                  window.location.href='/user'
                   }
                                 })
   
@@ -47,13 +54,38 @@ function LogIn(){   //function component declaration
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
-        <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
-          <div >
+          </div>
+          <div style={{backgroundImage:`url(${background})`,backgroundRepeat:"no-repeat",height: "600px"}}>
           <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
-                   Please enter your credentials
+                   Be an adventurer !
           </Typography>
         <form onSubmit={handleSubmit} id="form" style={{margin:'auto' , width:'20%'}}>
+          <div style={{display:"inline-block",display: "flex",flexDirection: "column",flexWrap: "wrap",height: "300px",alignContent: "center"}}>
         <TextField 
+          required
+          key='firstname'
+          id='firstname'
+          label='First Name'
+          name='firstname'
+          margin='normal'
+          />
+           <TextField 
+          required
+          key='lastname'
+          id='lastname'
+          label='Last Name'
+          name='lastname'
+          margin='normal'
+          />
+           <TextField
+          required
+          key='passport'
+          id='passport'
+          label='Passport Number'
+          name='passport'
+          margin='normal'
+          />
+        <TextField style={{marginLeft:"10px"}}
           required
           key='email'
           id='email'
@@ -61,7 +93,7 @@ function LogIn(){   //function component declaration
           name='email'
           margin='normal'
           />
-          <TextField 
+          <TextField style={{marginLeft:"10px"}}
           required
           key='password'
           id='password'
@@ -70,9 +102,34 @@ function LogIn(){   //function component declaration
           margin='normal'
           type="password"
           />
+          <TextField style={{marginLeft:"10px"}}
+          required
+          key='address'
+          id='address'
+          label='Home Address'
+          name='address'
+          margin='normal'
+          />
+           <TextField style={{marginLeft:"10px"}}
+          required
+          key='telephone'
+          id='telephone'
+          label='Telephone Number'
+          name='telephone'
+          margin='normal'
+          />
+          <TextField style={{marginLeft:"10px"}}
+          required
+          key='cc'
+          id='cc'
+          label='Country Code'
+          name='cc'
+          margin='normal'
+          />
+          </div>
          
           <Button style={{marginLeft:'15px'}} value="Submit" type="submit" variant="contained" endIcon={<SendIcon />}>
-              Log in
+              Sign Up
           </Button>
         </form>
         </div>
@@ -82,11 +139,9 @@ function LogIn(){   //function component declaration
         </footer>
         </div>
         </div>
-        </div>
-        </div>
 
       );
     }
   
 
-export default LogIn ;
+export default Register ;
