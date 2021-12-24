@@ -1,4 +1,5 @@
-import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
+import {BrowserRouter as Router , Route ,Routes,useParams,Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
 import Schedule from "./Admin/Schedule";
@@ -20,11 +21,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './User/Logo.svg';
-import {Link} from 'react-router-dom'
+import { useState } from 'react';
 
 function App() {
-
-
 
   return (
     <Router>
@@ -33,6 +32,12 @@ function App() {
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
             <Route path='/register' element={<Register/>} />
+            {/* <Route element={localStorage.getItem('isLoggedIn') ? (
+            <Route path='/user' element={<MainPageLoggedIn/>} />
+            ) : (
+              <Redirect  from="/user" to='/login' /> 
+            )
+            } /> */}
             <Route path='/user' element={<MainPageLoggedIn/>} />
             <Route path='/user/profile/:id' element={<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />
@@ -41,11 +46,8 @@ function App() {
             <Route path='/searchflight' element={<Searchflight/>} />
             <Route path='/searchflightuser' element={<SearchflightUser/>} />
             <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
-            {/* <Route path='/viewflight/:id' element={<ViewFlightHandler />} /> */}
             <Route path='/PlaneView/:id' element={<PlaneView/>} />
-            {/* <Route path='/viewflight/:id' element={<ViewFlight/>} /> */}
             <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
-            {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
             <Route path='/cancelflight' element={<Cancelflight/>} />
       </Routes>

@@ -138,6 +138,8 @@ app.post('/user/login',(req,res)=>{
                     req.session.userEmail = Email;
                     req.session.userID=data._id;
                     res.send({statusCode:200,login:true,user:req.session.userID});
+                }else{
+                  res.send({statusCode:401,login:false});
                 }
             }
             else{

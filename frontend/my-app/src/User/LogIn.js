@@ -14,22 +14,24 @@ import { ReactComponent as Logo } from './Logo.svg';
 
 function LogIn(){   //function component declaration
 
-  const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
+  const handleSubmit=async (e)=>{//method called when submiting to send a request and clear the fields of the form
    
     e.preventDefault();
 
     // get user email & password from form here (in sprint 3).
-
     const email = e.target.email.value;
     const password = e.target.password.value;
-    axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
+    await axios.post('http://localhost:8000/user/login',{'email':email , 'password':password})
                 .then((result) => {
+                  console.log(result);
                   if(result.data.statusCode == 401){
                     // insert error handling code here
+                    console.log('ERROR');
                   }else{
                   const userId = result.data.user ; 
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
+                  console.log(userId);
                   window.location.href='/user'
                   }
                                 })

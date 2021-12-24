@@ -47,7 +47,7 @@ function Reservedflights() {
   const {id} =  useParams();
 
   const getAllresFlights =async () => {
-console.log(id);
+        console.log(id);
         let flights = [];
         await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
@@ -83,7 +83,7 @@ console.log(id);
       //Link to direct back to home
   return (
     <div >
-                          <div style={{marginBottom : '0px'}}>
+      <div style={{marginBottom : '0px'}}>
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>

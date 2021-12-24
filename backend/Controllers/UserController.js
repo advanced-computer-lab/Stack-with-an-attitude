@@ -2,13 +2,14 @@ const User = require('../Models/User');
 const Reservation = require('../Models/Reservation');
 const Flight = require('../Models/Flight');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const saltRounds = 10;
 
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
-    updateReservationSeats(depID,cabinclass,assignedDepartureSeats);
+    updateReservationSeats(depID,cabinclass,assignedDepartureSeats , false);
 
-    updateReservationSeats(returnID,cabinclass,assignedReturnSeats);
+    updateReservationSeats(returnID,cabinclass,assignedReturnSeats , false);
 
 }
 
@@ -57,7 +58,7 @@ exports.getAllReservedSeats = async function(req,res) {
 exports.getReservedFlightById = async function(req,res) {
 
 
-  let ID = req.params.getID
+  let ID = req.params.id;
 
   Reservation.findById(ID)
       .then( (reservedflights) => {
@@ -128,15 +129,60 @@ exports.getAllreservedFlights = async function(req,res) {
 
 exports.deleteReservedFlightById = async function(req,res) {
 
-  let ID = req.params.deleteID
+  let ID = req.params.id;
+
 
   Reservation.findByIdAndDelete(ID)
-      .then( (reservedflights) => {
-          //res.status(200)
-          res.json(reservedflights)
+      .then(async (reservedflights) => {
+
+        console.log('BEF--------------------------------------------');
+
+        console.log(reservedflights);
+
+        await updateReservationSeats(reservedflights.reservedFlightIDs[0],
+            reservedflights.cabinClass,
+            reservedflights.assignedDepartureSeats , true);
+        await updateReservationSeats(reservedflights.reservedFlightIDs[1],
+            reservedflights.cabinClass,
+            reservedflights.assignedReturnSeats , true);
+            
+            console.log('AFTER------------------------------------------------');
+
+            let IDuser = reservedflights.reservedUserID;
+            let useremail= null;
+
+            await User.findById(IDuser)
+            .then( (user) => {
+        
+                useremail= user.email;
+        
+            })
+            .catch( (err) => {
+                res.send({statusCode : err.status, message : err.message})
+                console.log(err.status)})
+
+            const option ={
+                from:'guccsen704@gmail.com',
+                to:useremail,
+                subject :"Cancelled flight",
+                text:"Your flight was cancelled , you will be refunded by "+ reservedflights.price
+            
+                };
+            
+                transporter.sendMail(options, (err,info)=>{
+            
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                console.log("Sent: "+ info.response);
+                })
+
+            res.send({statusCode:200});
       })
       .catch( (err) => {
           //res.status(404)
+          res.send({statusCode:400});
           console.log(err)})
 }
 
@@ -149,8 +195,17 @@ const updateFlight = async function(ID,reservedSeats){
 
 }
 
+//create transporter for sender data
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+   auth: {
+       user:'guccsen704@gmail.com',
+       pass:'Hossam2021'
+   }
+});
 
-const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
+
+const updateReservationSeats = async function(ID,cabinclass,assignedSeats , isCancelled){
 
     let oldFlight = null; 
     
@@ -166,7 +221,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedEconomySeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedEconomySeats[i];
         }
@@ -180,7 +235,7 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats){
 
         for (let i = 0; i < oldFlight.reservedBusinessSeats.length; i++) {
             if(assignedSeats.includes(i + ''))
-                newDepSeats[i] = true;
+                newDepSeats[i] = !isCancelled;
             else
                 newDepSeats[i] = oldFlight.reservedBusinessSeats[i];
         }
