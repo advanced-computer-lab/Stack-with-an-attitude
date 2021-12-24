@@ -82,7 +82,7 @@ class Searchflight extends Component{
       <div>
 
       <Link to="/admin">
-            <Button value="home" variant="contained" endIcon={<HomeIcon />}>
+            <Button style={{margin:'20px'}} value="home" variant="contained" endIcon={<HomeIcon />}>
                 Back to admin portal
             </Button>
       </Link>
@@ -97,40 +97,47 @@ class Searchflight extends Component{
             id="fnum"
             label="Flight Number"
             name="fnum"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="depdate"
             label="Departure Date"
             name="depdate"
             type="date"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="deptime"
             label="Departure Time"
             name="deptime"
             type="time"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="arrdate"
             label="Arrival Date"
             name="arrdate"
             type="date"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="arrtime"
             label="Arrival Time"
             name="arrtime"
             type="time"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="fromf"
             label="From Terminal"
             name="fromf"
+            InputLabelProps={{ shrink: true }}
             />
             <TextField
             id="to"
             label="To Terminal"
             name="to"
+            InputLabelProps={{ shrink: true }}
             />
             <Button value="Submit" type="submit" variant="contained" style={{marginLeft : '15px'}} endIcon={<SendIcon />}>
                 Submit

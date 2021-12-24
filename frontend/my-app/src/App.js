@@ -1,5 +1,4 @@
 import {BrowserRouter as Router , Route ,Routes,useParams,Link} from 'react-router-dom';
-import {Redirect} from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
 import Schedule from "./Admin/Schedule";
@@ -17,12 +16,6 @@ import LogIn from './User/LogIn';
 import Register from './User/Register';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
-import Cancelflight from './Admin/Cancelflight';
-import HomeIcon from '@mui/icons-material/Home';
-import Header from 'components/Header/Header.js';
-import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
-import { ReactComponent as Logo } from './User/Logo.svg';
-import { useState } from 'react';
 
 function App() {
 
@@ -52,7 +45,6 @@ function App() {
             <Route path='/confirmPayment/:id' element={<PaymentConfirm />} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
-            <Route path='/cancelflight' element={<Cancelflight/>} />
       </Routes>
     </Router>
   );
