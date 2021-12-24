@@ -28,7 +28,11 @@ function Register(){   //function component declaration
   "lastName" : e.target.lastname.value,
   "passportNumber" : e.target.passport.value,
   "password" : e.target.password.value,
-  "email" : e.target.email.value
+  "email" : e.target.email.value,
+  "telephoneNumber" : e.target.telephone.value,
+  "countryNumber" : e.target.cc.value,
+  "address" : e.target.address.value,
+
 
  }
     axios.post('http://localhost:8000/user/register',{'newuser':newuser})
@@ -97,6 +101,30 @@ function Register(){   //function component declaration
           name='password'
           margin='normal'
           type="password"
+          />
+          <TextField style={{marginLeft:"10px"}}
+          required
+          key='address'
+          id='address'
+          label='Home Address'
+          name='address'
+          margin='normal'
+          />
+           <TextField style={{marginLeft:"10px"}}
+          required
+          key='telephone'
+          id='telephone'
+          label='Telephone Number'
+          name='telephone'
+          margin='normal'
+          />
+          <TextField style={{marginLeft:"10px"}}
+          required
+          key='cc'
+          id='cc'
+          label='Country Code'
+          name='cc'
+          margin='normal'
           />
           </div>
          
