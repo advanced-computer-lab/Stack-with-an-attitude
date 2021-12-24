@@ -1,4 +1,4 @@
-import {BrowserRouter as Router , Route ,Routes,useParams } from 'react-router-dom';
+import {BrowserRouter as Router , Route ,Routes,useParams,Navigate } from 'react-router-dom';
 import './App.css';
 import Addflights from "./Admin/Addflight" ;
 import Schedule from "./Admin/Schedule";
@@ -16,6 +16,7 @@ import Register from './User/Register';
 import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import Cancelflight from './Admin/Cancelflight';
+import ForbiddenAccess from './Admin/ForbiddenAccess';
 import HomeIcon from '@mui/icons-material/Home';
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
@@ -29,25 +30,26 @@ function App() {
   return (
     <Router>
       <Routes>
+             <Route path='/denied' element={<ForbiddenAccess/>} />
             <Route path='/admin' element={<AdminPage/>} />
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
             <Route path='/register' element={<Register/>} />
-            <Route path='/user' element={<MainPageLoggedIn/>} />
-            <Route path='/user/profile/:id' element={<ViewProfile/>} />
+            <Route path='/user' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<MainPageLoggedIn/>}/>
+            <Route path='/user/profile/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewProfile/>} />
             <Route path='/schedule' element={<Schedule/>} />
             <Route path='/addFlight' element={<Addflights/>} />
             <Route path='/updateflight/:id' element={<Updateflight/>}/>
             <Route path='/searchflight' element={<Searchflight/>} />
-            <Route path='/searchflightuser' element={<SearchflightUser/>} />
-            <Route path='/yourreservedflights/:id' element={<Reservedflights/>} />
+            <Route path='/searchflightuser' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<SearchflightUser/>} />
+            <Route path='/yourreservedflights/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<Reservedflights/>} />
             {/* <Route path='/viewflight/:id' element={<ViewFlightHandler />} /> */}
-            <Route path='/PlaneView/:id' element={<PlaneView/>} />
+            <Route path='/PlaneView/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PlaneView/>} />
             {/* <Route path='/viewflight/:id' element={<ViewFlight/>} /> */}
-            <Route path='/viewreturnflight/:id' element={<ViewReturnFlight/>} />
+            <Route path='/viewreturnflight/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewReturnFlight/>} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
-            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
-            <Route path='/cancelflight' element={<Cancelflight/>} />
+            <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewFlightHandler/>} />
+            <Route path='/cancelflight' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<Cancelflight/>} />
       </Routes>
     </Router>
   );
