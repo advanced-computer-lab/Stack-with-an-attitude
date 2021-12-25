@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios' ;
 import AlertDialogReservation from './AlertDialogReservation';
+import AlertDialogmail from './AlertDialogmail';
 import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -59,7 +60,7 @@ function Reservedflights() {
         await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
 
-          result.data.forEach(flight => {
+          result.data.reservation.forEach(flight => {
 
             flights.push(flight);
           });
@@ -115,6 +116,7 @@ function Reservedflights() {
             <StyledTableCell>Number of adults</StyledTableCell>
             <StyledTableCell>Number of children</StyledTableCell>
             <StyledTableCell>Options</StyledTableCell>
+            <StyledTableCell>Mail me</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -132,6 +134,9 @@ function Reservedflights() {
               <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
               <StyledTableCell>
                 <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
+              </StyledTableCell>
+              <StyledTableCell>
+                <AlertDialogmail id={row._id} state={(d) => setState(d)}/>
               </StyledTableCell>
             </StyledTableRow>
           ))}

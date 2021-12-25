@@ -32,7 +32,7 @@ function LogIn(){   //function component declaration
                     // insert error handling code here
                     console.log('ERROR');
                   }else{
-                  const userId = result.data.user ; 
+                  const userId = result.data.user  ; 
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
                   console.log(userId);

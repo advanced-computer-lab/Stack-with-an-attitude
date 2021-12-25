@@ -26,6 +26,7 @@ import Parallax from "components/Parallax/Parallax.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import ButtonBasesLoggedIn from './ButtonBasesLoggedIn';
+import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
 
 
@@ -100,11 +101,17 @@ export default function SearchflightUser() {
   }  
     return(
       <div>  
-            <div style={{marginBottom : '0px'}}>
+         {localStorage.getItem('userID') ? (<div style={{marginBottom : '0px'}}>
             <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
               <Logo />
              </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
-          </div> 
+          </div> ) : (
+              <div style={{marginBottom : '0px'}}>
+              <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/'><div style={{height:'70px',width: '100px' }}>
+                <Logo />
+               </div></Link>} rightLinks={<HeaderLinks/>} fixed/>
+            </div>
+          )}
         <div style={{margin : 'auto' , textAlign : 'center'}}>
           <Typography  variant="h3" gutterBottom component="div">
             Search and Reserve your flights seats

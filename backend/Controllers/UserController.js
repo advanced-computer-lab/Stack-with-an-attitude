@@ -124,7 +124,7 @@ exports.getAllreservedFlights = async function(req,res) {
 
   await Reservation.find({reservedUserID : ID + ''})
           .then( (reservation) => {
-              res.send({reservation,statusCode:200})
+              res.send({"reservation":reservation,statusCode:200})
           })
           .catch( (err) => {
               res.send({statusCode : err.status, message : err.message})
