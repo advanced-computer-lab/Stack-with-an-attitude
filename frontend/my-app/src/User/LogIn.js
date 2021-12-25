@@ -11,6 +11,7 @@ import background from "../assets/img/travel.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import { ReactComponent as Logo } from './Logo.svg';
+import Cookies from 'universal-cookie';
 
 
 function LogIn(){   //function component declaration
@@ -18,6 +19,8 @@ function LogIn(){   //function component declaration
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+
+  const cookies = new Cookies();
 
   const [open , setOpen] = useState(false);
 
@@ -43,11 +46,16 @@ function LogIn(){   //function component declaration
                     setOpen(true);
                     console.log('ERROR');
                   }else{
-                  const userId = result.data.user  ; 
+                  const userId = result.data.user ;
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
-                  console.log(userId);
+                  const timer = setTimeout(() => {
+                    console.log("Hello, World!")
+                    localStorage.clear();
+                  }, 10000);
+
                   window.location.href='/user'
+                  //return () => clearTimeout(timer);
                   }
                                 })
   

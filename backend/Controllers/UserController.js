@@ -286,52 +286,49 @@ const transporter = nodemailer.createTransport({
 exports.sendsummary = async function(req,res){
 
     let ID = req.params.id;
+    let IDuser=req.body.userID;
 
-    let IDuser = req.body.userid;
     let useremail= null;
+
     await User.findById(IDuser)
     .then( (user) => {
-       
-        useremail= 'hossamnew16@gmail.com';
-        console.log('USER SET');
+
+        useremail = user.email;
+        console.log(useremail);
+
     })
     .catch( (err) => {
-      //  res.send({statusCode : err.status, message : err.message})
         console.log(err.status)})
 
-    
-    
-    
+
     await Reservation.findById(ID)
     .then( (reservedflights) => {
-            console.log('RESERV FETCH SUCC , ALSO THICCCCC');
 
             //recevier info
-            let mailoption = {
-                from:'csenair704no1@gmail.com',
-                to:'hossamnew16@gmail.com',
-                subject :"Summary",
-                text:`Dear Customer , \n Here is your summary for the reservation : \n Reservation number : ${reservedflights.reservationNumber} \n Number of seats : ${reservedflights.assignedSeats.length} + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " + reservedflights.price + "\n Number of adults : "+ reservedflights.numberOfAdults + "\n Number of children : "+ reservedflights.numberOfChildren + "\n Thank you for choosing Weeb Airlines.`
-            };
-            
-            
-            
-            
-            transporter.sendMail(mailoption, function(err, data){
-            
-                if(err){
-                    console.log('faile',err);
-                }else{
-                    console.log('email sent.....');
-                }
-            })
+    const option ={
+    from:'guccsen704@gmail.com',
+    to:useremail,
+    subject :"Summary",
+    text:
+    "Dear Customer ," +"\n Here is your summary for the reservation : " +
+        "\n Reservation number : "+ reservedflights.reservationNumber + "\n"
+    +"\n Number of seats : "+ reservedflights.numberOfSeats  + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " +reservedflights.price
+        + "\n Number of adults : "+reservedflights.numberOfAdults + "\n Number of children : "+ reservedflights.numberOfChildren +
+        "\n Thank you for choosing Weeb Airlines."
 
-            console.log('THE FINAL STAGE');
-                res.status(200)
-                res.json(reservedflights)
-                    })
-                
+    };
 
+    transporter.sendMail(option, (err,info)=>{
+
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log("Sent: "+ info.response);
+    })
+            res.status(200)
+            res.json(reservedflights)
+        })
         .catch( (err) => {
             res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
