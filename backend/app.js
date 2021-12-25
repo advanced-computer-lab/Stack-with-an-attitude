@@ -173,7 +173,7 @@ app.post("/create-checkout-session", async (req, res) => {
             quantity: 1,
            }],
         success_url: `http://localhost:3000/confirmPayment/${req.body.reservationId}`,
-        cancel_url: `http://localhost:3000/`
+        cancel_url: `http://localhost:3000/cancelReservation/${req.body.reservationId}`
       })
       await Reservation.findByIdAndUpdate(req.body.reservationId,{paymentIntent:session.payment_intent},{new: true}).then(res=>{console.log(res)});
       res.json({ url: session.url,session:session })
