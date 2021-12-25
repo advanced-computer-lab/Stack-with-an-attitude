@@ -39,15 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const handlesendemailClick = async (e) => {
-
-  await axios.post(`http://localhost:8000/sendsummary/${e.currentTarget.id}`)
-  .then(data => console.log('Senttttt!'));
-
-  
-  
-}
-
 function Reservedflights() {
 
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows

@@ -51,7 +51,7 @@ function ViewProfile(){   //function component declaration
     console.log(update);
     axios.put(`http://localhost:8000/user/update/${id}`,{user:update})  //the update request
     .then(data=>{
-      console.log(data);
+      console.log(data.data);
       console.log("updated successfully")
         //in the then part meaning if the request is successful clear the feilds and set a flag "updated" to true 
         //its part of the state of the component so if you have a listener for it (the useEffect) it will sense that the flag is updated
