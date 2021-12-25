@@ -19,13 +19,14 @@ import ViewFlightHandler from './User/viewFlightHandler';
 import ViewReturnFlight from './User/ViewReturnFlight';
 import ForbiddenAccess from './Admin/ForbiddenAccess';
 import AdminLogIn from './Admin/AdminLogIn';
+import PaymentCancel from './User/PaymentCancel';
 
 function App() {
 
   return (
     <Router>
       <Routes>
-             <Route path='/denied' element={<ForbiddenAccess/>} />
+            <Route path='/denied' element={<ForbiddenAccess/>} />
             <Route path='/' element={<MainPage/>} />
             <Route path='/login' element={<LogIn/>} />
             <Route path='/register' element={<Register/>} />
@@ -44,6 +45,7 @@ function App() {
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewFlightHandler/>} />
             <Route path='/confirmPayment/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PaymentConfirm />} />
             <Route path='/editReservation/:reservationId' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<EditFlightHandler/>} />
+            <Route path='/cancelReservation/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PaymentCancel/>} />
       </Routes>
     </Router>
   );

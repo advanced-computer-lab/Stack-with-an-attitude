@@ -42,10 +42,11 @@ function PaymentConfirmation(){   //function component declaration
     <Card sx={{ maxWidth: 800 , margin: "auto"  }}>
       <CardContent>
         <Typography variant="h4">
-        {confirmed?"Payment confirmed! \n Thank you for using AirlineZ \n We hope you have a great flight!":"pending...."}
+        {confirmed?`Payment confirmed!  Thank you for using AirlineZ  
+                    We hope you have a great flight!`:"pending...."}
         </Typography>
         <Typography variant="h6">
-        {confirmed?"An email has been sent to you. \n You will now be redirected to the home page":"pending...."}
+        {confirmed?"An email has been sent to you. You will now be redirected to the home page":"pending...."}
         </Typography> 
       </CardContent>
       
