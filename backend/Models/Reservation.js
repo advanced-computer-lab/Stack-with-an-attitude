@@ -57,8 +57,10 @@ const reservationSchema = new Schema ({
     payed:{
         type:Boolean,
         default:false
+    },
+    paymentIntent:{
+        type:String
     }
-    
 }, {timestamps:true})
 
 const Reservation = mongoose.model('Reservation',reservationSchema);

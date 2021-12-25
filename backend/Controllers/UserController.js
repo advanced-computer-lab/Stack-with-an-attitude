@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const saltRounds = 10;
 
+const config = require('config');
+const stripeSecretKey = config.get('stripe_secret');
+const stripe = require('stripe')(stripeSecretKey);
+
 const reserveSelectedSeats = async function(depID,returnID,assignedDepartureSeats,assignedReturnSeats,cabinclass) {
 
     updateReservationSeats(depID,cabinclass,assignedDepartureSeats , false);
@@ -135,60 +139,81 @@ exports.getAllreservedFlights = async function(req,res) {
 exports.deleteReservedFlightById = async function(req,res) {
 
   let ID = req.params.id;
+    try{
+    await Reservation.findById(req.params.id)
+    .then(data=>{
+
+        stripe.refunds.create({
+        payment_intent: data.paymentIntent,
+        }).then(()=>{
+    
+        Reservation.findByIdAndDelete(ID)
+        .then(async (reservedflights) => {
+  
+          console.log('BEF--------------------------------------------');
+  
+          console.log(reservedflights);
+  
+          await updateReservationSeats(reservedflights.reservedFlightIDs[0],
+              reservedflights.cabinClass,
+              reservedflights.assignedDepartureSeats , true);
+          await updateReservationSeats(reservedflights.reservedFlightIDs[1],
+              reservedflights.cabinClass,
+              reservedflights.assignedReturnSeats , true);
+              
+              console.log('AFTER------------------------------------------------');
+  
+              let IDuser = reservedflights.reservedUserID;
+              let useremail= null;
+  
+              await User.findById(IDuser)
+              .then( (user) => {
+          
+                  useremail= user.email;
+          
+              })
+              .catch( (err) => {
+                  res.send({statusCode : err.status, message : err.message})
+                  console.log(err.status)})
+  
+              const option ={
+                  from:'guccsen704@gmail.com',
+                  to:useremail,
+                  subject :"Cancelled flight",
+                  text:"Your flight was cancelled , you will be refunded by "+ reservedflights.price
+              
+                  };
+              
+                  transporter.sendMail(option, (err,info)=>{
+              
+                  if(err){
+                      console.log(err);
+                      return;
+                  }
+                  console.log("Sent: "+ info.response);
+                  })
+  
+              res.send({statusCode:200});
+        })
+        .catch( (err) => {
+            //res.status(404)
+            res.send({statusCode:400});
+            console.log(err)})
 
 
-  Reservation.findByIdAndDelete(ID)
-      .then(async (reservedflights) => {
+    })
+        .catch((e)=>{
+            console.log("error");
+            res.send({error:e});
+        })
+        console.log("---------------------------------refunded");
+        });
+    }
+    catch(e){
+    console.log(e)
+    }
 
-        console.log('BEF--------------------------------------------');
-
-        console.log(reservedflights);
-
-        await updateReservationSeats(reservedflights.reservedFlightIDs[0],
-            reservedflights.cabinClass,
-            reservedflights.assignedDepartureSeats , true);
-        await updateReservationSeats(reservedflights.reservedFlightIDs[1],
-            reservedflights.cabinClass,
-            reservedflights.assignedReturnSeats , true);
-            
-            console.log('AFTER------------------------------------------------');
-
-            let IDuser = reservedflights.reservedUserID;
-            let useremail= null;
-
-            await User.findById(IDuser)
-            .then( (user) => {
-        
-                useremail= user.email;
-        
-            })
-            .catch( (err) => {
-                res.send({statusCode : err.status, message : err.message})
-                console.log(err.status)})
-
-            const option ={
-                from:'guccsen704@gmail.com',
-                to:useremail,
-                subject :"Cancelled flight",
-                text:"Your flight was cancelled , you will be refunded by "+ reservedflights.price
-            
-                };
-            
-                transporter.sendMail(options, (err,info)=>{
-            
-                if(err){
-                    console.log(err);
-                    return;
-                }
-                console.log("Sent: "+ info.response);
-                })
-
-            res.send({statusCode:200});
-      })
-      .catch( (err) => {
-          //res.status(404)
-          res.send({statusCode:400});
-          console.log(err)})
+  
 }
 
 
@@ -197,7 +222,7 @@ const updateFlight = async function(ID,reservedSeats){
     await Flight.findByIdAndUpdate(ID, reservedSeats, {new: true, runValidators: true})
     .then( (flights) => {
         console.log(flights)
-        res.send({statusCode:200})
+
     })
 
 }
@@ -257,17 +282,23 @@ const updateReservationSeats = async function(ID,cabinclass,assignedSeats , isCa
 }
 
 exports.register = async function(req,res) {
-
+    const config = require('config');
+    const stripeSecretKey = config.get('stripe_secret');
+    const stripe = require('stripe')(stripeSecretKey);
     let newuser = new User(req.body.newuser);
     bcrypt.hash(newuser.password, saltRounds).then(function(hash) {
         newuser.password = hash ;
     });
-    await newuser.save()
+    await stripe.customers.create({
+        description: 'My First Test Customer (created for API docs)',
+        }).then((customer)=>{
+        newuser.customerId=customer.id
+
+    newuser.save()
         .then( (user) => {
-            res.status(200)
-            res.json(user)
-            res.send({statusCode:200})
+            res.send({statusCode:200});
             console.log(user);
+
         })
         .catch( (err) => {
             if (err.name === "ValidationError") {
@@ -289,4 +320,7 @@ exports.register = async function(req,res) {
 
             res.send({statusCode : err.status, message : err.message})
             console.log(err.status)})
+
+});
+
 }

@@ -10,7 +10,7 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import axios from 'axios' ;
 import { parse } from '@babel/core';
 
-export default function AlertDialogConfirmRes(props) {
+export default function AlertDialogEditRes(props) {
   const [open, setOpen] = React.useState(false);
 
   const {numOfchildren,numOfadults,numofresseats} = props;
@@ -24,20 +24,20 @@ export default function AlertDialogConfirmRes(props) {
   };
 
   const handleDeleteClick = async (e) => {
-
-    await axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
+    await axios.delete(`http://localhost:8000/user/deleteReservedFlight/${props.reservationId}`).then(
+    axios.post(`http://localhost:8000/user/createReservedFlight`,{'reservation':props.reservation})
     .then(data => {
       console.log(data);
       handleClose();
       let rId = data.data.object._id;
       let resNum = data.data.reservationNumber;
       console.log("sending pay");
-      axios.post("http://localhost:8000/create-checkout-session",{price:props.reservation.price,reservationNumber:resNum,reservationId:rId})
+      axios.post("http://localhost:8000/create-checkout-session",{price:props.reservation.price-props.oldprice,reservationNumber:resNum,reservationId:rId})
       .then(data=>{
         console.log("sent pay");
         window.location.href=data.data.url
     }).catch(err=>{console.log("error is");console.log(err);})
-    });
+    }));
 
     handleClose();
    // props.state([]);

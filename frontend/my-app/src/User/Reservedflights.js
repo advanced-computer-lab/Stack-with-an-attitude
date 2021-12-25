@@ -38,8 +38,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-
 function Reservedflights() {
 
   const [rows, setRows] = useState([]); //declare state param named rows for data of sched and its update method setRows
@@ -52,7 +50,7 @@ function Reservedflights() {
         await axios.get(`http://localhost:8000/user/getAllReservedFlights/${id}`)                   
         .then(result => {
 
-          result.data.forEach(flight => {
+          result.data.reservation.forEach(flight => {
 
             flights.push(flight);
           });
@@ -81,62 +79,67 @@ function Reservedflights() {
 
 
       //Link to direct back to home
-  return (
-    <div >
-      <div style={{marginBottom : '0px'}}>
-            <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
-              <Logo />
-             </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+      return (
+        <div >
+          <div style={{marginBottom : '0px'}}>
+                <Header color='info' style={{position:"static"}} transparent leftLinks={<Link to='/user'><div style={{height:'70px',width: '100px' }}>
+                  <Logo />
+                 </div></Link>} rightLinks={<HeaderLinksLoggedIn/>} fixed/>
+              </div>
+          <div style={{margin : 'auto' , textAlign : 'center'}}>
+            <Typography  variant="h3" gutterBottom component="div">
+              Reserved Flights
+            </Typography>
           </div>
-      <div style={{margin : 'auto' , textAlign : 'center'}}>
-        <Typography  variant="h3" gutterBottom component="div">
-          Reserved Flights
-        </Typography>
-      </div>
-    <TableContainer sx={{ width:'90%' , margin : 'auto' , marginBottom : '20px' , 
-                          borderRadius: '20px'}}  component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Reservation number</StyledTableCell>
-            <StyledTableCell>Flight ID</StyledTableCell>
-            <StyledTableCell>Number of seats</StyledTableCell>
-            <StyledTableCell>Assigned departure seats</StyledTableCell>
-            <StyledTableCell>Assigned return seats</StyledTableCell>
-            <StyledTableCell>Total price</StyledTableCell>
-            <StyledTableCell>Number of adults</StyledTableCell>
-            <StyledTableCell>Number of children</StyledTableCell>
-            <StyledTableCell>Options</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
-            <StyledTableRow key={row._id}>
-              <StyledTableCell component="th" scope="row">
-                {row.reservationNumber}
-              </StyledTableCell>
-              <StyledTableCell>{row.reservedFlightIDs}</StyledTableCell>
-              <StyledTableCell>{row.numberOfSeats}</StyledTableCell>
-              <StyledTableCell>{row.assignedDepartureSeats.map(seat=>'A'+seat + ' ') + ' '}</StyledTableCell>
-              <StyledTableCell>{row.assignedReturnSeats.map(seat=>'B'+seat + ' ') + ' '}</StyledTableCell>
-              <StyledTableCell>{row.price * row.numberOfSeats}</StyledTableCell>
-              <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
-              <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
-              <StyledTableCell>
-                <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <div>
-        <footer style={{bottom:0,height: "151px"}}>
-        <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
-        </footer>
+          <div style={{height:"400px"}}>
+        <TableContainer sx={{ width:'90%' , margin : 'auto' , marginBottom : '20px' , 
+                              borderRadius: '20px'}}  component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Reservation number</StyledTableCell>
+                <StyledTableCell>Flight ID</StyledTableCell>
+                <StyledTableCell>Number of seats</StyledTableCell>
+                <StyledTableCell>Assigned departure seats</StyledTableCell>
+                <StyledTableCell>Assigned return seats</StyledTableCell>
+                <StyledTableCell>Total price</StyledTableCell>
+                <StyledTableCell>Number of adults</StyledTableCell>
+                <StyledTableCell>Number of children</StyledTableCell>
+                <StyledTableCell>Options</StyledTableCell>
+                <StyledTableCell>Mail me</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (  //loop on rows and map to the template TableRows and Columns 
+                <StyledTableRow key={row._id}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.reservationNumber}
+                  </StyledTableCell>
+                  <StyledTableCell>{row.reservedFlightIDs}</StyledTableCell>
+                  <StyledTableCell>{row.numberOfSeats}</StyledTableCell>
+                  <StyledTableCell>{row.assignedDepartureSeats.map(seat=>'A'+seat + ' ') + ' '}</StyledTableCell>
+                  <StyledTableCell>{row.assignedReturnSeats.map(seat=>'B'+seat + ' ') + ' '}</StyledTableCell>
+                  <StyledTableCell>{row.price * row.numberOfSeats}</StyledTableCell>
+                  <StyledTableCell>{row.numberOfAdults}</StyledTableCell>
+                  <StyledTableCell>{row.numberOfChildren}</StyledTableCell>
+                  <StyledTableCell>
+                    <AlertDialogReservation id={row._id} state={(d) => setState(d)}/>
+                  </StyledTableCell>
+
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div>
+            <footer >
+            <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
+            </footer>
+            </div>
         </div>
-    </div>
-  );
+    
+        </div>
+      );
 }
 
 
