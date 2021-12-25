@@ -103,7 +103,27 @@ app.post('/user/sendsummary/:id',userController.sendsummary);
 //for login we store ONLY and ONLY I SAY AGAIN the USERNAME or ID not the password , NEVER!!!
 
 
-app.post("/create-checkout-session", async (req, res) => {
+async function StripeCallAPI (req, res) {
+  const customer = await stripe.customers.create({
+  description: 'My First Test Customer',
+  })
+
+  const paymentIntent = await stripe.paymentIntents.create({
+  customer: customer.id,
+  currency: 'usd',
+  amount: 2000,
+  payment_method_types: ['card'],
+  setup_future_usage: 'on_session',
+})
+
+res.send(customer);
+}
+
+
+
+
+
+app.post("/create-checkout-session-test", async (req, res) => {
   console.log(req.body);
     try {
       const session = await stripe.checkout.sessions.create({
@@ -124,13 +144,58 @@ app.post("/create-checkout-session", async (req, res) => {
         success_url: `http://localhost:3000/confirmPayment/${req.body.reservationId}`,
         cancel_url: `http://localhost:3000/`
       })
-      res.json({ url: session.url })
+      res.json({ url: session.url,session:session })
     } catch (e) {
       console.log(e);
       res.status(500).json({ error: e.message })
     }
   })
 
+
+
+app.post("/create-checkout-session", async (req, res) => {
+  console.log(req.body);
+    try {
+     
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "payment",
+        line_items:
+          [
+           { price_data: {
+              currency: "usd",
+              product_data: {
+                name: "reservation number: "+req.body.reservationNumber,
+                // description: "reservation ID: "+req.body.reservationId
+              },
+              unit_amount: req.body.price,
+            },
+            quantity: 1,
+           }],
+        success_url: `http://localhost:3000/confirmPayment/${req.body.reservationId}`,
+        cancel_url: `http://localhost:3000/`
+      })
+      await Reservation.findByIdAndUpdate(req.body.reservationId,{paymentIntent:session.payment_intent},{new: true}).then(res=>{console.log(res)});
+      res.json({ url: session.url,session:session })
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e.message })
+    }
+  })
+  app.post("/refund-payment/:id", async (req,res)=>{
+    await Reservation.findById(req.params.id)
+    .then(data=>{
+
+      stripe.refunds.create({
+        payment_intent: data.paymentIntent,
+      }).then(()=>{
+        res.status(200).send({msg:'payment refunded'})})
+        .catch((e)=>{
+          console.log("error");
+          res.send({error:e});
+        })
+      });
+})
 
   app.post("/confirm-payment/:id", async (req,res)=>{
       await Reservation.findByIdAndUpdate(req.params.id,{payed:true})
