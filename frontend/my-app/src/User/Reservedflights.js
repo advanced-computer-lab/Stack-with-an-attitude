@@ -18,6 +18,9 @@ import Typography from '@mui/material/Typography';
 import Header from 'components/Header/Header.js';
 import HeaderLinksLoggedIn from 'components/Header/HeaderLinksLoggedIn.js';
 import { ReactComponent as Logo } from './Logo.svg';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -108,6 +111,7 @@ function Reservedflights() {
                 <StyledTableCell>Number of children</StyledTableCell>
                 <StyledTableCell>Options</StyledTableCell>
                 <StyledTableCell>Mail me</StyledTableCell>
+                <StyledTableCell>Edit</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -128,6 +132,13 @@ function Reservedflights() {
                   </StyledTableCell>
                   <StyledTableCell>
                     <AlertDialogmail id={row._id} state={(d) => setState(d)}/>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Link to={"/editReservation/" + row._id}>
+                      <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
+                        <EditIcon />
+                      </IconButton>
+                    </Link>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

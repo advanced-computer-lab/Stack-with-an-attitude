@@ -75,15 +75,20 @@ function EditFlightHandler(){
 
     return(
         <div>
-            <h1>Update your flight</h1>
+             <Typography variant="h2" gutterBottom component="div" style={{textAlign:'center'}}>
+                   Update your reservation
+            </Typography>
             {!cf1&&firstFlight&&<SearchArrFlight flightId={firstFlight} setFunc={(value)=>{setCf1(true);setFirstFlight(value)}}/>}
             {!cs1&&cf1&&firstSeats&&<PlaneViewEdit oldId={firstFlight} id={firstFlight} type={Cabin} seats={firstSeats} setFunc={(value)=>{setCs1(true);setFirstSeats(value)}} />}
             {!cf2&&cs1&&firstFlight&&<SearchReturnFlight flightId={firstFlight} setFunc={(value)=>{setCf2(true);setSecondFlight(value)}}/>}
             {!cs2&&cf2&&secondSeats&&<PlaneViewEdit oldId={secondFlight} id={secondFlight} type={Cabin} seats={secondSeats} setFunc={(value)=>{setCs2(true);setSecondSeats(value)}} />}
             {cs2&&<div style={{margin: '10px auto' ,width: '100%'}}>
+            <div style={{margin:'10px auto' , width: '100%'}}>
             <SimpleAccordion id={firstFlight} secondFlight={secondFlight} 
                             firstSeats={firstSeats} secondSeats={secondSeats} getPrice={getPrice}
                             />
+            </div>
+            <div style={{margin:'10px auto'}}>
             <AlertDialogEditRes reservationId={reservationId} oldprice={oldPrice} reservation={{reservedUserID:localStorage.getItem('userID'),
                                                 reservedFlightIDs:[firstFlight,secondFlight],
                                                 numberOfSeats:firstSeats.length,
@@ -98,6 +103,7 @@ function EditFlightHandler(){
                                                 numOfchildren={numOfchildren}
                                                 numofresseats={numofresseats}
                                                 />
+            </div>
             </div>}
         </div>
         

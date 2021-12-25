@@ -32,7 +32,7 @@ export default function AlertDialogEditRes(props) {
       let rId = data.data.object._id;
       let resNum = data.data.reservationNumber;
       console.log("sending pay");
-      axios.post("http://localhost:8000/create-checkout-session",{price:props.reservation.price-props.oldprice,reservationNumber:resNum,reservationId:rId})
+      axios.post("http://localhost:8000/create-checkout-session",{price:props.reservation.price,reservationNumber:resNum,reservationId:rId})
       .then(data=>{
         console.log("sent pay");
         window.location.href=data.data.url
