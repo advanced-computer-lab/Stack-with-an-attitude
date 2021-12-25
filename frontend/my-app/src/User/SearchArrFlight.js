@@ -46,17 +46,6 @@ function SearchReturnFlight(props) {
 
 
   // const {from, to} = props;
-  useEffect(async() => {  
-
-    await axios.get(`http://localhost:8000/getFlight/${flightId}`).then((flight)=>{
-    console.log(flight);
-    to = flight.data.from;
-    from = flight.data.to;
-    arrive = flight.data.arrivalDate;
-    getAllFlights();
-  })
-  },[flightId]);
-
 
 
   const getAllFlights =async () => {
@@ -66,10 +55,10 @@ function SearchReturnFlight(props) {
         .then(result => {
 
           result.data.forEach(flight => {
-            if(flight.from == from && flight.to == to && Date.parse(flight.departureDate) > Date.parse(arrive))
+            
               flights.push(flight);
           });
-
+          setRows(flights);
         }).catch(err => {
                 console.log(err);
                 });
@@ -77,11 +66,31 @@ function SearchReturnFlight(props) {
  
   }    
 
- 
+  useEffect(async() => {  
+
+    await axios.get(`http://localhost:8000/getFlight/${flightId}`).then((flight)=>{
+    console.log(flight);
+    to = flight.data.from;
+    from = flight.data.to;
+    arrive = flight.data.arrivalDate;
+  })
+  const interval = setInterval(() => {getAllFlights()},2000);
+    return () => clearInterval(interval); 
+    
+  },[]);
+
+  useEffect(() => {
+    console.log(from,to)
+    getAllFlights();
+  },[state,flightId]);
+
+  useEffect(()=>{},[rows])
+
+
 
       //Link to direct back to home
   return (
-    <div style={{height:"300px"}} >
+    <div >
     <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper} elevation={4}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -94,25 +103,13 @@ function SearchReturnFlight(props) {
             <StyledTableCell>Departure Time</StyledTableCell>
             <StyledTableCell>Departure</StyledTableCell>
             <StyledTableCell>Destination</StyledTableCell>
-            <StyledTableCell>Duration</StyledTableCell>
             <StyledTableCell>Price</StyledTableCell>
             <StyledTableCell>view a flight</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => {  //loop on rows and map to the template TableRows and Columns 
-                let depstr = row.departureTime+"";
-                let dephour = depstr[0]+""+depstr[1];
-                let depsec = depstr[3]+""+depstr[4];
-                let arrstr = row.arrivalTime+"";
-                let arrhour = arrstr[0]+""+arrstr[1];
-                let arrsec = arrstr[3]+""+arrstr[4];
-                let dep = new Date(row.departureDate);
-                let arr = new Date(row.arrivalDate);
-                dep.setHours(dephour);
-                arr.setHours(arrhour);
-                dep.setMinutes(depsec);
-                arr.setMinutes(arrsec);
+
                 return(  
             <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
@@ -124,13 +121,15 @@ function SearchReturnFlight(props) {
               <StyledTableCell>{row.departureTime}</StyledTableCell>
               <StyledTableCell>{row.from}</StyledTableCell>
               <StyledTableCell>{row.to}</StyledTableCell>
-              <StyledTableCell>{(arr-dep)/3600000 + " hours"}</StyledTableCell>
+
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                           <DeleteIcon />
                         </IconButton> */}
-                        <Button onClick={()=>{setFunc(row._id)}}>
+                        <Button onClick={(e)=>{
+                          e.preventDefault();
+                          setFunc(row._id)}}>
                         {/* <Link to={"/viewreturnflight/" + row._id}> */}
                           <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
                             <PreviewIcon />
