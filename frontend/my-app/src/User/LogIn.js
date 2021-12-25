@@ -43,7 +43,7 @@ function LogIn(){   //function component declaration
                     setOpen(true);
                     console.log('ERROR');
                   }else{
-                  const userId = result.data.user ; 
+                  const userId = result.data.user  ; 
                   localStorage.setItem('userID',userId);
                   localStorage.setItem('isLoggedIn',true);
                   console.log(userId);

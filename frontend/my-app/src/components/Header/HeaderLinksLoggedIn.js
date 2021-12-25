@@ -22,6 +22,7 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 
+
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinksLoggedIn(props) {
@@ -42,7 +43,7 @@ export default function HeaderLinksLoggedIn(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button
+        <Button 
           color="rose"
           target="_blank"
           round
@@ -50,8 +51,6 @@ export default function HeaderLinksLoggedIn(props) {
           {/* WHEN SPRINT 3 IS HERE , PUT LINK TO USER REGISTER HERE*/}
         <Link style={{padding:0}} to="/" className={classes.dropdownLink}>
               Log out
-              {localStorage.removeItem('isLoggedIn')}
-              {localStorage.removeItem('userID')}
         </Link>
         </Button>
       </ListItem>

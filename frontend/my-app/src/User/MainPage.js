@@ -25,7 +25,7 @@ class MainPage extends Component{
               </CardBody>
             </Card>   
             </div>
-          {localStorage.setItem('isLoggedIn',false)}
+          {localStorage.setItem('isLoggedIn',false),localStorage.removeItem('userID')}
         </div>
       );
     }
