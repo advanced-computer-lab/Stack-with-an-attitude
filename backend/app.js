@@ -4,7 +4,6 @@ const bodyparser = require("body-parser");
 const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-
 const cors = require('cors');
 
 //Models
