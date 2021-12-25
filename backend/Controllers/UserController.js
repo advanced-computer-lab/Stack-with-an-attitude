@@ -65,7 +65,7 @@ exports.getReservedFlightById = async function(req,res) {
   Reservation.findById(ID)
       .then( (reservedflights) => {
           //res.status(200)
-          res.send({statusCode:200 , data:reservedflights})
+          res.send({statusCode:200,data:reservedflights});
       })
       .catch( (err) => {
           //res.status(404)
@@ -133,6 +133,10 @@ exports.getAllreservedFlights = async function(req,res) {
 exports.deleteReservedFlightById = async function(req,res) {
 
   let ID = req.params.id;
+  let IDuser=req.body.data.userID;
+  console.log(IDuser);
+
+
 
 
   Reservation.findByIdAndDelete(ID)
@@ -147,13 +151,14 @@ exports.deleteReservedFlightById = async function(req,res) {
             reservedflights.assignedReturnSeats , true);
             
 
-            let IDuser = reservedflights.reservedUserID;
+
             let useremail= null;
 
             await User.findById(IDuser)
             .then( (user) => {
         
                 useremail= user.email;
+                console.log(useremail)
         
             })
             .catch( (err) => {
@@ -195,6 +200,17 @@ const updateFlight = async function(ID,reservedSeats){
 
 }
 
+//create transporter for sender data
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+   auth: {
+       user:'guccsen704@gmail.com',
+       pass:'Hossam2021'
+   },
+   tls: {
+    rejectUnauthorized: false
+}
+});
 
 
 const updateReservationSeats = async function(ID,cabinclass,assignedSeats , isCancelled){
@@ -287,7 +303,8 @@ exports.sendsummary = async function(req,res){
 
     let ID = req.params.id;
     let IDuser=req.body.userID;
-
+    //let IDuser = req.body.userid;
+    console.log(IDuser);
     let useremail= null;
 
     await User.findById(IDuser)

@@ -9,6 +9,7 @@ import PaymentConfirm from "./User/PaymentConfirm"
 import Updateflight from "./Admin/Updateflight";
 import Searchflight from './Admin/Searchflight';
 import SearchflightUser from './User/SearchflightUser';
+import EditFlightHandler from 'User/EditFlightHandler';
 import Reservedflights from './User/Reservedflights';
 import PlaneView from './User/PlaneView';
 import ViewProfile from './User/ViewProfile';
@@ -41,6 +42,8 @@ function App() {
             <Route path='/PlaneView/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PlaneView/>} />
             <Route path='/viewreturnflight/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewReturnFlight/>} />
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<ViewFlightHandler/>} />
+            <Route path='/confirmPayment/:id' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<PaymentConfirm />} />
+            <Route path='/editReservation/:reservationId' element={!localStorage.getItem("userID")?<Navigate  to="/login" />:<EditFlightHandler/>} />
       </Routes>
     </Router>
   );

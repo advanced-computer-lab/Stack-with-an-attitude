@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
 
   const handlemailclick = async (e) => {
 
-    await axios.post(`http://localhost:8000/user/sendsummary/${props.id}`)
+    await axios.post(`http://localhost:8000/user/sendsummary/${props.id}`,{"userID":localStorage.getItem("userID")})
     .then(data => console.log('sent!'));
 
     handleClose();

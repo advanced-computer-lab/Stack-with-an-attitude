@@ -31,18 +31,14 @@ function PaymentConfirmation(){   //function component declaration
       return(
         <div>
 <Link to='/user'><h2>Home</h2></Link>
-<Card sx={{ maxWidth: 350 , margin: "auto"  }}>
+<Card sx={{ maxWidth: 250 , margin: "auto"  }}>
       <CardContent>
-        <Typography variant="body2">
-        confimed : {confirmed?"confimed":"pending"}
+        <Typography variant="h3">
+        {confirmed?"confimed":"pending"}
         </Typography>
         
       </CardContent>
-      <CardActions>
-      <Button value="Submit" variant="contained" endIcon={< EventSeatIcon />}>
-              reserve seats
-          </Button>
-      </CardActions>
+      
     </Card>
     </div>
       );

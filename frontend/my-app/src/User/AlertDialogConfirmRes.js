@@ -30,10 +30,12 @@ export default function AlertDialogConfirmRes(props) {
       handleClose();
       let rId = data.data.object._id;
       let resNum = data.data.reservationNumber;
+      console.log("sending pay");
       axios.post("http://localhost:8000/create-checkout-session",{price:props.reservation.price,reservationNumber:resNum,reservationId:rId})
       .then(data=>{
+        console.log("sent pay");
         window.location.href=data.data.url
-    }) 
+    }).catch(err=>{console.log("error is");console.log(err);})
     });
 
     handleClose();
