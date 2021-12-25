@@ -46,6 +46,17 @@ function SearchReturnFlight(props) {
 
 
   // const {from, to} = props;
+  useEffect(async() => {  
+
+    await axios.get(`http://localhost:8000/getFlight/${flightId}`).then((flight)=>{
+    console.log(flight);
+    to = flight.data.from;
+    from = flight.data.to;
+    arrive = flight.data.arrivalDate;
+    getAllFlights();
+  })
+  },[flightId]);
+
 
 
   const getAllFlights =async () => {
@@ -66,31 +77,11 @@ function SearchReturnFlight(props) {
  
   }    
 
-  useEffect(async() => {  
-
-    await axios.get(`http://localhost:8000/getFlight/${flightId}`).then((flight)=>{
-    console.log(flight);
-    to = flight.data.from;
-    from = flight.data.to;
-    arrive = flight.data.arrivalDate;
-  })
-  const interval = setInterval(() => {getAllFlights()},2000);
-    return () => clearInterval(interval); 
-    
-  },[]);
-
-  useEffect(() => {
-    console.log(from,to)
-    getAllFlights();
-  },[state,flightId]);
-
-  useEffect(()=>{},[rows])
-
-
+ 
 
       //Link to direct back to home
   return (
-    <div >
+    <div style={{height:"300px"}} >
     <TableContainer sx={{ width:'90%' , margin : '0 auto' , marginBottom : '20px' , 
                           borderRadius: '20px'}} component={Paper} elevation={4}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -139,9 +130,7 @@ function SearchReturnFlight(props) {
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>
                           <DeleteIcon />
                         </IconButton> */}
-                        <Button onClick={(e)=>{
-                          e.preventDefault();
-                          setFunc(row._id)}}>
+                        <Button onClick={()=>{setFunc(row._id)}}>
                         {/* <Link to={"/viewreturnflight/" + row._id}> */}
                           <IconButton color="primary" aria-label="upload picture" component="span" id={row._id}>
                             <PreviewIcon />

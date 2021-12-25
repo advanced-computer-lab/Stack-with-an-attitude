@@ -81,7 +81,7 @@ function PlaneView(props){   //function component declaration
                 {(seat?
                     <Checkbox
                     id={index.toString()}
-                    key={index.toString()}
+                    key={flight.toString()+index.toString()}
                     disabled
                     checked
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
@@ -89,7 +89,7 @@ function PlaneView(props){   //function component declaration
                     <Checkbox
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     id={index.toString()}
-                    key={index.toString()}
+                    key={flight.toString()+index.toString()}
                     color="success"
                     onChange={handleChange}
                     disabled={!(selected.includes(index+''))&&selected.length>=seats}

@@ -82,7 +82,7 @@ function SearchReturnFlight(props) {
   useEffect(() => {
     console.log(from,to)
     getAllFlights();
-  },[state]);
+  },[state,flightId]);
 
   useEffect(()=>{},[rows])
 

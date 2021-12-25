@@ -4,12 +4,13 @@ const bodyparser = require("body-parser");
 const config = require('config');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+
 const cors = require('cors');
 
 //Models
 const admin = require('./Models/Admin');
 const User = require('./Models/User');
-
+const Reservation = require("./Models/Reservation");
  
 // Controller Imports
 const adminController = require('./Controllers/AdminController');
@@ -26,12 +27,15 @@ app.use(cors());
 
 const MongoURI =  config.get('mongoURI');
 const secret = config.get('sessionSecret');
+const stripeSecretKey = config.get('stripe_secret');
+
 
 // Mongo DB
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() =>console.log("MongoDB is now connected") )
 .catch(err => console.log(err));
 
+const stripe = require('stripe')(stripeSecretKey);
 // Session Initialization
 
 // secret is used to validate the session think password store is the place we store the session,
@@ -97,6 +101,7 @@ app.post('/user/register', userController.register);
 
 
 app.post("/create-checkout-session", async (req, res) => {
+  console.log(req.body);
     try {
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -118,6 +123,7 @@ app.post("/create-checkout-session", async (req, res) => {
       })
       res.json({ url: session.url })
     } catch (e) {
+      console.log(e);
       res.status(500).json({ error: e.message })
     }
   })
@@ -192,30 +198,7 @@ app.post('/user/login',(req,res)=>{
   
   });
 
-  app.post("/create-checkout-session", async (req, res) => {
-    try {
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        mode: "payment",
-        line_items:
-          [
-           { price_data: {
-              currency: "usd",
-              product_data: {
-                name: "Reservation",
-              },
-              unit_amount: req.body.price,
-            },
-            quantity: 1,
-           }],
-        success_url: 'http://localhost:3000/', // here will be the /user
-        cancel_url: 'http://localhost:4000/' // here will be the summary page
-      })
-      res.json({ url: session.url })
-    } catch (e) {
-      res.status(500).json({ error: e.message }) // VIEW IN A SNACKBAR IN FE
-    }
-  })
+
 
 
 

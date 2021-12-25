@@ -11,11 +11,10 @@ import Typography from '@mui/material/Typography';
 
 
 
-function PlaneViewEdit(props){   //function component declaration
-  
+function PlaneView(props){   //function component declaration
+  const [selected,setSelected] = useState([]);
   const [flight,setFlight] = useState([]);
-  const {id,setFunc,type,seats} = props;
-  const [selected,setSelected] = useState(seats);
+  const {oldId,id,setFunc,type,seats} = props;
   let i =0;
 
   const handleSubmit=(e)=>{//method called when submiting to send a request and clear the fields of the form
@@ -48,12 +47,21 @@ function PlaneViewEdit(props){   //function component declaration
   useEffect(()=>{
     async function fetchData(){
     let data = (await axios.get(`http://localhost:8000/getFlight/${id}`)).data
+
     if(type=="economy"){
-      setFlight(data.reservedEconomySeats);
+      if(oldId==id)
+      setFlight((data.reservedEconomySeats).map((leat,index)=>seats.includes(index+"")?false:leat));
+      else
+      setFlight(data.reservedEconomySeats)
     }else if(type=="business"){
+      if(oldId==id)
+      setFlight(data.reservedBusinessSeats.map((leat,index)=>seats.includes(index+"")?false:leat))
+      else
       setFlight(data.reservedBusinessSeats)
     }
+    console.log("flight")
     console.log(flight);
+    console.log("data");
     console.log(data);
     }
 
@@ -82,16 +90,15 @@ function PlaneViewEdit(props){   //function component declaration
                 {(seat?
                     <Checkbox
                     id={index.toString()}
-                    key={index.toString()}
-                    disabled={!(selected.includes(index+''))&&selected.length>=seats.length}
-                    onChange={seats.includes(index+'')?handleChange:()=>{}}
-                    defaultChecked
+                    key={flight.toString()+index.toString()}
+                    disabled
+                    checked
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     />:
                     <Checkbox
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 135 } }}
                     id={index.toString()}
-                    key={index.toString()}
+                    key={flight.toString()+index.toString()}
                     color="success"
                     onChange={handleChange}
                     disabled={!(selected.includes(index+''))&&selected.length>=seats.length}
@@ -100,9 +107,9 @@ function PlaneViewEdit(props){   //function component declaration
                 )
             }   
             </div>
-         
+          
           <div style={{width : '10%' , margin : '10px auto'}}>
-          <Button value="Submit" type="submit" variant="contained" disabled={selected.length<seats} endIcon={<SendIcon />}>
+          <Button value="Submit" type="submit" variant="contained" disabled={selected.length<seats.length} endIcon={<SendIcon />}>
               Submit
           </Button>
           </div>
@@ -113,4 +120,4 @@ function PlaneViewEdit(props){   //function component declaration
     }
   
 
-export default PlaneViewEdit ;
+export default PlaneView ;
