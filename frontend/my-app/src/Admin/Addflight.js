@@ -52,8 +52,8 @@ class Addflights extends Component{
       e.target.price.value='';
       e.target.baggageAllowance.value='';
 
-      this.setState({inserted:true});
-      this.setState({notValidObjString:""});
+      setInserted(true);
+      //this.setState({notValidObjString:""});
 
     })//.catch((err, data) => console.log(err.message));
       .catch(error=>{
