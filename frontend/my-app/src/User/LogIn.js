@@ -11,7 +11,6 @@ import background from "../assets/img/travel.jpg";
 import Header from 'components/Header/Header.js';
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import { ReactComponent as Logo } from './Logo.svg';
-import Cookies from 'universal-cookie';
 
 
 function LogIn(){   //function component declaration
@@ -20,7 +19,6 @@ function LogIn(){   //function component declaration
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const cookies = new Cookies();
 
   const [open , setOpen] = useState(false);
 

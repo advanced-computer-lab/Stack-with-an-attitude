@@ -257,7 +257,6 @@ exports.register = async function(req,res) {
     await newuser.save()
         .then( (user) => {
             res.status(200)
-            res.json(user)
             res.send({statusCode:200})
         })
         .catch( (err) => {

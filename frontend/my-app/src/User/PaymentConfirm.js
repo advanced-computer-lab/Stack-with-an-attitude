@@ -18,6 +18,10 @@ function PaymentConfirmation(){   //function component declaration
     async function fetchData(){
     await axios.post(`http://localhost:8000/confirm-payment/${id}`)
     .then((data)=>{setConfirmed(true)})
+    
+    await axios.post(`http://localhost:8000/user/sendsummary/${id}`,{"userID":localStorage.getItem("userID")})
+    .then(data => console.log('sent!'));
+    window.location.href = "/user";
     }
 
 
