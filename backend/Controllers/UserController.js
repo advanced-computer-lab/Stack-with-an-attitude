@@ -306,14 +306,6 @@ exports.sendsummary = async function(req,res){
     .then( (reservedflights) => {
             console.log('RESERV FETCH SUCC , ALSO THICCCCC');
 
-            const textMessage = `
-            TEZAK 7AMRA , 3ayez teshof el reservation : RO7 el view reserved flight ya ro7 omak
-             <p> Assigned departure seats :  ${reservedflights.assignedDepartureSeats} </p>
-             <p> Assigned return seats : ${reservedflights.assignedReturnSeats} </p>
-             `;
-            
-            
-
             //recevier info
             let mailoption = {
                 from:'csenair704no1@gmail.com',
