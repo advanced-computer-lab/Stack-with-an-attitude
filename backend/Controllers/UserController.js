@@ -133,6 +133,10 @@ exports.getAllreservedFlights = async function(req,res) {
 exports.deleteReservedFlightById = async function(req,res) {
 
   let ID = req.params.id;
+  let IDuser=req.body.data.userID;
+  console.log(IDuser);
+
+
 
 
   Reservation.findByIdAndDelete(ID)
@@ -147,13 +151,14 @@ exports.deleteReservedFlightById = async function(req,res) {
             reservedflights.assignedReturnSeats , true);
             
 
-            let IDuser = reservedflights.reservedUserID;
+
             let useremail= null;
 
             await User.findById(IDuser)
             .then( (user) => {
         
                 useremail= user.email;
+                console.log(useremail)
         
             })
             .catch( (err) => {
@@ -201,7 +206,10 @@ const transporter = nodemailer.createTransport({
    auth: {
        user:'guccsen704@gmail.com',
        pass:'Hossam2021'
-   }
+   },
+   tls: {
+    rejectUnauthorized: false
+}
 });
 
 
@@ -284,46 +292,58 @@ exports.register = async function(req,res) {
 exports.sendsummary = async function(req,res){
 
     let ID = req.params.id;
-
-    let IDuser = req.body.userid;
+    let IDuser=req.body.userID;
+    //let IDuser = req.body.userid;
+    console.log(IDuser);
     let useremail= null;
     await User.findById(IDuser)
     .then( (user) => {
-       
-        useremail= 'hossamnew16@gmail.com';
+
+        useremail = user.email;
+        console.log(useremail);
 
     })
     .catch( (err) => {
       //  res.send({statusCode : err.status, message : err.message})
         console.log(err.status)})
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     await Reservation.findById(ID)
     .then( (reservedflights) => {
-            
+
+
+
+        const message1 =  "Dear Customer ," +"\n Here is your summary for the reservation : " +
+        "\n Reservation number : "+ reservedflights.reservationNumber + "\n"
+
+
+
+
             //recevier info
     const option ={
     from:'guccsen704@gmail.com',
     to:useremail,
     subject :"Summary",
-    text: "Dear Customer ," +
-        "\n Here is your summary for the reservation : " +
-        "\n Reservation number : "+ reservedflights.reservationNumber + "\n" +
-        "Number of seats : "+ reservedflights.assignedSeats.length + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats
-        + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " +reservedflights.price
+    text:
+    "Dear Customer ," +"\n Here is your summary for the reservation : " +
+        "\n Reservation number : "+ reservedflights.reservationNumber + "\n"
+    +"\n Number of seats : "+ reservedflights.numberOfSeats  + "\n Assigned departure seats : " +  reservedflights.assignedDepartureSeats + "\n Assigned return seats : "+ reservedflights.assignedReturnSeats + "\n Total price : " +reservedflights.price
         + "\n Number of adults : "+reservedflights.numberOfAdults + "\n Number of children : "+ reservedflights.numberOfChildren +
         "\n Thank you for choosing Weeb Airlines."
 
-    
+
     };
-    
-    
+
+
+
+
+
     transporter.sendMail(option, (err,info)=>{
-    
+
     if(err){
         console.log(err);
         return;

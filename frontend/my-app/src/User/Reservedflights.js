@@ -143,12 +143,13 @@ function Reservedflights() {
         </TableBody>
       </Table>
     </TableContainer>
-    </div>
-        <div>
+    <div>
         <footer >
         <img src="https://www.pngkey.com/png/full/122-1220928_are-you-a-health-professional-wave-footer-png.png" style={{objectFit:"contain",width:"100%",bottom:0}}/>
         </footer>
         </div>
+    </div>
+
     </div>
   );
 }
