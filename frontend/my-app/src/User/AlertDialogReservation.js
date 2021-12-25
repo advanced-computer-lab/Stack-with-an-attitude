@@ -22,7 +22,7 @@ export default function AlertDialog(props) {
 
   const handleDeletereserveClick = async (e) => {
 
-    await axios.delete(`http://localhost:8000/deletereservedFlight/${props.id}`,{ data: {"userID":localStorage.getItem("userID")} })
+    await axios.delete(`http://localhost:8000/user/deletereservedFlight/${props.id}`)
     .then(data => console.log('Cancelled!'));
 
     handleClose();
