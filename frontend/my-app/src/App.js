@@ -10,6 +10,7 @@ import PaymentConfirm from "./User/PaymentConfirm"
 import Updateflight from "./Admin/Updateflight";
 import Searchflight from './Admin/Searchflight';
 import SearchflightUser from './User/SearchflightUser';
+import EditFlightHandler from 'User/EditFlightHandler';
 import Reservedflights from './User/Reservedflights';
 import PlaneView from './User/PlaneView';
 import ViewProfile from './User/ViewProfile';
@@ -52,6 +53,9 @@ function App() {
             <Route path='/confirmPayment/:id' element={<PaymentConfirm />} />
             {/* <Route path='/searchreturnflight/:from/:to' element={<SearchReturnFlight/>} /> */}
             <Route path='/viewflight/:id/:cabinclass/:numofresseats' element={<ViewFlightHandler/>} />
+            <Route path='/editReservation/:reservationId' element={<EditFlightHandler/>} />
+            
+            EditFlightHandler
             <Route path='/cancelflight' element={<Cancelflight/>} />
       </Routes>
     </Router>

@@ -55,10 +55,10 @@ function SearchReturnFlight(props) {
         .then(result => {
 
           result.data.forEach(flight => {
-            if(flight.from == from && flight.to == to && Date.parse(flight.departureDate) > Date.parse(arrive))
+            
               flights.push(flight);
           });
-
+          setRows(flights);
         }).catch(err => {
                 console.log(err);
                 });
@@ -82,7 +82,7 @@ function SearchReturnFlight(props) {
   useEffect(() => {
     console.log(from,to)
     getAllFlights();
-  },[state,flightId]);
+  },[state]);
 
   useEffect(()=>{},[rows])
 
@@ -103,25 +103,13 @@ function SearchReturnFlight(props) {
             <StyledTableCell>Departure Time</StyledTableCell>
             <StyledTableCell>Departure</StyledTableCell>
             <StyledTableCell>Destination</StyledTableCell>
-            <StyledTableCell>Duration</StyledTableCell>
             <StyledTableCell>Price</StyledTableCell>
             <StyledTableCell>view a flight</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => {  //loop on rows and map to the template TableRows and Columns 
-                let depstr = row.departureTime+"";
-                let dephour = depstr[0]+""+depstr[1];
-                let depsec = depstr[3]+""+depstr[4];
-                let arrstr = row.arrivalTime+"";
-                let arrhour = arrstr[0]+""+arrstr[1];
-                let arrsec = arrstr[3]+""+arrstr[4];
-                let dep = new Date(row.departureDate);
-                let arr = new Date(row.arrivalDate);
-                dep.setHours(dephour);
-                arr.setHours(arrhour);
-                dep.setMinutes(depsec);
-                arr.setMinutes(arrsec);
+
                 return(  
             <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
@@ -133,7 +121,7 @@ function SearchReturnFlight(props) {
               <StyledTableCell>{row.departureTime}</StyledTableCell>
               <StyledTableCell>{row.from}</StyledTableCell>
               <StyledTableCell>{row.to}</StyledTableCell>
-              <StyledTableCell>{(arr-dep)/3600000 + " hours"}</StyledTableCell>
+
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>
                         {/* <IconButton aria-label="delete" onClick={handleDeleteClick} id={row._id}>

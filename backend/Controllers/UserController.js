@@ -67,8 +67,7 @@ exports.getReservedFlightById = async function(req,res) {
   Reservation.findById(ID)
       .then( (reservedflights) => {
           //res.status(200)
-          res.send({statusCode:200})
-          res.json(reservedflights)
+          res.send({statusCode:200,data:reservedflights});
       })
       .catch( (err) => {
           //res.status(404)
