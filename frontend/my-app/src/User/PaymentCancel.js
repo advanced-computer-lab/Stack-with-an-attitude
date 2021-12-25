@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import HomeIcon from '@mui/icons-material/Home';
 
 
-function PaymentConfirmation(){   //function component declaration
+function PaymentCancel(){   //function component declaration
   const {id} = useParams();
   const [confirmed,setConfirmed] = useState(false);
 
@@ -42,7 +42,7 @@ function PaymentConfirmation(){   //function component declaration
     <Card sx={{ maxWidth: 800 , margin: "auto"  }}>
       <CardContent>
         <Typography variant="h4">
-        {confirmed?"Payment confirmed! \n Thank you for using AirlineZ \n We hope you have a great flight!":"pending...."}
+        {confirmed?"Reservation cancelled! \n We are sad to see you go":"pending...."}
         </Typography>
         <Typography variant="h6">
         {confirmed?"An email has been sent to you. \n You will now be redirected to the home page":"pending...."}
@@ -55,4 +55,4 @@ function PaymentConfirmation(){   //function component declaration
     
     }
 
-export default PaymentConfirmation ;
+export default PaymentCancel ;
