@@ -38,6 +38,21 @@ Currently our build version is 1.2.42 . Users might experience some bugs includi
 
 ## Screenshots
 
+### Main page
+![MainPage](https://user-images.githubusercontent.com/69060525/147393259-1af22a8b-da8f-463d-86ab-f46ea65a8038.jpeg)
+
+### Register page
+![Register](https://user-images.githubusercontent.com/69060525/147393281-853ddff5-5e85-4acb-aca0-8829da2ffaac.jpeg)
+
+### Login page
+![Login](https://user-images.githubusercontent.com/69060525/147393276-4d199687-c24f-4063-9ef2-f1287254a82d.jpeg)
+
+### Main page for a logged in user
+![LoggedInUser](https://user-images.githubusercontent.com/69060525/147393264-8021bde2-4ff2-4ecb-b7d2-6fb493d6cc95.jpeg)
+
+### Reserved flights for user
+![ReservedFlights](https://user-images.githubusercontent.com/69060525/147393293-4f68589b-48c3-4a5a-87d2-2d7f24967efb.jpeg)
+
 ## Tech/Framework used
 
 #### We are using the popular MERN Stack developing this project. The tech/frameworks used in this stack are :
